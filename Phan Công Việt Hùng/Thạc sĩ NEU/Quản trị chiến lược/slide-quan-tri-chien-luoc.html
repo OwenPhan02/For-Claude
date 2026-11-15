@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quản trị chiến lược — Công cụ phân tích</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#14213D; --paper:#F7F5EF; --paper2:#EEF2F7; --card:#FFFDF8; --line:#E4DFD3;
+  --orange:#C2410C; --orange-l:#F2A65A; --orange-bg:#FCE7D6; --orange-bg2:#F6C9A4;
+  --blue:#2F6FB3; --blue-bg:#DCE7F5; --blue-bg2:#AFC8E8;
+  --green:#CFE6D6; --yellow:#F6E3A1; --red:#EDC2BC;
+  --soft:#4A5568; --muted:#6B7280;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;background:#0B1220;overflow:hidden}
+body{font-family:'Be Vietnam Pro',Arial,sans-serif}
+#viewport{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#deck{width:1920px;height:1080px;position:relative;transform-origin:center center;flex:none}
+.slide{position:absolute;inset:0;width:1920px;height:1080px;padding:128px 128px 160px;display:flex;flex-direction:column;gap:36px;background:var(--paper);color:var(--navy);overflow:hidden}
+/* chuyển slide: trượt + mờ dần, theo hướng tiến/lùi */
+.slide{opacity:0;visibility:hidden;transform:translateX(80px) scale(.985);
+  transition:opacity .55s ease, transform .7s cubic-bezier(.22,.61,.36,1), visibility 0s linear .7s}
+.slide.before{transform:translateX(-80px) scale(.985)}
+.slide.active{opacity:1;visibility:visible;transform:none;
+  transition:opacity .55s ease, transform .7s cubic-bezier(.22,.61,.36,1), visibility 0s}
+/* phần tử bên trong hiện lần lượt */
+.slide.active .anim{animation:rise .65s cubic-bezier(.22,.61,.36,1) both;
+  animation-delay:calc(var(--d,0) * 65ms + 180ms)}
+.slide.active svg.arrow.anim{animation-name:grow}
+@keyframes rise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+@keyframes grow{from{opacity:0;transform:translateX(-16px) scaleX(.4)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){
+  .slide,.slide.before{transform:none}
+  .slide,.slide.active{transition:opacity .2s ease, visibility 0s}
+  .slide.active .anim{animation:none}
+}
+.slide.alt{background:var(--paper2)}
+.slide.dark{background:var(--navy);color:var(--paper);padding:128px}
+.slide.accent{background:#E07A2E;color:var(--navy);padding:128px}
+.slide aside{display:none}
+.head{display:flex;flex-direction:column;gap:8px}
+.eyebrow{font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--orange)}
+h1{font-size:112px;font-weight:700;line-height:1.1}
+h2{font-size:64px;font-weight:700;line-height:1.15}
+h3{font-size:36px;font-weight:700;line-height:1.2}
+p{font-size:28px;line-height:1.4}
+.lead{color:var(--soft)}
+.small{font-size:24px}
+.s26{font-size:26px}
+.soft{color:var(--soft)}
+.foot{position:absolute;left:128px;right:128px;bottom:64px;font-size:24px;color:var(--muted);display:flex;justify-content:space-between}
+.dark .foot{color:#9AA7BD}
+.row{display:flex;gap:24px}
+.col{display:flex;flex-direction:column;gap:16px}
+.f1{flex:1}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:36px;display:flex;flex-direction:column;gap:14px}
+.alt .card{background:#FBFCFE;border-color:#D9E0EA}
+.callout{background:var(--orange-bg);border-radius:16px;padding:20px 28px}
+.callout p{font-size:26px}
+.callout.dark{background:var(--navy);color:var(--paper)}
+.callout.dark b{color:var(--orange-l)}
+.pill{display:inline-block;font-size:26px;font-weight:600;background:var(--navy);color:var(--paper);padding:8px 20px;border-radius:999px}
+.pills{display:flex;flex-wrap:wrap;gap:12px}
+.steps{display:flex;flex-direction:column;gap:20px}
+.step{display:flex;gap:24px;align-items:flex-start}
+.step .n{width:56px;flex:none;font-size:32px;font-weight:700;color:var(--orange)}
+.big{font-size:72px;font-weight:700;line-height:1}
+table.t{width:100%;border-collapse:collapse;font-size:27px;color:var(--navy)}
+table.t th{background:var(--navy);color:var(--paper);text-align:left;font-weight:600;padding:14px 20px}
+table.t td{padding:12px 20px;border-bottom:1px solid var(--line);background:var(--card)}
+.alt table.t td{background:#FBFCFE;border-color:#D9E0EA}
+table.t tr:nth-child(odd) td{background:#F2EEE5}
+.alt table.t tr:nth-child(odd) td{background:#E6EBF2}
+table.t td.num, table.t th.num{text-align:right;font-variant-numeric:tabular-nums}
+table.t tr.total td{background:#E4DFD3;font-weight:700}
+.alt table.t tr.total td{background:#D3DCE8}
+table.t tr.hl td{background:var(--orange-bg)}
+table.t.compact{font-size:24px}
+table.t.compact td,table.t.compact th{padding:10px 18px}
+.arrow{align-self:center;flex:none}
+/* matrices */
+.mx{display:grid;gap:12px}
+.mx .lab{font-size:24px;font-weight:600;color:var(--soft);display:flex;align-items:center;justify-content:center;text-align:center}
+.mx .cell{border-radius:16px;padding:24px 28px;display:flex;flex-direction:column;gap:8px}
+.mx .cell h3{font-size:34px}
+.mx .cell p{font-size:24px;line-height:1.35}
+.ge .cell{padding:18px 22px;min-height:132px;justify-content:center}
+.ge .cell p{font-size:24px;font-weight:600}
+.g{background:var(--green)} .y{background:var(--yellow)} .r{background:var(--red)}
+.tag{font-size:24px;font-weight:600;color:var(--orange)}
+.chip{border-radius:16px;padding:26px;display:flex;flex-direction:column;gap:8px;flex:1}
+.chip p{font-size:26px;line-height:1.3}
+#progress{position:fixed;left:0;bottom:0;height:4px;background:#E07A2E;transition:width .2s}
+#hint{position:fixed;right:16px;bottom:12px;color:#7D8AA3;font:13px 'Be Vietnam Pro',Arial,sans-serif}
+@media print{
+  html,body{overflow:visible;background:#fff}
+  #viewport{position:static;display:block}
+  #deck{transform:none!important;width:auto;height:auto}
+  .slide{position:relative;display:flex!important;page-break-after:always;break-after:page;opacity:1!important;visibility:visible!important;transform:none!important;transition:none!important}
+  .anim{animation:none!important}
+  #progress,#hint{display:none}
+  @page{size:1920px 1080px;margin:0}
+}
+</style>
+</head>
+<body>
+<div id="viewport"><div id="deck">
+
+<!-- 1 COVER -->
+<section class="slide dark" style="justify-content:space-between">
+  <p style="font-size:28px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--orange-l)">Quản trị chiến lược</p>
+  <div class="col" style="gap:36px">
+    <h1>Công cụ phân tích<br>và lựa chọn chiến lược</h1>
+    <p style="font-size:36px;color:#C9D3E3">EFE · CPM · IFE · SWOT · BCG · GE · SPACE · QSPM<br>kèm ví dụ xuyên suốt: quán cà phê nhà chị Hoa</p>
+  </div>
+  <div style="width:240px;height:8px;background:#E07A2E"></div>
+</section>
+
+<!-- 2 ROADMAP -->
+<section class="slide" style="justify-content:space-between">
+  <div class="head"><p class="eyebrow">Bức tranh chung</p><h2>Ba giai đoạn hình thành chiến lược</h2></div>
+  <div class="row" style="align-items:stretch">
+    <div class="card f1" style="padding:48px;gap:20px">
+      <p class="big" style="color:var(--orange)">1</p><h3 style="font-size:40px">Nhập dữ liệu</h3>
+      <p class="soft">Tóm tắt, lượng hóa thông tin trong và ngoài doanh nghiệp</p>
+      <div class="f1"></div><div class="pills"><span class="pill">EFE</span><span class="pill">CPM</span><span class="pill">IFE</span></div>
+    </div>
+    <svg class="arrow" width="64" height="32" viewBox="0 0 64 32"><path d="M0 10h38V0l26 16-26 16V22H0z" fill="#C2410C"/></svg>
+    <div class="card f1" style="padding:48px;gap:20px">
+      <p class="big" style="color:var(--orange)">2</p><h3 style="font-size:40px">Kết hợp</h3>
+      <p class="soft">Ghép yếu tố bên trong với bên ngoài để sinh ra các phương án</p>
+      <div class="f1"></div><div class="pills"><span class="pill">SWOT</span><span class="pill">SPACE</span><span class="pill">BCG</span><span class="pill">GE</span></div>
+    </div>
+    <svg class="arrow" width="64" height="32" viewBox="0 0 64 32"><path d="M0 10h38V0l26 16-26 16V22H0z" fill="#C2410C"/></svg>
+    <div class="card f1" style="padding:48px;gap:20px">
+      <p class="big" style="color:var(--orange)">3</p><h3 style="font-size:40px">Quyết định</h3>
+      <p class="soft">Chấm điểm các phương án để chọn ra phương án hấp dẫn nhất</p>
+      <div class="f1"></div><div class="pills"><span class="pill">QSPM</span></div>
+    </div>
+  </div>
+  <p class="soft" style="font-size:30px">Đầu ra của ma trận trước là <b>đầu vào</b> của ma trận sau.</p>
+  <div class="foot"><span>Quản trị chiến lược · Tổng quan</span><span class="pg"></span></div>
+</section>
+
+<!-- 3 EFE -->
+<section class="slide">
+  <div class="head"><p class="eyebrow">Nhập dữ liệu · Môi trường bên ngoài</p><h2>Ma trận EFE: cấu trúc 4 cột</h2></div>
+  <p class="lead">Lượng hóa cơ hội, nguy cơ bên ngoài và đo xem doanh nghiệp <b>phản ứng tốt đến đâu</b>.</p>
+  <table class="t">
+    <tr><th style="width:26%">Cột</th><th style="width:40%">Nội dung</th><th style="width:34%">Cách chấm</th></tr>
+    <tr><td>(1) Yếu tố bên ngoài</td><td>Cơ hội và nguy cơ, thường 10–20 yếu tố</td><td>—</td></tr>
+    <tr><td>(2) Mức độ quan trọng</td><td>Tầm quan trọng với thành công <b>trong ngành</b></td><td>0 → 1, tổng cột = 1</td></tr>
+    <tr><td>(3) Phân loại</td><td>Mức <b>doanh nghiệp phản ứng</b> với yếu tố</td><td>1 ít · 2 trung bình · 3 khá · 4 tốt</td></tr>
+    <tr><td>(4) Điểm quan trọng</td><td>(2) × (3)</td><td>Cộng lại, tổng từ 1 đến 4</td></tr>
+  </table>
+  <div class="callout"><p><b>Dễ nhầm:</b> cột (2) chấm theo <b>ngành</b>, giống nhau cho mọi đối thủ; cột (3) chấm theo <b>doanh nghiệp</b>.</p></div>
+  <div class="foot"><span>Quản trị chiến lược · Nhập dữ liệu · EFE</span><span class="pg"></span></div>
+</section>
+
+<!-- 4 EFE STEPS -->
+<section class="slide" style="gap:44px">
+  <div class="head"><p class="eyebrow">Nhập dữ liệu · Môi trường bên ngoài</p><h2>EFE: 5 bước và cách đọc kết quả</h2></div>
+  <div class="row" style="gap:48px">
+    <div class="steps f1" style="gap:24px">
+      <div class="step"><span class="n">1</span><p><b>Liệt kê</b> 10–20 yếu tố từ PEST và 5 lực lượng; cơ hội trước, nguy cơ sau</p></div>
+      <div class="step"><span class="n">2</span><p><b>Gán trọng số</b> 0 → 1 theo ảnh hưởng tới thành công trong ngành; tổng = 1</p></div>
+      <div class="step"><span class="n">3</span><p><b>Chấm phân loại</b> 1–4 theo mức doanh nghiệp đang phản ứng</p></div>
+      <div class="step"><span class="n">4</span><p><b>Nhân</b> trọng số × phân loại → điểm quan trọng</p></div>
+      <div class="step"><span class="n">5</span><p><b>Cộng</b> lại → tổng từ 1 đến 4, so với mốc 2,5</p></div>
+    </div>
+    <div class="card" style="width:620px;flex:none;gap:20px">
+      <h3>Đọc tổng điểm</h3>
+      <div class="row" style="align-items:center"><p style="width:130px;font-size:44px;font-weight:700;color:var(--blue)">4</p><p class="s26">Phản ứng rất tốt với môi trường</p></div>
+      <div class="row" style="align-items:center"><p style="width:130px;font-size:44px;font-weight:700">2,5</p><p class="s26">Mức trung bình</p></div>
+      <div class="row" style="align-items:center"><p style="width:130px;font-size:44px;font-weight:700;color:var(--orange)">&lt; 2,5</p><p class="s26 f1">Chưa tận dụng cơ hội, chưa né được nguy cơ</p></div>
+      <div class="row" style="align-items:center"><p style="width:130px;font-size:44px;font-weight:700;color:var(--orange)">1</p><p class="s26">Gần như không phản ứng</p></div>
+    </div>
+  </div>
+  <div class="foot"><span>Quản trị chiến lược · Nhập dữ liệu · EFE</span><span class="pg"></span></div>
+</section>
+
+<!-- 5 CPM -->
+<section class="slide" style="gap:44px">
+  <div class="head"><p class="eyebrow">Nhập dữ liệu · So với đối thủ</p><h2>CPM: ma trận hình ảnh cạnh tranh</h2></div>
+  <div class="row" style="gap:48px">
+    <div class="steps f1">
+      <div class="step"><span class="n">1</span><p><b>Chọn 2–4 đối thủ</b> chính: dẫn đầu, trực tiếp, mới nổi</p></div>
+      <div class="step"><span class="n">2</span><p><b>Liệt kê yếu tố thành công</b> then chốt: giá, chất lượng, thương hiệu, kênh…</p></div>
+      <div class="step"><span class="n">3</span><p><b>Gán trọng số</b> 0 → 1, tổng = 1, dùng chung cho mọi doanh nghiệp</p></div>
+      <div class="step"><span class="n">4</span><p><b>Chấm 1–4</b> cho từng doanh nghiệp ở từng yếu tố</p></div>
+      <div class="step"><span class="n">5</span><p><b>Nhân</b> trọng số × điểm cho từng ô</p></div>
+      <div class="step"><span class="n">6</span><p><b>Cộng theo cột</b>, so tổng và so từng dòng</p></div>
+    </div>
+    <div class="card" style="width:640px;flex:none;gap:20px">
+      <h3>Khác EFE ở đâu?</h3>
+      <table class="t" style="font-size:25px">
+        <tr><th style="width:50%">EFE</th><th>CPM</th></tr>
+        <tr><td>Một doanh nghiệp</td><td>Nhiều doanh nghiệp cạnh nhau</td></tr>
+        <tr><td>Chỉ yếu tố bên ngoài</td><td>Cả bên trong lẫn bên ngoài</td></tr>
+      </table>
+      <div class="f1"></div>
+      <p class="s26 soft">Tổng cao nhất là đối thủ mạnh nhất; so từng dòng để thấy mạnh, yếu tương đối.</p>
+    </div>
+  </div>
+  <div class="foot"><span>Quản trị chiến lược · Nhập dữ liệu · CPM</span><span class="pg"></span></div>
+</section>
+
+<!-- 6 IFE -->
+<section class="slide">
+  <div class="head"><p class="eyebrow">Nhập dữ liệu · Môi trường bên trong</p><h2>Ma trận IFE: điểm mạnh, điểm yếu</h2></div>
+  <p class="lead">Cùng 4 cột như EFE, nhưng liệt kê yếu tố nội bộ theo từng bộ phận chức năng hoặc chuỗi giá trị.</p>
+  <div class="col" style="gap:12px">
+    <p class="small soft" style="font-weight:600">Cột (3) — phân loại</p>
+    <div class="row" style="gap:16px">
+      <div class="chip" style="background:var(--orange-bg2)"><p class="big" style="font-size:56px">1</p><p>Điểm yếu lớn nhất</p></div>
+      <div class="chip" style="background:var(--orange-bg)"><p class="big" style="font-size:56px">2</p><p>Điểm yếu nhỏ nhất</p></div>
+      <div class="chip" style="background:var(--blue-bg)"><p class="big" style="font-size:56px">3</p><p>Điểm mạnh nhỏ nhất</p></div>
+      <div class="chip" style="background:var(--blue-bg2)"><p class="big" style="font-size:56px">4</p><p>Điểm mạnh lớn nhất</p></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="card f1"><h3 style="font-size:32px">Khác EFE ở cột (3)</h3><p class="s26 soft">EFE chấm <i>mức phản ứng</i>; IFE chấm <i>mạnh hay yếu</i>: 1–2 luôn là điểm yếu, 3–4 luôn là điểm mạnh.</p></div>
+    <div class="card f1"><h3 style="font-size:32px">Đọc tổng điểm</h3><p class="s26 soft"><b>&gt; 2,5</b> nội bộ mạnh · <b>= 2,5</b> trung bình · <b>&lt; 2,5</b> nội bộ yếu</p></div>
+  </div>
+  <div class="foot"><span>Quản trị chiến lược · Nhập dữ liệu · IFE</span><span class="pg"></span></div>
+</section>
+
+<!-- 7 SWOT -->
+<section class="slide" style="gap:32px">
+  <div class="head"><p class="eyebrow">Kết hợp · Sinh phương án</p><h2>SWOT: cốt lõi là 4 ô kết hợp</h2></div>
+  <div class="mx" style="grid-template-columns:220px 1fr 1fr;gap:16px">
+    <div></div>
+    <div class="col" style="gap:4px;padding:4px 28px"><p style="font-size:32px;font-weight:700;color:var(--blue)">S — Điểm mạnh</p><p class="small soft">S1, S2… lấy từ IFE</p></div>
+    <div class="col" style="gap:4px;padding:4px 28px"><p style="font-size:32px;font-weight:700;color:var(--blue)">W — Điểm yếu</p><p class="small soft">W1, W2… lấy từ IFE</p></div>
+    <div class="col" style="gap:4px;justify-content:center"><p style="font-size:32px;font-weight:700;color:var(--orange)">O — Cơ hội</p><p class="small soft">từ EFE</p></div>
+    <div class="cell" style="background:var(--blue-bg)"><div class="row" style="justify-content:space-between;align-items:center"><h3 style="font-size:40px">SO</h3><p class="small" style="font-weight:600">Tấn công, tăng trưởng</p></div><p style="font-size:28px">Dùng điểm mạnh để khai thác cơ hội</p></div>
+    <div class="cell card" style="padding:24px 28px"><div class="row" style="justify-content:space-between;align-items:center"><h3 style="font-size:40px">WO</h3><p class="small" style="font-weight:600">Cải thiện</p></div><p style="font-size:28px">Tận dụng cơ hội để khắc phục điểm yếu</p></div>
+    <div class="col" style="gap:4px;justify-content:center"><p style="font-size:32px;font-weight:700;color:var(--orange)">T — Nguy cơ</p><p class="small soft">từ EFE</p></div>
+    <div class="cell card" style="padding:24px 28px"><div class="row" style="justify-content:space-between;align-items:center"><h3 style="font-size:40px">ST</h3><p class="small" style="font-weight:600">Đối phó</p></div><p style="font-size:28px">Dùng điểm mạnh để giảm tác động của nguy cơ</p></div>
+    <div class="cell" style="background:var(--orange-bg)"><div class="row" style="justify-content:space-between;align-items:center"><h3 style="font-size:40px">WT</h3><p class="small" style="font-weight:600">Phòng thủ</p></div><p style="font-size:28px">Khắc phục điểm yếu, giảm hoặc né nguy cơ</p></div>
+  </div>
+  <div class="callout dark"><p><b>Lỗi hay gặp:</b> dừng ở 4 danh sách. Mỗi chiến lược phải ghi rõ ghép từ đâu, ví dụ “S1 + O2”.</p></div>
+  <div class="foot"><span>Quản trị chiến lược · Kết hợp · SWOT</span><span class="pg"></span></div>
+</section>
+
+<!-- 8 BCG -->
+<section class="slide" style="gap:32px">
+  <div class="head"><p class="eyebrow">Kết hợp · Danh mục SBU</p><h2>Ma trận BCG: tăng trưởng — thị phần</h2></div>
+  <div class="row" style="gap:48px;flex:1">
+    <div class="col" style="width:1000px;flex:none;gap:12px">
+      <p class="small soft" style="font-weight:600">↑ Tốc độ tăng trưởng thị trường (mốc 10%)</p>
+      <div class="mx f1" style="grid-template-columns:90px 1fr 1fr;grid-template-rows:1fr 1fr auto">
+        <div class="lab">Cao</div>
+        <div class="cell" style="background:var(--orange-bg)"><h3>⭐ Ngôi sao</h3><p>Dẫn đầu nhưng vẫn tốn tiền giữ vị thế → <b>đầu tư để duy trì, tăng trưởng</b></p></div>
+        <div class="cell" style="background:#EFEBE2"><h3>❓ Dấu hỏi</h3><p>Cần nhiều tiền, chưa chắc thắng → <b>đầu tư mạnh hoặc rút lui</b></p></div>
+        <div class="lab">Thấp</div>
+        <div class="cell" style="background:var(--blue-bg)"><h3>🐄 Bò sữa</h3><p>Bão hòa, tạo nhiều tiền → <b>duy trì, “vắt sữa”</b> nuôi mảng khác</p></div>
+        <div class="cell" style="background:#E2DDD2"><h3>🐕 Chó ghẻ</h3><p>Tạo ít tiền, ít triển vọng → <b>thu hoạch, thoái vốn</b></p></div>
+        <div></div><div class="lab">Thị phần cao</div><div class="lab">Thị phần thấp</div>
+      </div>
+      <p class="small soft" style="font-weight:600;text-align:center;padding-left:90px">← Thị phần tương đối (mốc 1, trục đảo chiều)</p>
+    </div>
+    <div class="col f1" style="gap:28px">
+      <div class="col" style="gap:8px"><h3 style="font-size:30px">Dùng khi nào</h3><p class="s26 soft">Doanh nghiệp có từ 2 SBU hoặc dòng sản phẩm trở lên, cần phân bổ vốn.</p></div>
+      <div class="col" style="gap:8px"><h3 style="font-size:30px">Thị phần tương đối</h3><p class="s26 soft">= thị phần SBU ÷ thị phần đối thủ lớn nhất. Cỡ vòng tròn = tỷ trọng doanh thu.</p></div>
+      <div class="col" style="gap:8px"><h3 style="font-size:30px">Vòng đời</h3><p class="s26 soft">Dấu hỏi → Ngôi sao → Bò sữa → Chó ghẻ. Tiền đi ngược lại: Bò sữa nuôi Dấu hỏi và Ngôi sao.</p></div>
+    </div>
+  </div>
+  <div class="foot"><span>Quản trị chiến lược · Kết hợp · BCG</span><span class="pg"></span></div>
+</section>
+
+<!-- 9 BCG CENTER -->
+<section class="slide" style="gap:40px">
+  <div class="head"><p class="eyebrow">Kết hợp · BCG</p><h2>SBU nằm đúng điểm giao 4 ô thì sao?</h2></div>
+  <div class="row">
+    <div class="card f1"><p class="tag">Bước 1</p><h3 style="font-size:32px">Đánh giá theo từng trục</h3><p class="s26 soft">So riêng thị phần với mốc 1 và tăng trưởng với mốc 10%, xem nghiêng về phía nào, rồi ghép lại.</p></div>
+    <div class="card f1"><p class="tag">Bước 2</p><h3 style="font-size:32px">Tịnh tiến theo biên độ quá khứ</h3><p class="s26 soft">Kéo tiếp xu hướng các năm trước; chọn chiến lược theo ô <b>sắp tới</b>, không theo vị trí giữa.</p></div>
+  </div>
+  <div class="row" style="align-items:center;gap:16px">
+    <div class="card f1" style="padding:24px 28px;gap:4px"><p class="small soft">Năm 1</p><p style="font-size:40px;font-weight:700">(0,6; 16%)</p></div>
+    <svg class="arrow" width="40" height="24" viewBox="0 0 40 24"><path d="M0 8h24V0l16 12-16 12v-8H0z" fill="#C2410C"/></svg>
+    <div class="card f1" style="padding:24px 28px;gap:4px"><p class="small soft">Năm 2</p><p style="font-size:40px;font-weight:700">(0,8; 13%)</p></div>
+    <svg class="arrow" width="40" height="24" viewBox="0 0 40 24"><path d="M0 8h24V0l16 12-16 12v-8H0z" fill="#C2410C"/></svg>
+    <div class="card f1" style="padding:24px 28px;gap:4px"><p class="small soft">Năm 3 · điểm giao</p><p style="font-size:40px;font-weight:700">(1,0; 10%)</p></div>
+    <svg class="arrow" width="40" height="24" viewBox="0 0 40 24"><path d="M0 8h24V0l16 12-16 12v-8H0z" fill="#C2410C"/></svg>
+    <div class="f1" style="background:var(--navy);color:var(--paper);border-radius:20px;padding:24px 28px;display:flex;flex-direction:column;gap:4px"><p class="small" style="color:var(--orange-l)">Dự báo năm sau</p><p style="font-size:40px;font-weight:700">(1,2; 7%)</p></div>
+  </div>
+  <p class="soft">Mỗi năm thị phần <b>+0,2</b>, tăng trưởng <b>−3 điểm %</b> → đang đi sang <b>Bò sữa</b>: chuẩn bị chuyển từ đầu tư sang duy trì, thu tiền.</p>
+  <div class="foot"><span>Quản trị chiến lược · Kết hợp · BCG</span><span class="pg"></span></div>
+</section>
+
+<!-- 10 GE -->
+<section class="slide" style="gap:32px">
+  <div class="head"><p class="eyebrow">Kết hợp · Danh mục SBU</p><h2>Ma trận GE / McKinsey: 9 ô, 3 vùng</h2></div>
+  <div class="row" style="gap:48px">
+    <div class="col" style="width:1040px;flex:none;gap:12px">
+      <div class="mx ge" style="grid-template-columns:120px 1fr 1fr 1fr">
+        <div></div><div class="lab">Mạnh</div><div class="lab">Trung bình</div><div class="lab">Yếu</div>
+        <div class="lab">Cao</div><div class="cell g"><p>Củng cố và bảo vệ vị thế</p></div><div class="cell g"><p>Đầu tư để tăng trưởng</p></div><div class="cell y"><p>Đầu tư chọn lọc để tăng trưởng</p></div>
+        <div class="lab">Trung bình</div><div class="cell g"><p>Đầu tư chọn lọc để tăng trưởng</p></div><div class="cell y"><p>Đầu tư lựa chọn / thu hoạch</p></div><div class="cell r"><p>Mở rộng có giới hạn hoặc thu hoạch</p></div>
+        <div class="lab">Thấp</div><div class="cell y"><p>Bảo vệ và tái xác định mục tiêu</p></div><div class="cell r"><p>Thu hoạch</p></div><div class="cell r"><p>Loại bỏ, thoái vốn</p></div>
+      </div>
+      <p class="small soft" style="padding-left:132px">↓ Hấp dẫn của ngành · → Năng lực cạnh tranh của SBU</p>
+      <div class="row" style="gap:20px;padding-left:132px">
+        <p class="small"><span style="display:inline-block;width:20px;height:20px;border-radius:4px;background:var(--green);vertical-align:-3px"></span> Xanh: đầu tư</p>
+        <p class="small"><span style="display:inline-block;width:20px;height:20px;border-radius:4px;background:var(--yellow);vertical-align:-3px"></span> Vàng: chọn lọc</p>
+        <p class="small"><span style="display:inline-block;width:20px;height:20px;border-radius:4px;background:var(--red);vertical-align:-3px"></span> Đỏ: thu hoạch</p>
+      </div>
+    </div>
+    <div class="col f1" style="gap:24px">
+      <div class="col" style="gap:8px"><h3 style="font-size:30px">Hai trục, nhiều yếu tố</h3><p class="s26 soft">Mỗi trục gộp nhiều yếu tố có trọng số (tổng = 1), chấm thang 1–5, nhân rồi cộng.</p></div>
+      <div class="col" style="gap:8px"><h3 style="font-size:30px">Xếp mức</h3><p class="s26 soft">≥ 3,67 cao · 2,33–3,67 trung bình · &lt; 2,33 thấp</p></div>
+      <div class="col" style="gap:8px"><h3 style="font-size:30px">So với BCG</h3><p class="s26 soft">Sát thực tế hơn, có vùng trung gian; nhưng tốn công và chủ quan hơn.</p></div>
+    </div>
+  </div>
+  <div class="foot"><span>Quản trị chiến lược · Kết hợp · GE</span><span class="pg"></span></div>
+</section>
+
+<!-- 11 SPACE AXES -->
+<section class="slide" style="gap:32px">
+  <div class="head"><p class="eyebrow">Kết hợp · Vị thế chiến lược</p><h2>Ma trận SPACE: 4 phương diện</h2></div>
+  <div class="mx" style="grid-template-columns:1fr 1fr;gap:24px">
+    <div class="card"><h3>CA — Lợi thế cạnh tranh</h3><p class="tag">Trục X · bên trong · −1 → −6</p><p class="s26 soft">Thị phần, chất lượng, thương hiệu, lợi thế chi phí, năng lực khác biệt, phân phối</p></div>
+    <div class="card"><h3>IS — Sức mạnh ngành</h3><p class="tag" style="color:var(--blue)">Trục X · bên ngoài · +1 → +6</p><p class="s26 soft">Tiềm năng tăng trưởng, sinh lời của ngành, quy mô thị trường, công nghệ, rào cản gia nhập</p></div>
+    <div class="card"><h3>FS — Sức mạnh tài chính</h3><p class="tag" style="color:var(--blue)">Trục Y · bên trong · +1 → +6</p><p class="s26 soft">Khả năng sinh lời, dòng tiền, thanh khoản, huy động vốn, cơ cấu vốn</p></div>
+    <div class="card"><h3>ES — Ổn định môi trường</h3><p class="tag">Trục Y · bên ngoài · −1 → −6</p><p class="s26 soft">Lạm phát, lãi suất, biến động công nghệ, cạnh tranh, rủi ro chính trị, nhu cầu</p></div>
+  </div>
+  <div class="row">
+    <div class="callout dark f1"><p style="font-size:32px;font-weight:700">X = IS + CA &nbsp;·&nbsp; Y = FS + ES</p></div>
+    <div class="callout f1"><p><b>Dễ chấm ngược:</b> với CA và ES, càng gần <b>−1</b> càng tốt.</p></div>
+  </div>
+  <div class="foot"><span>Quản trị chiến lược · Kết hợp · SPACE</span><span class="pg"></span></div>
+</section>
+
+<!-- 12 SPACE QUADRANTS -->
+<section class="slide" style="gap:32px">
+  <div class="head"><p class="eyebrow">Kết hợp · Vị thế chiến lược</p><h2>SPACE: đọc kết quả theo góc phần tư</h2></div>
+  <div class="row" style="gap:40px">
+    <div class="mx" style="width:1060px;flex:none;grid-template-columns:1fr 1fr">
+      <div class="cell" style="background:#EFEBE2"><h3>IV. Thận trọng</h3><p class="soft">X &lt; 0, Y &gt; 0 · có tiền, lợi thế yếu</p><p>Tập trung cốt lõi, nâng hiệu quả, kiểm soát chi phí</p></div>
+      <div class="cell" style="background:var(--blue-bg)"><h3>I. Tấn công</h3><p class="soft">X &gt; 0, Y &gt; 0 · ngành hấp dẫn, tài chính mạnh</p><p>Mở rộng thị trường, phát triển sản phẩm, đa dạng hóa, hội nhập</p></div>
+      <div class="cell" style="background:#E2DDD2"><h3>III. Phòng thủ</h3><p class="soft">X &lt; 0, Y &lt; 0 · yếu cả trong lẫn ngoài</p><p>Thu hẹp, cắt giảm chi phí, tái cơ cấu, rút lui</p></div>
+      <div class="cell" style="background:var(--orange-bg)"><h3>II. Cạnh tranh</h3><p class="soft">X &gt; 0, Y &lt; 0 · ngành tốt, môi trường bất ổn</p><p>Tăng lợi thế, khác biệt hóa, giảm chi phí, liên minh</p></div>
+    </div>
+    <div class="card f1" style="gap:18px">
+      <h3 style="font-size:32px">Ví dụ trên lớp</h3>
+      <div class="mx" style="grid-template-columns:1fr 1fr;gap:12px">
+        <p style="font-size:30px"><b>FS</b> +5</p><p style="font-size:30px"><b>CA</b> −2</p>
+        <p style="font-size:30px"><b>IS</b> +4</p><p style="font-size:30px"><b>ES</b> −3</p>
+      </div>
+      <p class="s26 soft">X = 4 + (−2) = <b>2</b><br>Y = 5 + (−3) = <b>2</b></p>
+      <div class="f1"></div>
+      <p class="pill" style="align-self:flex-start;background:var(--blue)">(2; 2) → Tấn công</p>
+    </div>
+  </div>
+  <div class="foot"><span>Quản trị chiến lược · Kết hợp · SPACE</span><span class="pg"></span></div>
+</section>
+
+<!-- 13 QSPM -->
+<section class="slide" style="gap:44px">
+  <div class="head"><p class="eyebrow">Quyết định · Chọn phương án</p><h2>QSPM: chấm điểm để chọn</h2></div>
+  <div class="row" style="gap:48px">
+    <div class="steps f1" style="gap:24px">
+      <div class="step"><span class="n">1</span><p>Liệt kê yếu tố từ <b>EFE và IFE</b>, giữ nguyên trọng số</p></div>
+      <div class="step"><span class="n">2</span><p>Chọn các phương án <b>thay thế nhau</b>, chỉ chọn được một</p></div>
+      <div class="step"><span class="n">3</span><p>Chấm <b>điểm hấp dẫn (AS)</b> 1–4 cho từng phương án; yếu tố không ảnh hưởng thì bỏ trống</p></div>
+      <div class="step"><span class="n">4</span><p><b>TAS</b> = trọng số × AS</p></div>
+      <div class="step"><span class="n">5</span><p>Cộng TAS → phương án có <b>tổng cao nhất</b> được chọn</p></div>
+    </div>
+    <div class="card" style="width:600px;flex:none;gap:18px">
+      <h3>Thang điểm AS</h3>
+      <div class="row" style="align-items:center"><p style="width:60px;font-size:44px;font-weight:700;color:var(--orange)">1</p><p class="s26">Không hấp dẫn</p></div>
+      <div class="row" style="align-items:center"><p style="width:60px;font-size:44px;font-weight:700;color:var(--orange)">2</p><p class="s26">Ít hấp dẫn</p></div>
+      <div class="row" style="align-items:center"><p style="width:60px;font-size:44px;font-weight:700;color:var(--blue)">3</p><p class="s26">Khá hấp dẫn</p></div>
+      <div class="row" style="align-items:center"><p style="width:60px;font-size:44px;font-weight:700;color:var(--blue)">4</p><p class="s26">Rất hấp dẫn</p></div>
+    </div>
+  </div>
+  <div class="foot"><span>Quản trị chiến lược · Quyết định · QSPM</span><span class="pg"></span></div>
+</section>
+
+<!-- 14 TOOLS COMPARE -->
+<section class="slide" style="gap:32px">
+  <div class="head"><p class="eyebrow">Tổng hợp</p><h2>Mỗi công cụ giúp gì, hạn chế ở đâu</h2></div>
+  <table class="t compact">
+    <tr><th style="width:14%">Công cụ</th><th style="width:43%">Giúp được gì</th><th style="width:43%">Hạn chế</th></tr>
+    <tr><td><b>EFE</b></td><td>Gom PEST, 5 lực lượng vào một bảng có số</td><td>Tự chấm; tổng điểm che mất nguy cơ lớn đơn lẻ</td></tr>
+    <tr><td><b>CPM</b></td><td>Thấy mạnh, yếu tương đối so với đối thủ</td><td>Điểm do người phân tích tự chấm</td></tr>
+    <tr><td><b>IFE</b></td><td>Bức tranh nội lực bằng số; cấp S, W cho SWOT</td><td>Dễ thiên vị nội bộ nếu không đặt cạnh đối thủ</td></tr>
+    <tr><td><b>SWOT</b></td><td>Cầu nối từ phân tích sang phương án</td><td>Không cho biết nên chọn phương án nào</td></tr>
+    <tr><td><b>BCG</b></td><td>Nhìn cả danh mục trên một hình</td><td>Chỉ 2 chỉ tiêu; thị phần cao chưa chắc lãi cao</td></tr>
+    <tr><td><b>GE</b></td><td>Nhiều tiêu chí, có vùng trung gian</td><td>Chọn yếu tố, trọng số chủ quan; ảnh chụp tĩnh</td></tr>
+    <tr><td><b>SPACE</b></td><td>Hướng đi tổng quát: tấn công hay co lại</td><td>Chỉ là định hướng, không thay quyết định</td></tr>
+    <tr><td><b>QSPM</b></td><td>Chọn giữa các phương án bằng số</td><td>Chỉ tốt như dữ liệu từ EFE, IFE</td></tr>
+  </table>
+  <div class="foot"><span>Quản trị chiến lược · Tổng hợp</span><span class="pg"></span></div>
+</section>
+
+<!-- 15 HOA INTRO -->
+<section class="slide accent" style="justify-content:space-between">
+  <p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase">Ví dụ xuyên suốt</p>
+  <div class="col" style="gap:32px">
+    <h1 style="font-size:96px">Quán cà phê nhà chị Hoa<br>cạnh cổng trường</h1>
+    <p style="font-size:34px;max-width:1500px">Khách chủ yếu là sinh viên · 4 mảng: cà phê phin, trà sữa – trà trái cây, bánh mì sáng, cho thuê bàn học nhóm · Highlands vừa mở ngay đối diện.</p>
+  </div>
+  <p class="small" style="font-weight:600">Ví dụ giả định, số liệu tự đặt để minh họa.</p>
+</section>
+
+<!-- 16 HOA EFE -->
+<section class="slide alt" style="gap:28px">
+  <div class="head"><p class="eyebrow">Bước 1 · EFE</p><h2>Bên ngoài có gì, chị phản ứng thế nào?</h2></div>
+  <table class="t">
+    <tr><th style="width:64%">Yếu tố bên ngoài</th><th class="num">Trọng số</th><th class="num">Phân loại</th><th class="num">Điểm</th></tr>
+    <tr><td>O1. Sinh viên đông, nhu cầu chỗ ngồi học nhóm cao</td><td class="num">0,20</td><td class="num">3</td><td class="num">0,60</td></tr>
+    <tr class="hl"><td>O2. Đặt đồ uống qua app giao hàng tăng mạnh</td><td class="num">0,15</td><td class="num">2</td><td class="num">0,30</td></tr>
+    <tr><td>O3. Xu hướng đồ uống ít đường, trà trái cây</td><td class="num">0,10</td><td class="num">2</td><td class="num">0,20</td></tr>
+    <tr><td>T1. Chuỗi lớn (Highlands) mở đối diện</td><td class="num">0,25</td><td class="num">2</td><td class="num">0,50</td></tr>
+    <tr><td>T2. Giá cà phê, sữa nguyên liệu tăng</td><td class="num">0,15</td><td class="num">3</td><td class="num">0,45</td></tr>
+    <tr class="hl"><td>T3. Hè và Tết sinh viên về quê, doanh thu theo mùa</td><td class="num">0,15</td><td class="num">1</td><td class="num">0,15</td></tr>
+    <tr class="total"><td>Tổng</td><td class="num">1,00</td><td></td><td class="num">2,20</td></tr>
+  </table>
+  <div class="row" style="align-items:center;gap:32px">
+    <p class="big" style="color:var(--orange)">2,20</p>
+    <p class="s26 f1">&lt; 2,5 → phản ứng <b>dưới mức trung bình</b>. Yếu nhất: chưa có cách đối phó mùa vắng (T3), chưa tận dụng app giao hàng (O2).</p>
+  </div>
+  <div class="foot"><span>Ví dụ chị Hoa · EFE</span><span class="pg"></span></div>
+</section>
+
+<!-- 17 HOA CPM -->
+<section class="slide alt" style="gap:28px">
+  <div class="head"><p class="eyebrow">Bước 2 · CPM</p><h2>So với đối thủ thì sao?</h2></div>
+  <table class="t">
+    <tr><th style="width:28%">Yếu tố thành công</th><th class="num" style="width:12%">Trọng số</th><th class="num" style="width:20%">Chị Hoa</th><th class="num" style="width:20%">Highlands</th><th class="num" style="width:20%">Quán cóc</th></tr>
+    <tr><td>Giá</td><td class="num">0,30</td><td class="num">3 → 0,90</td><td class="num">1 → 0,30</td><td class="num">4 → 1,20</td></tr>
+    <tr><td>Chất lượng đồ uống</td><td class="num">0,20</td><td class="num">3 → 0,60</td><td class="num">3 → 0,60</td><td class="num">2 → 0,40</td></tr>
+    <tr><td>Không gian, chỗ ngồi</td><td class="num">0,25</td><td class="num">3 → 0,75</td><td class="num">4 → 1,00</td><td class="num">1 → 0,25</td></tr>
+    <tr><td>Thương hiệu</td><td class="num">0,15</td><td class="num">2 → 0,30</td><td class="num">4 → 0,60</td><td class="num">1 → 0,15</td></tr>
+    <tr><td>Vị trí sát cổng trường</td><td class="num">0,10</td><td class="num">4 → 0,40</td><td class="num">3 → 0,30</td><td class="num">4 → 0,40</td></tr>
+    <tr class="total"><td>Tổng</td><td class="num">1,00</td><td class="num">2,95 · cao nhất</td><td class="num">2,80</td><td class="num">2,40</td></tr>
+  </table>
+  <p class="s26">Chị Hoa nhỉnh hơn nhờ <b>giá vừa phải + chỗ ngồi tạm ổn</b>. Highlands thắng về không gian và thương hiệu; quán cóc thắng về giá nhưng không có chỗ ngồi học.</p>
+  <div class="foot"><span>Ví dụ chị Hoa · CPM</span><span class="pg"></span></div>
+</section>
+
+<!-- 18 HOA IFE -->
+<section class="slide alt" style="gap:28px">
+  <div class="head"><p class="eyebrow">Bước 3 · IFE</p><h2>Bên trong quán mạnh, yếu ở đâu?</h2></div>
+  <table class="t">
+    <tr><th style="width:64%">Yếu tố nội bộ</th><th class="num">Trọng số</th><th class="num">Phân loại</th><th class="num">Điểm</th></tr>
+    <tr><td>S1. Vị trí sát cổng trường</td><td class="num">0,20</td><td class="num">4</td><td class="num">0,80</td></tr>
+    <tr><td>S2. Giá rẻ hơn chuỗi 30–40%</td><td class="num">0,20</td><td class="num">4</td><td class="num">0,80</td></tr>
+    <tr><td>S3. Khách quen đông, chủ quán nhớ tên khách</td><td class="num">0,10</td><td class="num">3</td><td class="num">0,30</td></tr>
+    <tr class="hl"><td>W1. Chưa có mặt trên app giao hàng</td><td class="num">0,15</td><td class="num">1</td><td class="num">0,15</td></tr>
+    <tr class="hl"><td>W2. Quán nhỏ, giờ cao điểm hết chỗ</td><td class="num">0,20</td><td class="num">1</td><td class="num">0,20</td></tr>
+    <tr><td>W3. Sổ sách ghi tay, không biết món nào lãi</td><td class="num">0,15</td><td class="num">2</td><td class="num">0,30</td></tr>
+    <tr class="total"><td>Tổng</td><td class="num">1,00</td><td></td><td class="num">2,55</td></tr>
+  </table>
+  <div class="row" style="align-items:center;gap:32px">
+    <p class="big" style="color:var(--blue)">2,55</p>
+    <p class="s26 f1">Nội lực <b>trung bình, nhỉnh hơn một chút</b>. Mạnh nhờ vị trí và giá; yếu ở chỗ ngồi và kênh online.</p>
+  </div>
+  <div class="foot"><span>Ví dụ chị Hoa · IFE</span><span class="pg"></span></div>
+</section>
+
+<!-- 19 HOA SWOT -->
+<section class="slide alt" style="gap:28px">
+  <div class="head"><p class="eyebrow">Bước 4 · SWOT</p><h2>Ghép lại thành phương án</h2></div>
+  <div class="mx" style="grid-template-columns:330px 1fr 1fr;gap:16px">
+    <div></div>
+    <div class="cell" style="background:var(--navy);color:var(--paper)"><p><b style="color:#9CC3F0">S</b> — vị trí (S1), giá rẻ (S2), khách quen (S3)</p></div>
+    <div class="cell" style="background:var(--navy);color:var(--paper)"><p><b style="color:var(--orange-l)">W</b> — chưa lên app (W1), thiếu chỗ (W2), sổ sách thủ công (W3)</p></div>
+    <div class="cell" style="background:#E6EBF2"><p><b>O</b> — nhu cầu học nhóm (O1), app giao hàng (O2), trà ít đường (O3)</p></div>
+    <div class="cell" style="background:var(--blue-bg)"><p class="tag" style="color:var(--blue)">SO · S1 + S2 + O1</p><p style="font-size:28px">Mở tầng 2 làm chỗ học nhóm thuê theo giờ, giá sinh viên</p></div>
+    <div class="cell card" style="padding:24px 28px;gap:8px"><p class="tag">WO · W1 + O2</p><p style="font-size:28px">Lên GrabFood, ShopeeFood</p></div>
+    <div class="cell" style="background:#E6EBF2"><p><b>T</b> — chuỗi lớn (T1), giá nguyên liệu (T2), mùa vắng (T3)</p></div>
+    <div class="cell card" style="padding:24px 28px;gap:8px"><p class="tag" style="color:var(--blue)">ST · S2 + S3 + T1</p><p style="font-size:28px">Thẻ tích điểm khách quen, giữ giá thấp hơn chuỗi</p></div>
+    <div class="cell" style="background:var(--orange-bg)"><p class="tag">WT · W3 + T2 + T3</p><p style="font-size:28px">Dùng app bán hàng biết món nào lãi, cắt món lỗ, giảm nhập hàng mùa hè</p></div>
+  </div>
+  <div class="foot"><span>Ví dụ chị Hoa · SWOT</span><span class="pg"></span></div>
+</section>
+
+<!-- 20 HOA BCG -->
+<section class="slide alt" style="gap:32px">
+  <div class="head"><p class="eyebrow">Bước 5 · BCG</p><h2>4 mảng của quán nằm ở đâu?</h2></div>
+  <div class="row" style="gap:48px;flex:1">
+    <div class="mx" style="width:980px;flex:none;grid-template-columns:90px 1fr 1fr;grid-template-rows:1fr 1fr auto">
+      <div class="lab">Tăng<br>cao</div>
+      <div class="cell" style="background:var(--orange-bg)"><p class="tag">⭐ Ngôi sao</p><h3>Cho thuê bàn học nhóm</h3><p>Thị phần 2,0 · tăng ~25%/năm</p></div>
+      <div class="cell" style="background:#EFEBE2"><p class="tag">❓ Dấu hỏi</p><h3>Trà sữa – trà trái cây</h3><p>Thị phần 0,3 · tăng ~20%/năm</p></div>
+      <div class="lab">Tăng<br>thấp</div>
+      <div class="cell" style="background:var(--blue-bg)"><p class="tag" style="color:var(--blue)">🐄 Bò sữa</p><h3>Cà phê phin tại chỗ</h3><p>Thị phần 1,5 · tăng ~3%/năm</p></div>
+      <div class="cell" style="background:#E2DDD2"><p class="tag" style="color:var(--soft)">🐕 Chó ghẻ</p><h3>Bánh mì buổi sáng</h3><p>Thị phần 0,4 · tăng ~2%/năm</p></div>
+      <div></div><div class="lab">Thị phần cao</div><div class="lab">Thị phần thấp</div>
+    </div>
+    <div class="col f1" style="gap:24px;justify-content:center">
+      <h3 style="font-size:32px">Quyết định</h3>
+      <p class="s26">💰 Lấy <b>tiền từ cà phê</b> để <b>đầu tư chỗ học nhóm</b></p>
+      <p class="s26">🧪 Thử trà trái cây có giới hạn; sau 6 tháng không lên thì bỏ</p>
+      <p class="s26">✋ <b>Dừng bánh mì</b> để có thời gian cho mảng khác</p>
+    </div>
+  </div>
+  <div class="foot"><span>Ví dụ chị Hoa · BCG</span><span class="pg"></span></div>
+</section>
+
+<!-- 21 HOA GE -->
+<section class="slide alt" style="gap:32px">
+  <div class="head"><p class="eyebrow">Bước 6 · GE</p><h2>Nhìn lại 4 mảng bằng nhiều tiêu chí hơn</h2></div>
+  <table class="t">
+    <tr><th style="width:25%">Mảng</th><th style="width:22%">Hấp dẫn ngành</th><th style="width:22%">Năng lực quán</th><th>Ô GE</th></tr>
+    <tr><td>Học nhóm</td><td>Cao</td><td>Mạnh</td><td style="background:var(--green)">Xanh · củng cố và bảo vệ vị thế</td></tr>
+    <tr><td>Cà phê phin</td><td>Trung bình</td><td>Mạnh</td><td style="background:var(--green)">Xanh · đầu tư chọn lọc để tăng trưởng</td></tr>
+    <tr><td>Trà trái cây</td><td>Cao</td><td>Yếu</td><td style="background:var(--yellow)">Vàng · đầu tư chọn lọc để tăng trưởng</td></tr>
+    <tr><td>Bánh mì</td><td>Thấp</td><td>Yếu</td><td style="background:var(--red)">Đỏ · loại bỏ</td></tr>
+  </table>
+  <div class="callout dark"><p><b>Khác BCG:</b> cà phê vẫn nằm vùng xanh. Ngoài vai trò “vắt sữa”, cà phê là lý do khách ngồi lại thuê bàn, nên vẫn đáng đầu tư chọn lọc (cà phê muối, cold brew).</p></div>
+  <div class="foot"><span>Ví dụ chị Hoa · GE</span><span class="pg"></span></div>
+</section>
+
+<!-- 22 HOA SPACE -->
+<section class="slide alt" style="gap:32px">
+  <div class="head"><p class="eyebrow">Bước 7 · SPACE</p><h2>Quán nên tấn công hay phòng thủ?</h2></div>
+  <div class="row" style="gap:20px">
+    <div class="card f1" style="padding:28px;gap:10px"><p class="tag" style="color:var(--blue)">FS · tài chính</p><p class="big" style="font-size:64px">+3,5</p><p class="small soft">Dòng tiền cà phê +4 · không vay nợ +5 · dự phòng ít +2 · vay người nhà +3</p></div>
+    <div class="card f1" style="padding:28px;gap:10px"><p class="tag">CA · lợi thế</p><p class="big" style="font-size:64px">−3,0</p><p class="small soft">Giá rẻ −2 · vị trí −1 · chất lượng −3 · thương hiệu −6</p></div>
+    <div class="card f1" style="padding:28px;gap:10px"><p class="tag" style="color:var(--blue)">IS · ngành</p><p class="big" style="font-size:64px">+4,0</p><p class="small soft">Nhu cầu tăng +5 · biên lợi nhuận cao +5 · rào cản thấp +2 · khu đông người +4</p></div>
+    <div class="card f1" style="padding:28px;gap:10px"><p class="tag">ES · môi trường</p><p class="big" style="font-size:64px">−4,0</p><p class="small soft">Chuỗi lớn −4 · giá nguyên liệu −3 · theo mùa −5 · xu hướng đổi nhanh −4</p></div>
+  </div>
+  <div class="row" style="align-items:stretch">
+    <div style="background:var(--navy);color:var(--paper);border-radius:20px;padding:28px 36px;display:flex;flex-direction:column;gap:8px;width:640px;flex:none">
+      <p class="s26">X = 4 + (−3) = <b>1</b> · Y = 3,5 + (−4) = <b>−0,5</b></p>
+      <p style="font-size:36px;font-weight:700;color:var(--orange-l)">(1; −0,5) → Vùng cạnh tranh (II)</p>
+    </div>
+    <p class="s26 f1" style="align-self:center">Chưa đủ sức tấn công dàn trải. Hợp với: <b>khác biệt hóa</b> (chỗ học nhóm chuỗi không có), giữ chi phí thấp, liên minh với câu lạc bộ sinh viên.</p>
+  </div>
+  <div class="foot"><span>Ví dụ chị Hoa · SPACE</span><span class="pg"></span></div>
+</section>
+
+<!-- 23 HOA QSPM -->
+<section class="slide alt" style="gap:28px">
+  <div class="head"><p class="eyebrow">Bước 8 · QSPM</p><h2>Chọn một trong hai phương án</h2></div>
+  <table class="t">
+    <tr><th style="width:40%">Yếu tố (từ EFE, IFE)</th><th class="num" style="width:14%">Trọng số</th><th class="num" style="width:23%">A · Mở tầng 2 học nhóm</th><th class="num" style="width:23%">B · Lên app giao hàng</th></tr>
+    <tr><td>O1. Nhu cầu học nhóm</td><td class="num">0,20</td><td class="num">4 → 0,80</td><td class="num">1 → 0,20</td></tr>
+    <tr><td>O2. App giao hàng tăng</td><td class="num">0,15</td><td class="num">1 → 0,15</td><td class="num">4 → 0,60</td></tr>
+    <tr><td>T1. Chuỗi lớn đối diện</td><td class="num">0,25</td><td class="num">4 → 1,00</td><td class="num">2 → 0,50</td></tr>
+    <tr><td>T3. Mùa vắng sinh viên</td><td class="num">0,15</td><td class="num">1 → 0,15</td><td class="num">3 → 0,45</td></tr>
+    <tr><td>S1. Vị trí sát cổng trường</td><td class="num">0,20</td><td class="num">4 → 0,80</td><td class="num">2 → 0,40</td></tr>
+    <tr><td>W2. Thiếu chỗ ngồi</td><td class="num">0,20</td><td class="num">4 → 0,80</td><td class="num">3 → 0,60</td></tr>
+    <tr class="total"><td>Tổng TAS</td><td></td><td class="num">3,70 · chọn</td><td class="num">2,75</td></tr>
+  </table>
+  <p class="s26"><b>Chọn A:</b> đánh vào chỗ chuỗi lớn không làm được và tận dụng vị trí. Điểm yếu là mùa hè (T3 chỉ 1 điểm) → kèm phương án WT: giảm nhập hàng mùa hè.</p>
+  <div class="foot"><span>Ví dụ chị Hoa · QSPM</span><span class="pg"></span></div>
+</section>
+
+<!-- 24 HOA SUMMARY -->
+<section class="slide alt" style="gap:28px">
+  <div class="head"><p class="eyebrow">Tóm lại cả chuỗi</p><h2>Mỗi ma trận trả lời một câu hỏi</h2></div>
+  <table class="t compact" style="font-size:26px">
+    <tr><th style="width:14%">Ma trận</th><th style="width:43%">Câu hỏi chị Hoa đặt ra</th><th style="width:43%">Câu trả lời</th></tr>
+    <tr><td><b>EFE</b></td><td>Bên ngoài có gì, mình phản ứng tốt không?</td><td>Chưa tốt (2,20)</td></tr>
+    <tr><td><b>CPM</b></td><td>So với đối thủ thì sao?</td><td>Nhỉnh hơn Highlands một chút, nhờ giá</td></tr>
+    <tr><td><b>IFE</b></td><td>Mình mạnh, yếu ở đâu?</td><td>Trung bình (2,55): mạnh vị trí, yếu chỗ ngồi</td></tr>
+    <tr><td><b>SWOT</b></td><td>Có những phương án nào?</td><td>4 nhóm SO, WO, ST, WT</td></tr>
+    <tr><td><b>BCG</b></td><td>Mảng nào nuôi mảng nào?</td><td>Cà phê nuôi học nhóm, bỏ bánh mì</td></tr>
+    <tr><td><b>GE</b></td><td>Nhìn kỹ hơn thì sao?</td><td>Cà phê vẫn đáng đầu tư chọn lọc</td></tr>
+    <tr><td><b>SPACE</b></td><td>Nên tấn công hay thủ?</td><td>Cạnh tranh: khác biệt hóa, không dàn trải</td></tr>
+    <tr><td><b>QSPM</b></td><td>Chọn phương án nào?</td><td><b>Mở tầng 2 làm chỗ học nhóm</b></td></tr>
+  </table>
+  <div class="foot"><span>Ví dụ chị Hoa · Tóm tắt</span><span class="pg"></span></div>
+</section>
+
+<!-- 25 CLOSING -->
+<section class="slide dark" style="justify-content:center;gap:56px">
+  <p style="font-size:28px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--orange-l)">Ghi nhớ</p>
+  <div class="col" style="gap:40px">
+    <p style="font-size:52px;font-weight:700;line-height:1.25">Nhập dữ liệu → kết hợp → quyết định.</p>
+    <p style="font-size:52px;font-weight:700;line-height:1.25">Đầu ra ma trận trước là đầu vào ma trận sau.</p>
+    <p style="font-size:52px;font-weight:700;line-height:1.25;color:#C9D3E3">Điểm số đều chủ quan — nhiều công cụ cùng chỉ một hướng thì kết luận mới chắc.</p>
+  </div>
+</section>
+
+</div></div>
+<div id="progress"></div>
+<div id="hint">← → để chuyển slide · F toàn màn hình</div>
+<script>
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var deck = document.getElementById('deck');
+  var bar = document.getElementById('progress');
+  var i = 0;
+  slides.forEach(function(s, k){
+    var pg = s.querySelector('.pg'); if (pg) pg.textContent = (k + 1) + ' / ' + slides.length;
+    // Gắn thứ tự xuất hiện: nhóm (row, cột, ma trận, bảng) thì tách từng phần tử con
+    var idx = 0;
+    var GROUP = '.row, .mx, .steps, .col, table, tbody';
+    (function walk(parent){
+      Array.prototype.forEach.call(parent.children, function(el){
+        if (el.matches('.foot, aside')) return;
+        if (el.matches(GROUP) && el.children.length > 1) { walk(el); return; }
+        if (el.matches('tbody')) { walk(el); return; }
+        el.classList.add('anim');
+        el.style.setProperty('--d', Math.min(idx++, 16));
+      });
+    })(s);
+  });
+  function fit(){
+    var sc = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    deck.style.transform = 'scale(' + sc + ')';
+  }
+  function show(n){
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach(function(s, k){
+      s.classList.toggle('active', k === i);
+      s.classList.toggle('before', k < i);
+    });
+    bar.style.width = ((i + 1) / slides.length * 100) + '%';
+    if (location.hash !== '#' + (i + 1)) history.replaceState(null, '', '#' + (i + 1));
+  }
+  document.addEventListener('keydown', function(e){
+    if (['ArrowRight','PageDown',' ','Enter'].indexOf(e.key) > -1) { e.preventDefault(); show(i + 1); }
+    else if (['ArrowLeft','PageUp','Backspace'].indexOf(e.key) > -1) { e.preventDefault(); show(i - 1); }
+    else if (e.key === 'Home') show(0);
+    else if (e.key === 'End') show(slides.length - 1);
+    else if (e.key === 'f' || e.key === 'F') {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen(); else document.exitFullscreen();
+    }
+  });
+  document.addEventListener('click', function(e){
+    if (e.clientX > window.innerWidth / 2) show(i + 1); else show(i - 1);
+  });
+  var tx = null;
+  document.addEventListener('touchstart', function(e){ tx = e.touches[0].clientX; });
+  document.addEventListener('touchend', function(e){
+    if (tx === null) return; var dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 40) show(i + (dx < 0 ? 1 : -1)); tx = null;
+  });
+  window.addEventListener('resize', fit);
+  fit();
+  var h = parseInt(location.hash.slice(1), 10);
+  show(isNaN(h) ? 0 : h - 1);
+})();
+</script>
+</body>
+</html>
