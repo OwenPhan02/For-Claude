@@ -6,7 +6,7 @@
 html,body{width:1600px;height:205px;overflow:hidden;background:var(--bg);font-family:"Hanken Grotesk",sans-serif;color:#111}
 .wrap{position:relative;width:1600px;height:205px;overflow:hidden}
 /* decorative side strips (may be cropped on small screens) */
-.strip{position:absolute;top:50%;display:flex;gap:14px;transform:translateY(-50%) rotate(-6deg)}
+.strip{position:absolute;top:60%;display:flex;gap:14px;transform:translateY(-50%) rotate(-6deg)}
 .strip.l{left:-40px}.strip.r{right:-40px;transform:translateY(-50%) rotate(6deg)}
 .card{flex:none;width:122px;aspect-ratio:16/10;border-radius:12px;overflow:hidden;border:3px solid #fff;box-shadow:0 14px 24px -12px rgba(0,0,0,.45)}
 .card.t{width:60px;aspect-ratio:9/16}
@@ -15,16 +15,16 @@ html,body{width:1600px;height:205px;overflow:hidden;background:var(--bg);font-fa
 .fade.l{left:230px;background:linear-gradient(90deg,rgba(248,247,242,0),var(--bg) 55%)}
 .fade.r{right:230px;background:linear-gradient(270deg,rgba(248,247,242,0),var(--bg) 55%)}
 /* centre safe zone */
-.center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:28px}
+.center{position:absolute;left:50%;top:61%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:34px}
 .av{position:relative;width:132px;height:132px;flex:none}
 .av .ring{position:absolute;inset:-12px;border-radius:50%;border:2px dashed var(--line)}
 .av .disc{position:absolute;inset:0;border-radius:50%;background:var(--beige);overflow:hidden}
 .av img{width:100%;height:118%;object-fit:cover;object-position:50% 0;filter:brightness(1.16) saturate(.88) contrast(1.03);display:block;margin-top:2px}
 .tag{display:inline-block;padding:3px 11px;border:1.5px solid var(--green);border-radius:999px;font-weight:600;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--green)}
-h1{margin-top:8px;font-size:38px;line-height:1;font-weight:800;letter-spacing:-.02em;white-space:nowrap}
+h1{margin-top:7px;font-size:40px;line-height:1;font-weight:800;letter-spacing:-.02em;white-space:nowrap}
 .role{margin-top:8px;font-size:16px;font-weight:700;color:var(--green);white-space:nowrap}
 .role span{font-weight:500;color:#6b7166}
-.sep{width:2px;height:96px;background:var(--line);border-radius:2px}
+.sep{width:2px;height:84px;background:var(--line);border-radius:2px}
 .stats{display:grid;gap:8px}
 .st{font-size:13px;font-weight:600;color:#555;white-space:nowrap}
 .st b{font-size:22px;font-weight:700;color:#111;margin-right:6px}
@@ -43,7 +43,6 @@ h1{margin-top:8px;font-size:38px;line-height:1;font-weight:800;letter-spacing:-.
 </div>
 <div class="fade l"></div><div class="fade r"></div>
 <div class="center">
-  <div class="av"><div class="ring"></div><div class="disc"><img src="../assets/avatar.png"></div></div>
   <div>
     <div class="tag">Portfolio</div>
     <h1>Phan Cong Viet Hung</h1>
