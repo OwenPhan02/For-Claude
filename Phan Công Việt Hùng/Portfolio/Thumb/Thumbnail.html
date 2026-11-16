@@ -1,0 +1,62 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#f8f7f2;--green:#555d50;--beige:#ddd2c4;--line:#e6dbd0}
+html,body{width:1200px;height:627px;overflow:hidden;background:var(--bg);font-family:"Hanken Grotesk",sans-serif;color:#111}
+.wrap{position:relative;width:1200px;height:627px}
+.dots{position:absolute;left:56px;top:48px;display:grid;grid-template-columns:repeat(6,8px);gap:12px}
+.dots i{width:8px;height:8px;border-radius:50%;background:var(--green);opacity:.85}
+.dots i:nth-child(odd){background:#bbbdb8}
+.left{position:absolute;left:64px;top:118px;width:600px}
+.tag{display:inline-block;padding:7px 16px;border:1.5px solid var(--green);border-radius:999px;font-weight:600;font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:var(--green)}
+h1{margin-top:22px;font-size:66px;line-height:1.02;font-weight:800;letter-spacing:-.02em}
+.role{margin-top:14px;font-size:30px;font-weight:700;color:var(--green)}
+.tools{margin-top:12px;font-size:18px;font-weight:500;color:#6b7166}
+.stats{margin-top:34px;display:flex;background:#fff;border-radius:22px;box-shadow:8px 12px 30px rgba(0,0,0,.07);width:560px}
+.st{flex:1;padding:18px 22px}
+.st+.st{border-left:3px solid var(--line)}
+.st small{display:block;font-size:14px;font-weight:600;color:#555}
+.st b{display:block;margin-top:2px;font-size:30px;font-weight:700}
+.st b em{font-style:normal;font-size:18px;color:var(--green);margin-left:2px}
+.url{position:absolute;left:64px;bottom:40px;display:flex;align-items:center;gap:12px;font-size:17px;font-weight:600;color:var(--green)}
+.url span{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--green);color:var(--bg);font-size:16px}
+.visual{position:absolute;right:-40px;top:50%;width:560px;height:560px;transform:translateY(-50%)}
+.ring{position:absolute;border-radius:50%;border:3px dashed var(--line)}
+.r1{inset:0}.r2{inset:46px}
+.core{position:absolute;left:88px;top:40px;width:384px;height:384px}
+.disc{position:absolute;left:6px;top:52px;width:372px;height:372px;border-radius:50%;background:var(--beige);box-shadow:inset 0 -30px 60px -30px rgba(0,0,0,.2)}
+.av{position:absolute;left:0;top:0;width:384px;height:424px;
+ -webkit-mask:radial-gradient(circle 186px at 192px 238px,#000 99.5%,transparent 100%),linear-gradient(#000,#000) top/100% 238px no-repeat}
+.av img{width:100%;height:100%;object-fit:cover;object-position:50% 0;filter:brightness(1.16) saturate(.88) contrast(1.03)}
+.core{isolation:auto}
+.film{position:absolute;display:flex;gap:10px}
+.card{width:150px;aspect-ratio:16/10;border-radius:14px;overflow:hidden;box-shadow:0 18px 30px -14px rgba(0,0,0,.45);border:4px solid #fff;position:relative}
+.card img{width:100%;height:100%;object-fit:cover;display:block}
+.card::after{content:"";position:absolute;left:50%;top:50%;width:30px;height:30px;transform:translate(-50%,-50%);border-radius:50%;background:rgba(248,247,242,.92) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 7l9 5-9 5z' fill='%23555d50'/%3E%3C/svg%3E") center/18px no-repeat}
+.c1{left:-30px;top:330px;transform:rotate(-7deg)}
+.c2{left:330px;top:400px;transform:rotate(6deg)}
+.c3{left:350px;top:58px;transform:rotate(5deg)}
+.c3 .card{width:128px}
+</style></head><body><div class="wrap">
+<div class="dots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<div class="left">
+  <div class="tag">Portfolio</div>
+  <h1>Phan Cong<br>Viet Hung</h1>
+  <div class="role">Editor Media</div>
+  <div class="tools">Motion Video · Visual LED · TikTok · Design</div>
+  <div class="stats">
+    <div class="st"><small>Work Experience</small><b>3<em>years</em></b></div>
+    <div class="st"><small>Satisfaction</small><b>99<em>%</em></b></div>
+    <div class="st"><small>IELTS · APTIS</small><b>6.5<em>· B2</em></b></div>
+  </div>
+</div>
+<div class="url"><span>→</span>owenphan09.github.io</div>
+<div class="visual">
+  <div class="ring r1"></div><div class="ring r2"></div>
+  <div class="core"><div class="disc"></div><div class="av"><img src="../assets/avatar.png"></div></div>
+  <div class="film c1"><div class="card"><img src="../assets/thumbs/mv-character-1.jpg"></div></div>
+  <div class="film c2"><div class="card"><img src="../assets/thumbs/led-1.jpg"></div></div>
+  <div class="film c3"><div class="card"><img src="../assets/thumbs/mv-pixel-art-1.jpg"></div></div>
+</div>
+</div></body></html>

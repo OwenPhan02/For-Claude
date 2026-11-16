@@ -1,0 +1,43 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#f8f7f2;--green:#555d50;--line:#e6dbd0}
+html,body{width:808px;height:632px;overflow:hidden;background:var(--bg);font-family:"Hanken Grotesk",sans-serif;color:#111}
+.wrap{position:relative;width:808px;height:632px;overflow:hidden}
+.ring{position:absolute;border-radius:50%;border:2.5px dashed var(--line)}
+.r1{width:760px;height:760px;right:-300px;top:-200px}.r2{width:600px;height:600px;right:-220px;top:-120px}
+.dots{position:absolute;left:48px;top:44px;display:grid;grid-template-columns:repeat(6,7px);gap:10px}
+.dots i{width:7px;height:7px;border-radius:50%;background:var(--green)}.dots i:nth-child(odd){background:#bbbdb8}
+.txt{position:absolute;left:48px;top:96px;z-index:5}
+.tag{display:inline-block;padding:5px 13px;border:1.5px solid var(--green);border-radius:999px;font-weight:600;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--green);background:var(--bg)}
+h1{margin-top:14px;font-size:58px;line-height:1;font-weight:800;letter-spacing:-.02em}
+.sub{max-width:250px;line-height:1.4;margin-top:10px;font-size:17px;font-weight:600;color:var(--green)}
+.stage{position:absolute;inset:0}
+.c{position:absolute;border-radius:16px;overflow:hidden;border:5px solid #fff;box-shadow:0 22px 40px -18px rgba(0,0,0,.5)}
+.c img{width:100%;height:100%;object-fit:cover;display:block}
+.c.play::after{content:"";position:absolute;left:50%;top:50%;width:46px;height:46px;transform:translate(-50%,-50%);border-radius:50%;background:rgba(248,247,242,.92) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 7l9 5-9 5z' fill='%23555d50'/%3E%3C/svg%3E") center/26px no-repeat}
+</style></head><body><div class="wrap">
+<div class="ring r1"></div><div class="ring r2"></div>
+<div class="dots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<div class="stage" id="stage"></div>
+<div class="txt"><div class="tag" id="tag"></div><h1 id="t"></h1><div class="sub" id="s"></div></div>
+</div>
+<script>
+const T='../../assets/thumbs/';
+const P={
+ motion:{tag:'Motion Video',t:'Motion<br>Video',s:'After Effects · Premiere Pro<br>9 videos',
+  cards:[['mv-character-1',330,40,400,250,-4],['mv-pixel-art-1',470,250,300,188,5],['mv-cozy-rain-1',380,400,250,156,-6]]},
+ led:{tag:'Visual LED',t:'Visual<br>LED',s:'Stage LED visuals<br>3 videos',
+  cards:[['led-1',300,40,460,288,-3],['led-2',470,300,300,188,5],['led-3',300,380,230,144,-6]]},
+ school:{tag:'At School',t:'School<br>Projects',s:'MV · Short film · Mashup<br>2021–2023',
+  cards:[['school-mashup-mv',330,40,410,256,-4],['school-ha-noi-ngay-yeu',480,290,290,181,5],['school-cam-vut-rac',360,410,230,144,-6]]},
+ tiktok:{tag:'TikTok Video',t:'TikTok<br>Video',s:'Travel content in Taiwan<br>10 videos',
+  cards:[['tt-03',400,40,150,267,-6],['tt-01',560,70,150,267,4],['tt-08',470,330,130,231,8],['tt-05',620,350,130,231,-5]]}
+};
+const p=P[location.hash.slice(1)];
+tag.textContent=p.tag;t.innerHTML=p.t;s.innerHTML=p.s;
+p.cards.forEach(([f,x,y,w,h,r],i)=>{const d=document.createElement('div');d.className='c'+(i==0?' play':'');
+ d.style.cssText=`left:${x}px;top:${y}px;width:${w}px;height:${h}px;transform:rotate(${r}deg);z-index:${3-i}`;
+ d.innerHTML=`<img src="${T}${f}.jpg">`;stage.appendChild(d)});
+</script></body></html>
