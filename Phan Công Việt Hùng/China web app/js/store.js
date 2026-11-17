@@ -33,6 +33,7 @@ const defaults = () => ({
   srs: {},             // 'bài:từ' -> { due, ivl (ngày), ease, reps, lapses }
   reviewed: 0,          // tổng số thẻ đã ôn
   cultureSeen: [], songsSeen: [], games: {},
+  test: null,           // kết quả test trình độ gần nhất
   settings: { script: 's', theme: 'auto', pinyin: true, trans: true, lang: 'vi' },
 });
 
@@ -86,6 +87,7 @@ export const store = {
   seeCulture(id) { if (!state.cultureSeen.includes(id)) { state.cultureSeen.push(id); save(); } },
   seeSong(id) { if (!state.songsSeen.includes(id)) { state.songsSeen.push(id); save(); } },
   setGameBest(id, n) { if (n > (state.games[id] || 0)) { state.games[id] = n; save(); return true; } return false; },
+  setTest(r) { state.test = r; save(); },
   setToneBest(n) { if (n > state.toneBest) { state.toneBest = n; save(); } },
   // ----- Ôn tập lặp lại ngắt quãng (kiểu SM-2 rút gọn) -----
   srsAdd(keys) {

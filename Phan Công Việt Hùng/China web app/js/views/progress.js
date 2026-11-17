@@ -18,6 +18,13 @@ export function render(el) {
     { ico: '🔥', name: 'Bền bỉ', how: 'Học 7 ngày liên tiếp', ok: st.streak >= 7 },
     { ico: '📚', name: '100 từ', how: 'Học 100 từ vựng', ok: words >= 100 },
     { ico: '🏯', name: 'Tú tài', how: 'Đạt 150 XP', ok: st.xp >= 150 },
+    { ico: '🧭', name: 'Biết mình biết ta', how: 'Làm bài test trình độ', ok: !!st.test },
+    { ico: '🔁', name: 'Chăm ôn', how: 'Ôn 100 thẻ', ok: (st.reviewed || 0) >= 100 },
+    { ico: '🏮', name: 'Hiểu văn hóa', how: 'Đọc 5 bài văn hóa', ok: (st.cultureSeen || []).length >= 5 },
+    { ico: '🎵', name: 'Ngâm thơ', how: 'Học 3 bài hát / bài thơ', ok: (st.songsSeen || []).length >= 3 },
+    { ico: '🐼', name: 'Nhanh hơn gấu trúc', how: 'Đạt 7 điểm trò Nghe – giành thẻ', ok: (st.games?.grab || 0) >= 7 },
+    { ico: '🐉', name: 'Rồng dài', how: 'Nối chuỗi 10 từ', ok: (st.games?.chain || 0) >= 10 },
+    { ico: '🎓', name: 'Tốt nghiệp HSK 1', how: 'Hoàn thành cả 13 bài HSK 1', ok: ALL_LESSONS.filter(l => l.level === 1).every(l => st.lessons[l.id]?.parts?.quiz) },
     { ico: '👑', name: 'Trạng nguyên', how: 'Đạt 3500 XP', ok: st.xp >= 3500 },
   ];
 

@@ -36,12 +36,12 @@ Mỗi bài gồm: **Từ vựng** (thẻ lật + phát âm), **Ngữ pháp**, **
 - [x] Ôn tập theo lặp lại ngắt quãng (SRS) cho từ đã học – 3 kiểu ôn, phím tắt Space/1-4
 - [x] Luyện viết chữ Hán (hanzi-writer quiz mode) – trong trang Ôn tập
 - [x] 50 bộ thủ thường gặp + trò đoán bộ thủ
-- [ ] Bài test trình độ HSK 1→6 (giống "Bạn đang ở trình độ nào?")
+- [x] Bài test trình độ HSK 1→6: 36 câu, dừng khi chưa đạt, gợi ý lộ trình
 - [x] Văn hóa Trung Quốc: 8 bài (Tết, trà, bàn ăn, con số, Trung thu, xưng hô, tặng quà, thư pháp), "Văn hóa hôm nay" ở trang chủ
 - [x] Học qua bài hát: 3 đồng dao dân gian + 4 bài thơ Đường (có âm Hán Việt), đọc theo từng dòng
 - [x] Mini game 1: "Nghe – giành thẻ" đấu với gấu trúc 熊猫, 3 mức độ
 - [x] Mini game 2: Nối chữ 接龙 (từ bài đã học + 70 từ bổ trợ), 12 giây/lượt
-- [ ] Huy hiệu & trang thành tích
+- [x] Huy hiệu & trang thành tích (15 huy hiệu)
 - [ ] HSK 2, HSK 3 (cùng khuôn bài)
 
 ### Giai đoạn 3 – Tài khoản và đưa lên mạng

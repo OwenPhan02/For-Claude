@@ -1,0 +1,51 @@
+// Bài test trình độ: 6 câu mỗi cấp HSK 1 → 6. Đáp án '@…' là chữ Hán. answer = chỉ số đáp án đúng.
+export const PLACEMENT = [
+  { level: 1, qs: [
+    { label: 'Nghĩa của 谢谢 là gì?', options: ['Cảm ơn', 'Xin lỗi', 'Tạm biệt', 'Xin chào'], answer: 0 },
+    { label: 'Điền: 我 ___ 越南人。', options: ['@是', '@有', '@很', '@在'], answer: 0 },
+    { label: 'Nghe và chọn chữ đúng', say: '再见', options: ['@再见', '@谢谢', '@你好', '@老师'], answer: 0 },
+    { label: '我家有三口人 nghĩa là:', options: ['Nhà tôi có ba người', 'Tôi có ba người bạn', 'Nhà tôi ở số 3', 'Tôi ba tuổi'], answer: 0 },
+    { label: 'Câu 今天星期几？ hỏi về:', options: ['Thứ trong tuần', 'Giờ', 'Thời tiết', 'Tuổi'], answer: 0 },
+    { label: 'Điền: 我 ___ 有哥哥。(Tôi không có anh trai.)', options: ['@没', '@不', '@是', '@也'], answer: 0 },
+  ]},
+  { level: 2, qs: [
+    { label: 'Điền: 今天比昨天 ___。(Hôm nay lạnh hơn hôm qua.)', options: ['@冷', '@很冷', '@冷很', '@太冷'], answer: 0 },
+    { label: 'Điền: 我去 ___ 中国。(Tôi đã từng đến Trung Quốc.)', options: ['@过', '@了', '@着', '@的'], answer: 0 },
+    { label: '他跑得很快 nghĩa là:', options: ['Anh ấy chạy rất nhanh', 'Anh ấy muốn chạy nhanh', 'Anh ấy chạy rồi', 'Anh ấy không chạy'], answer: 0 },
+    { label: '因为下雨，___ 我没去。', options: ['@所以', '@但是', '@因为', '@还是'], answer: 0 },
+    { label: 'Nghĩa của 已经 là:', options: ['đã, rồi', 'vẫn còn', 'sắp', 'chưa'], answer: 0 },
+    { label: 'Nghe và chọn nghĩa đúng', say: '我正在准备考试。', options: ['Tôi đang chuẩn bị thi', 'Tôi đã thi xong', 'Tôi không muốn thi', 'Tôi thi đỗ rồi'], answer: 0 },
+  ]},
+  { level: 3, qs: [
+    { label: 'Điền: 请 ___ 门关上。(Xin hãy đóng cửa lại.)', options: ['@把', '@被', '@给', '@让'], answer: 0 },
+    { label: '天气越来越冷了 nghĩa là:', options: ['Trời ngày càng lạnh', 'Trời lạnh quá', 'Trời hết lạnh rồi', 'Trời hơi lạnh'], answer: 0 },
+    { label: 'Điền: 我的自行车 ___ 偷了。(Xe đạp của tôi bị trộm.)', options: ['@被', '@把', '@对', '@跟'], answer: 0 },
+    { label: '除了汉语以外，他还会说英语 nghĩa là:', options: ['Ngoài tiếng Trung, anh ấy còn biết tiếng Anh', 'Anh ấy chỉ biết tiếng Trung', 'Anh ấy không biết tiếng Anh', 'Tiếng Anh dễ hơn tiếng Trung'], answer: 0 },
+    { label: 'Điền: 她一边听音乐，___ 做作业。', options: ['@一边', '@一起', '@一下', '@一样'], answer: 0 },
+    { label: 'Nghĩa của 解决 (giải quyết) dùng đúng trong câu nào?', options: ['@我们一起解决这个问题。', '@我解决去北京。', '@他很解决。', '@解决你好吗？'], answer: 0 },
+  ]},
+  { level: 4, qs: [
+    { label: 'Điền: ___ 天气怎么样，我们都要去。', options: ['@无论', '@虽然', '@因为', '@如果'], answer: 0 },
+    { label: 'Điền: 即使明天下雨，比赛 ___ 会进行。', options: ['@也', '@就', '@才', '@还是'], answer: 0 },
+    { label: '他竟然没来 – từ 竟然 diễn tả:', options: ['Sự bất ngờ (không ngờ)', 'Sự chắc chắn', 'Sự mong đợi', 'Thời gian'], answer: 0 },
+    { label: 'Nghĩa của 尽管 là:', options: ['mặc dù', 'vì vậy', 'hơn nữa', 'nếu như'], answer: 0 },
+    { label: 'Nghĩa của 估计 là:', options: ['ước tính, đoán', 'quyết định', 'chuẩn bị', 'so sánh'], answer: 0 },
+    { label: 'Nghe và chọn nghĩa đúng', say: '由于时间关系，会议提前结束了。', options: ['Vì lý do thời gian, cuộc họp kết thúc sớm', 'Cuộc họp bị hoãn', 'Cuộc họp kéo dài', 'Không có thời gian họp'], answer: 0 },
+  ]},
+  { level: 5, qs: [
+    { label: 'Điền: 与其在家睡觉，___ 出去走走。', options: ['@不如', '@而且', '@所以', '@或者'], answer: 0 },
+    { label: 'Thành ngữ 一举两得 nghĩa là:', options: ['Một công đôi việc', 'Được ăn cả ngã về không', 'Nhất quyết không đổi', 'Hai lần thất bại'], answer: 0 },
+    { label: 'Nghĩa của 犹豫 là:', options: ['do dự', 'vui mừng', 'thất vọng', 'kiên quyết'], answer: 0 },
+    { label: '他毕竟是个孩子 – 毕竟 nghĩa là:', options: ['dù sao thì, rốt cuộc', 'đột nhiên', 'chắc chắn không', 'thỉnh thoảng'], answer: 0 },
+    { label: 'Điền: 这么简单的题他都不会，___ 难的呢？', options: ['@何况', '@况且', '@甚至', '@既然'], answer: 0 },
+    { label: 'Nghe và chọn nghĩa đúng', say: '这个方案的优点是成本低，缺点是效率不高。', options: ['Ưu điểm là chi phí thấp, nhược điểm là hiệu quả không cao', 'Phương án này rất tốn kém', 'Phương án này hiệu quả nhất', 'Không có nhược điểm'], answer: 0 },
+  ]},
+  { level: 6, qs: [
+    { label: 'Thành ngữ 画蛇添足 nghĩa là:', options: ['Vẽ rắn thêm chân (làm thừa hỏng việc)', 'Vẽ rồng điểm mắt', 'Đứng núi này trông núi nọ', 'Nước chảy đá mòn'], answer: 0 },
+    { label: 'Nghĩa của 斟酌 là:', options: ['cân nhắc kỹ', 'uống rượu', 'phản đối', 'xin lỗi'], answer: 0 },
+    { label: 'Điền: ___ 目前的情况，我们决定推迟发布。', options: ['@鉴于', '@以免', '@何况', '@况且'], answer: 0 },
+    { label: '街上熙熙攘攘 miêu tả:', options: ['Đường phố tấp nập người qua lại', 'Đường phố vắng vẻ', 'Đường phố sạch sẽ', 'Đường phố ngập nước'], answer: 0 },
+    { label: 'Thành ngữ 拭目以待 nghĩa là:', options: ['Chờ xem (mong đợi kết quả)', 'Nhắm mắt làm ngơ', 'Mắt thấy tai nghe', 'Lau nước mắt'], answer: 0 },
+    { label: 'Điền: 与其说他是老师，___ 说他是朋友。', options: ['@不如', '@而是', '@但是', '@甚至'], answer: 0 },
+  ]},
+];
