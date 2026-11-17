@@ -1,0 +1,150 @@
+// HSK 1 – nội dung bài học (soạn mới cho người Việt).
+// Từ: s = giản thể, t = phồn thể (bỏ trống nếu giống), py = pinyin, hv = Hán Việt, vi = nghĩa, pos = từ loại.
+// Câu: tokens [[s, t, py], ...]; dấu câu để py rỗng.
+
+export const HSK1 = [
+  {
+    id: 'hsk1-1', level: 1, no: 1,
+    title: { s: '你好', t: '你好', py: 'nǐ hǎo' }, vi: 'Xin chào',
+    goal: 'Chào hỏi, cảm ơn, xin lỗi, tạm biệt; nói "Tôi là…" và hỏi "… phải không?"',
+    vocab: [
+      { s: '你', py: 'nǐ', hv: 'nhĩ', vi: 'bạn, anh, chị (ngôi thứ 2)', pos: 'đại từ' },
+      { s: '好', py: 'hǎo', hv: 'hảo', vi: 'tốt, khỏe, hay', pos: 'tính từ' },
+      { s: '您', py: 'nín', hv: 'nâm', vi: 'ngài, ông, bà (kính trọng)', pos: 'đại từ' },
+      { s: '你们', t: '你們', py: 'nǐmen', hv: 'nhĩ môn', vi: 'các bạn', pos: 'đại từ' },
+      { s: '我', py: 'wǒ', hv: 'ngã', vi: 'tôi, mình', pos: 'đại từ' },
+      { s: '我们', t: '我們', py: 'wǒmen', hv: 'ngã môn', vi: 'chúng tôi, chúng ta', pos: 'đại từ' },
+      { s: '他', py: 'tā', hv: 'tha', vi: 'anh ấy, ông ấy', pos: 'đại từ' },
+      { s: '她', py: 'tā', hv: 'tha', vi: 'cô ấy, bà ấy', pos: 'đại từ' },
+      { s: '是', py: 'shì', hv: 'thị', vi: 'là', pos: 'động từ' },
+      { s: '不', py: 'bù', hv: 'bất', vi: 'không', pos: 'phó từ' },
+      { s: '也', py: 'yě', hv: 'dã', vi: 'cũng', pos: 'phó từ' },
+      { s: '吗', t: '嗎', py: 'ma', hv: 'ma', vi: '(trợ từ để hỏi) … không?', pos: 'trợ từ' },
+      { s: '老师', t: '老師', py: 'lǎoshī', hv: 'lão sư', vi: 'thầy giáo, cô giáo', pos: 'danh từ' },
+      { s: '学生', t: '學生', py: 'xuésheng', hv: 'học sinh', vi: 'học sinh, sinh viên', pos: 'danh từ' },
+      { s: '谢谢', t: '謝謝', py: 'xièxie', hv: 'tạ tạ', vi: 'cảm ơn', pos: 'động từ' },
+      { s: '不客气', t: '不客氣', py: 'bú kèqi', hv: 'bất khách khí', vi: 'không có gì, đừng khách sáo', pos: 'cụm từ' },
+      { s: '对不起', t: '對不起', py: 'duìbuqǐ', hv: 'đối bất khởi', vi: 'xin lỗi', pos: 'cụm từ' },
+      { s: '没关系', t: '沒關係', py: 'méi guānxi', hv: 'một quan hệ', vi: 'không sao, không có gì', pos: 'cụm từ' },
+      { s: '再见', t: '再見', py: 'zàijiàn', hv: 'tái kiến', vi: 'tạm biệt (hẹn gặp lại)', pos: 'động từ' },
+    ],
+    grammar: [
+      {
+        title: 'Chào hỏi với 好',
+        formula: 'Người được chào + 好！',
+        explain: 'Muốn chào ai, đặt người đó trước 好. Với người lớn tuổi hoặc cần lịch sự, dùng 您 thay cho 你. ' +
+          'Lưu ý: 你好 có hai thanh 3 liền nhau nên đọc là <b>ní hǎo</b>.',
+        examples: [
+          { tokens: [['你', '', 'nǐ'], ['好', '', 'hǎo'], ['！', '', '']], vi: 'Chào bạn!' },
+          { tokens: [['您', '', 'nín'], ['好', '', 'hǎo'], ['！', '', '']], vi: 'Chào ông/bà! (lịch sự)' },
+          { tokens: [['老师', '老師', 'lǎoshī'], ['好', '', 'hǎo'], ['！', '', '']], vi: 'Em chào thầy/cô!' },
+          { tokens: [['你们', '你們', 'nǐmen'], ['好', '', 'hǎo'], ['！', '', '']], vi: 'Chào các bạn!' },
+        ],
+      },
+      {
+        title: 'Câu với 是 (là)',
+        formula: 'A + 是 + B　·　A + 不是 + B',
+        explain: '是 nối hai danh từ/đại từ, giống chữ "là". Phủ định thêm 不 trước 是 → 不是 (đọc <b>bú shì</b> vì 不 đứng trước thanh 4). ' +
+          'Chú ý: tiếng Trung <b>không dùng 是 trước tính từ</b>: nói 我好, không nói 我是好.',
+        examples: [
+          { tokens: [['我', '', 'wǒ'], ['是', '', 'shì'], ['学生', '學生', 'xuésheng'], ['。', '', '']], vi: 'Tôi là học sinh.' },
+          { tokens: [['她', '', 'tā'], ['是', '', 'shì'], ['老师', '老師', 'lǎoshī'], ['。', '', '']], vi: 'Cô ấy là giáo viên.' },
+          { tokens: [['他', '', 'tā'], ['不是', '', 'bú shì'], ['老师', '老師', 'lǎoshī'], ['。', '', '']], vi: 'Anh ấy không phải là giáo viên.' },
+        ],
+      },
+      {
+        title: 'Câu hỏi có/không với 吗',
+        formula: 'Câu trần thuật + 吗？',
+        explain: 'Thêm 吗 vào cuối câu là thành câu hỏi "… phải không / … không?". Trật tự từ giữ nguyên. ' +
+          'Trả lời: 是 (phải) / 不是 (không phải).',
+        examples: [
+          { tokens: [['你', '', 'nǐ'], ['是', '', 'shì'], ['老师', '老師', 'lǎoshī'], ['吗', '嗎', 'ma'], ['？', '', '']], vi: 'Bạn là giáo viên phải không?' },
+          { tokens: [['不是', '', 'bú shì'], ['，', '', ''], ['我', '', 'wǒ'], ['是', '', 'shì'], ['学生', '學生', 'xuésheng'], ['。', '', '']], vi: 'Không phải, tôi là học sinh.' },
+          { tokens: [['你', '', 'nǐ'], ['好', '', 'hǎo'], ['吗', '嗎', 'ma'], ['？', '', '']], vi: 'Bạn khỏe không?' },
+        ],
+      },
+      {
+        title: '也 – cũng',
+        formula: 'Chủ ngữ + 也 + động từ',
+        explain: '也 luôn đứng <b>sau chủ ngữ, trước động từ</b>. Không đặt 也 ở đầu hay cuối câu như tiếng Việt đôi khi làm.',
+        examples: [
+          { tokens: [['我', '', 'wǒ'], ['也', '', 'yě'], ['是', '', 'shì'], ['学生', '學生', 'xuésheng'], ['。', '', '']], vi: 'Tôi cũng là học sinh.' },
+          { tokens: [['她', '', 'tā'], ['也', '', 'yě'], ['不是', '', 'bú shì'], ['老师', '老師', 'lǎoshī'], ['。', '', '']], vi: 'Cô ấy cũng không phải giáo viên.' },
+        ],
+      },
+      {
+        title: 'Đáp lời lịch sự',
+        formula: '谢谢 → 不客气　·　对不起 → 没关系',
+        explain: 'Hai cặp câu dùng hằng ngày. Ai nói 谢谢 (cảm ơn), đáp 不客气 (không có gì). Ai nói 对不起 (xin lỗi), đáp 没关系 (không sao).',
+        examples: [
+          { tokens: [['谢谢', '謝謝', 'xièxie'], ['！', '', '']], reply: [['不客气', '不客氣', 'bú kèqi'], ['！', '', '']], vi: 'Cảm ơn! – Không có gì!' },
+          { tokens: [['对不起', '對不起', 'duìbuqǐ'], ['！', '', '']], reply: [['没关系', '沒關係', 'méi guānxi'], ['！', '', '']], vi: 'Xin lỗi! – Không sao!' },
+        ],
+      },
+    ],
+    hanzi: [
+      { s: '你', py: 'nǐ', hv: 'nhĩ', vi: 'bạn', strokes: 7, radical: '亻 (nhân – người)',
+        note: 'Bên trái là bộ 亻 "người", bên phải là 尔. Chữ chỉ "người đối diện tôi".' },
+      { s: '好', py: 'hǎo', hv: 'hảo', vi: 'tốt', strokes: 6, radical: '女 (nữ – phụ nữ)',
+        note: '女 (người mẹ) + 子 (đứa con): mẹ bên con là điều <b>tốt đẹp</b>. Mẹo nhớ rất hay dùng.' },
+      { s: '我', py: 'wǒ', hv: 'ngã', vi: 'tôi', strokes: 7, radical: '戈 (qua – cây giáo)',
+        note: 'Chữ cổ vẽ một loại vũ khí có răng cưa, sau mượn để chỉ "tôi".' },
+      { s: '是', py: 'shì', hv: 'thị', vi: 'là', strokes: 9, radical: '日 (nhật – mặt trời)',
+        note: 'Trên là 日 (mặt trời), dưới là 正 biến thể ("ngay thẳng"): điều đúng như ánh mặt trời → "là, đúng".' },
+      { s: '不', py: 'bù', hv: 'bất', vi: 'không', strokes: 4, radical: '一 (nhất)',
+        note: 'Chỉ 4 nét: ngang, phẩy, sổ, chấm. Một trong những chữ dùng nhiều nhất.' },
+      { s: '学', t: '學', py: 'xué', hv: 'học', vi: 'học', strokes: 8, strokesT: 16, radical: '子 (tử – con)',
+        note: 'Giản thể 学 có 8 nét, phồn thể 學 có 16 nét. Phần dưới là 子: đứa trẻ đang học.' },
+    ],
+    reading: {
+      title: 'Gặp nhau ở trường',
+      people: { A: { s: '李文', py: 'Lǐ Wén' }, B: { s: '阿美', py: 'Āměi' } },
+      lines: [
+        { who: 'A', tokens: [['你', '', 'nǐ'], ['好', '', 'hǎo'], ['！', '', '']], vi: 'Chào bạn!' },
+        { who: 'B', tokens: [['你', '', 'nǐ'], ['好', '', 'hǎo'], ['！', '', '']], vi: 'Chào bạn!' },
+        { who: 'A', tokens: [['你', '', 'nǐ'], ['是', '', 'shì'], ['老师', '老師', 'lǎoshī'], ['吗', '嗎', 'ma'], ['？', '', '']], vi: 'Bạn là giáo viên à?' },
+        { who: 'B', tokens: [['不是', '', 'bú shì'], ['，', '', ''], ['我', '', 'wǒ'], ['是', '', 'shì'], ['学生', '學生', 'xuésheng'], ['。', '', ''], ['你', '', 'nǐ'], ['也', '', 'yě'], ['是', '', 'shì'], ['学生', '學生', 'xuésheng'], ['吗', '嗎', 'ma'], ['？', '', '']], vi: 'Không phải, tôi là học sinh. Bạn cũng là học sinh à?' },
+        { who: 'A', tokens: [['是', '', 'shì'], ['，', '', ''], ['我', '', 'wǒ'], ['也', '', 'yě'], ['是', '', 'shì'], ['学生', '學生', 'xuésheng'], ['。', '', '']], vi: 'Phải, tôi cũng là học sinh.' },
+        { who: 'B', tokens: [['对不起', '對不起', 'duìbuqǐ'], ['，', '', ''], ['我', '', 'wǒ'], ['走', '', 'zǒu'], ['了', '', 'le'], ['。', '', ''], ['再见', '再見', 'zàijiàn'], ['！', '', '']], vi: 'Xin lỗi, mình đi đây. Tạm biệt!' },
+        { who: 'A', tokens: [['没关系', '沒關係', 'méi guānxi'], ['。', '', ''], ['再见', '再見', 'zàijiàn'], ['！', '', '']], vi: 'Không sao. Tạm biệt!' },
+      ],
+      newWords: '走了 zǒu le = đi đây (sẽ học ở bài sau)',
+      questions: [
+        { q: 'Āměi (阿美) là ai?', options: ['Giáo viên', 'Học sinh', 'Bác sĩ', 'Không rõ'], answer: 1 },
+        { q: 'Lǐ Wén (李文) có phải giáo viên không?', options: ['Có', 'Không, cũng là học sinh'], answer: 1 },
+      ],
+    },
+    listening: [
+      { say: '谢谢！', label: 'Nghe câu nói, chọn câu đáp phù hợp',
+        options: [{ s: '不客气', t: '不客氣' }, { s: '没关系', t: '沒關係' }, { s: '再见', t: '再見' }, { s: '你好' }], answer: 0,
+        explain: '谢谢 (cảm ơn) → 不客气 (không có gì).' },
+      { say: '对不起！', label: 'Nghe câu nói, chọn câu đáp phù hợp',
+        options: [{ s: '谢谢', t: '謝謝' }, { s: '没关系', t: '沒關係' }, { s: '你们好', t: '你們好' }, { s: '是' }], answer: 1,
+        explain: '对不起 (xin lỗi) → 没关系 (không sao).' },
+      { say: '你是老师吗？', label: 'Người nói đang hỏi gì?',
+        options: ['Bạn có khỏe không?', 'Bạn là giáo viên phải không?', 'Bạn là học sinh phải không?', 'Giáo viên ở đâu?'], answer: 1,
+        explain: '你是老师吗？ = Bạn là giáo viên phải không?' },
+      { say: '我不是学生。', label: 'Câu bạn nghe có nghĩa là gì?',
+        options: ['Tôi là học sinh.', 'Tôi cũng là học sinh.', 'Tôi không phải học sinh.', 'Bạn là học sinh à?'], answer: 2,
+        explain: '我不是学生 = Tôi không phải học sinh.' },
+      { say: '您好！', label: 'Bạn nghe thấy pinyin nào?',
+        options: ['nǐ hǎo', 'nín hǎo', 'nǐmen hǎo', 'lǎoshī hǎo'], answer: 1,
+        explain: '您好 nín hǎo – cách chào lịch sự.' },
+      { say: '她也是老师。', label: 'Câu bạn nghe có nghĩa là gì?',
+        options: ['Cô ấy cũng là giáo viên.', 'Cô ấy là học sinh.', 'Anh ấy không phải giáo viên.', 'Chúng tôi là giáo viên.'], answer: 0,
+        explain: '她也是老师 = Cô ấy cũng là giáo viên.' },
+    ],
+    // Câu kiểm tra ngữ pháp riêng; phần còn lại sinh tự động từ từ vựng để đủ 10 câu.
+    quiz: [
+      { label: 'Chọn từ điền vào chỗ trống: 我 ___ 学生。(Tôi là học sinh.)',
+        options: [{ s: '是' }, { s: '不' }, { s: '吗', t: '嗎' }, { s: '也' }], answer: 0, explain: 'A 是 B = A là B.' },
+      { label: 'Câu nào ĐÚNG ngữ pháp?',
+        options: [{ s: '我也是学生。', t: '我也是學生。' }, { s: '也我是学生。', t: '也我是學生。' }, { s: '我是学生也。', t: '我是學生也。' }], answer: 0,
+        explain: '也 đứng sau chủ ngữ, trước động từ.' },
+      { label: 'Biến câu thành câu hỏi: 你是老师 ___？',
+        options: [{ s: '吗', t: '嗎' }, { s: '不' }, { s: '好' }, { s: '是' }], answer: 0, explain: 'Thêm 吗 vào cuối câu.' },
+      { label: '你好 thực tế được đọc là:',
+        options: ['nǐ hǎo', 'ní hǎo', 'nǐ hào', 'nì hǎo'], answer: 1, explain: 'Hai thanh 3 liền nhau → thanh 3 đầu đọc thành thanh 2.' },
+    ],
+  },
+];

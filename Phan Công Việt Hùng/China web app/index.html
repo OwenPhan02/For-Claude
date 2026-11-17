@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>中文之路 – Học tiếng Trung HSK 1–6</title>
+  <meta name="description" content="Học tiếng Trung cho người Việt: pinyin, chữ Hán (giản thể & phồn thể, âm Hán Việt), từ vựng, ngữ pháp, nghe, đọc theo HSK 1–6.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23c8102e'/><text x='32' y='46' font-size='40' text-anchor='middle' fill='%23ffd166' font-family='serif'>中</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a href="#/" class="brand"><span class="brand-mark">中</span><span class="brand-name">中文之路</span></a>
+    <nav class="mainnav" id="mainnav">
+      <a href="#/" data-nav="home">🏮 Học thử</a>
+      <a href="#/pinyin" data-nav="pinyin">🔤 Pinyin</a>
+      <a href="#/lessons" data-nav="lessons">📚 Bài học</a>
+      <a href="#/daily" data-nav="daily">⚡ Thử thách</a>
+      <a href="#/progress" data-nav="progress">🏆 Thành tích</a>
+    </nav>
+    <div class="topbar-tools">
+      <div class="seg" role="group" aria-label="Loại chữ">
+        <button type="button" data-script="s" title="Giản thể">简</button>
+        <button type="button" data-script="t" title="Phồn thể">繁</button>
+      </div>
+      <button type="button" class="icon-btn" id="themeBtn" title="Đổi giao diện sáng/tối">🌓</button>
+      <button type="button" class="icon-btn menu-btn" id="menuBtn" aria-label="Mở menu">☰</button>
+    </div>
+  </header>
+  <main id="app" class="container" tabindex="-1"></main>
+  <footer class="footer">中文之路 · Học tiếng Trung cho người Việt · Tiến độ được lưu trên trình duyệt của bạn</footer>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
