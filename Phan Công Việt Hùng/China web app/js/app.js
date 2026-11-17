@@ -1,6 +1,7 @@
 import { store } from './store.js';
 import { speak } from './speech.js';
 import { t, LANGS, lang } from './i18n.js';
+import { cloudEnabled, onUser } from './cloud.js';
 
 // Mỗi trang là một module có hàm render(el, params). Tải khi cần.
 const routes = [
@@ -18,6 +19,7 @@ const routes = [
   { re: /^\/culture(?:\/([\w-]+))?$/, nav: 'explore', load: () => import('./views/culture.js'), keys: ['id'] },
   { re: /^\/songs(?:\/([\w-]+))?$/, nav: 'explore', load: () => import('./views/songs.js'), keys: ['id'] },
   { re: /^\/radicals$/, nav: 'explore', load: () => import('./views/radicals.js') },
+  { re: /^\/account$/, nav: 'account', load: () => import('./views/account.js') },
 ];
 
 const app = document.getElementById('app');
@@ -102,5 +104,15 @@ document.addEventListener('click', e => {
 applyScript();
 applyTheme();
 applyLang();
+
+// Nút tài khoản (chỉ hiện khi đã cấu hình Firebase)
+const acctBtn = document.getElementById('acctBtn');
+if (cloudEnabled()) {
+  acctBtn.classList.remove('hidden');
+  onUser(u => {
+    acctBtn.textContent = u ? `👤 ${(u.displayName || u.email || '').split('@')[0].slice(0, 14)}` : t('login');
+    acctBtn.classList.toggle('primary', !u);
+  });
+}
 window.addEventListener('hashchange', router);
 router();

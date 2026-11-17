@@ -34,6 +34,8 @@ const defaults = () => ({
   reviewed: 0,          // tổng số thẻ đã ôn
   cultureSeen: [], songsSeen: [], games: {},
   test: null,           // kết quả test trình độ gần nhất
+  week: null, weekXp: 0, // XP trong tuần (bảng xếp hạng)
+  updatedAt: 0,
   settings: { script: 's', theme: 'auto', pinyin: true, trans: true, lang: 'vi' },
 });
 
@@ -48,6 +50,7 @@ function load() {
   return defaults();
 }
 function save() {
+  state.updatedAt = Date.now();
   try { localStorage.setItem(KEY, JSON.stringify(state)); } catch { /* bỏ qua */ }
   listeners.forEach(fn => fn(state));
 }
@@ -67,7 +70,9 @@ export const store = {
       n = Math.max(0, Math.min(n, DAILY_XP_CAP - state.dailyXpToday));
       state.dailyXpToday += n;
     }
-    state.xp += n; state.xpToday += n;
+    const wk = weekId();
+    if (state.week !== wk) { state.week = wk; state.weekXp = 0; }
+    state.xp += n; state.xpToday += n; state.weekXp += n;
     touchStreak();
     save();
     return n;
@@ -128,6 +133,9 @@ export const store = {
       mature: cards.filter(c => c.ivl >= 21).length,
     };
   },
+  /** Thay toàn bộ dữ liệu (dùng khi tải tiến độ từ tài khoản). */
+  replace(data) { state = { ...defaults(), ...data, settings: { ...state.settings } }; rollDay(); try { localStorage.setItem(KEY, JSON.stringify(state)); } catch { /* bỏ qua */ } listeners.forEach(fn => fn(state)); },
+  snapshot: () => JSON.parse(JSON.stringify(state)),
   reset() { state = defaults(); save(); },
 };
 
@@ -136,6 +144,16 @@ function touchStreak() {
   if (state.lastActive === t) return;
   state.streak = state.lastActive === yesterday() ? state.streak + 1 : 1;
   state.lastActive = t;
+}
+
+/** Mã tuần dạng 2026-W47 (tuần bắt đầu thứ Hai). */
+export function weekId(d = new Date()) {
+  const t = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  const day = t.getUTCDay() || 7;
+  t.setUTCDate(t.getUTCDate() + 4 - day);
+  const y = t.getUTCFullYear();
+  const w = Math.ceil(((t - Date.UTC(y, 0, 1)) / 864e5 + 1) / 7);
+  return `${y}-W${String(w).padStart(2, '0')}`;
 }
 
 export function rankOf(xp) {

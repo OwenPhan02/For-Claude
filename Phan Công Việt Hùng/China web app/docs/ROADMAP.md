@@ -46,10 +46,10 @@ Mỗi bài gồm: **Từ vựng** (thẻ lật + phát âm), **Ngữ pháp**, **
 - [ ] HSK 3 (cùng khuôn bài)
 
 ### Giai đoạn 3 – Tài khoản và đưa lên mạng
-- [ ] Firebase project + Hosting (cần bạn tạo tài khoản Firebase)
-- [ ] Đăng ký / đăng nhập (email, Google)
-- [ ] Đồng bộ tiến độ lên Firestore
-- [ ] Bảng xếp hạng tuần
+- [ ] Firebase project + Hosting – **chờ chủ app tạo dự án và gửi firebaseConfig** (xem docs/FIREBASE.md); firebase.json + firestore.rules đã có
+- [x] Code đăng ký / đăng nhập (email, Google, quên mật khẩu) – trang #/account, tự bật khi có config
+- [x] Code đồng bộ tiến độ lên Firestore (bản mới hơn thắng)
+- [x] Code bảng xếp hạng tuần (XP thứ Hai → Chủ nhật)
 - [ ] Đề thi thử HSK 1–6
 - [ ] HSK 4–6
 
