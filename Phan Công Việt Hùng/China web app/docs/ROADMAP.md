@@ -43,7 +43,7 @@ Mỗi bài gồm: **Từ vựng** (thẻ lật + phát âm), **Ngữ pháp**, **
 - [x] Mini game 2: Nối chữ 接龙 (từ bài đã học + 70 từ bổ trợ), 12 giây/lượt
 - [x] Huy hiệu & trang thành tích (15 huy hiệu)
 - [x] HSK 2: 8 bài – HSK 1+2 khớp đủ 300 từ chính thức
-- [ ] HSK 3 (cùng khuôn bài)
+- [x] HSK 3: 12 bài – HSK 1→3 khớp đủ 600 từ chính thức (tổng 634 từ)
 
 ### Giai đoạn 3 – Tài khoản và đưa lên mạng
 - [ ] Firebase project + Hosting – **chờ chủ app tạo dự án và gửi firebaseConfig** (xem docs/FIREBASE.md); firebase.json + firestore.rules đã có
