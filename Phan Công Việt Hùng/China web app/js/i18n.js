@@ -13,6 +13,7 @@ const D = {
   vi: {
     appName: 'Tự học Tiếng Trung',
     footer: 'Học tiếng Trung cho người Việt · Tiến độ được lưu trên trình duyệt của bạn',
+    'nav.moreMenu': 'Thêm', 'nav.account': 'Tài khoản', 'set.title': 'Cài đặt', 'set.lang': 'Ngôn ngữ', 'set.script': 'Chữ Hán', 'set.petals': 'Hoa mai rơi', 'set.dark': 'Giao diện tối',
     'legal.terms': 'Điều khoản sử dụng', 'legal.privacy': 'Chính sách bảo mật', 'legal.refund': 'Chính sách hoàn tiền', 'legal.credits': 'Nguồn hình ảnh', 'legal.contact': 'Liên hệ', 'legal.viOnly': '',
     'nav.home': 'Học thử', 'nav.pinyin': 'Pinyin', 'nav.lessons': 'Bài học', 'nav.daily': 'Thử thách', 'nav.progress': 'Thành tích',
     'nav.review': 'Ôn tập', 'nav.more': 'Khám phá',
@@ -44,6 +45,7 @@ const D = {
   en: {
     appName: 'Self-study Chinese',
     footer: 'Learn Chinese at your own pace · Progress is saved in your browser',
+    'nav.moreMenu': 'More', 'nav.account': 'Account', 'set.title': 'Settings', 'set.lang': 'Language', 'set.script': 'Characters', 'set.petals': 'Falling blossoms', 'set.dark': 'Dark mode',
     'legal.terms': 'Terms of use', 'legal.privacy': 'Privacy policy', 'legal.refund': 'Refund policy', 'legal.credits': 'Credits', 'legal.contact': 'Contact', 'legal.viOnly': 'These policies are currently available in Vietnamese only.',
     'nav.home': 'Start', 'nav.pinyin': 'Pinyin', 'nav.lessons': 'Lessons', 'nav.daily': 'Challenge', 'nav.progress': 'Progress',
     'nav.review': 'Review', 'nav.more': 'Explore',
@@ -75,6 +77,7 @@ const D = {
   zh: {
     appName: '自学中文',
     footer: '为越南学习者设计的中文课程 · 学习进度保存在你的浏览器里',
+    'nav.moreMenu': '更多', 'nav.account': '账户', 'set.title': '设置', 'set.lang': '语言', 'set.script': '字体', 'set.petals': '梅花飘落', 'set.dark': '深色模式',
     'legal.terms': '使用条款', 'legal.privacy': '隐私政策', 'legal.refund': '退款政策', 'legal.credits': '图片与资源来源', 'legal.contact': '联系我们', 'legal.viOnly': '以下条款目前只有越南语版本。',
     'nav.home': '开始', 'nav.pinyin': '拼音', 'nav.lessons': '课程', 'nav.daily': '每日挑战', 'nav.progress': '成就',
     'nav.review': '复习', 'nav.more': '发现',

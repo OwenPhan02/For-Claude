@@ -37,7 +37,11 @@ async function router() {
   window.speechSynthesis?.cancel();
   document.getElementById('mainnav').classList.remove('open');
 
+  closeSheet();
   document.querySelectorAll('[data-nav]').forEach(a => a.classList.toggle('active', a.dataset.nav === route?.nav));
+  // Nút "Thêm" sáng lên khi đang ở trang không có trên thanh dưới
+  const shown = [...document.querySelectorAll('#tabbar [data-nav]')].filter(a => a.offsetParent).map(a => a.dataset.nav);
+  document.getElementById('moreBtn').classList.toggle('active', !!route && !shown.includes(route.nav));
   if (!route) {
     app.innerHTML = `<div class="card"><h2>Không tìm thấy trang</h2><p><a href="#/">← Về trang chủ</a></p></div>`;
     return;
@@ -65,6 +69,44 @@ async function router() {
   animateIn();
   if (newPage) window.scrollTo(0, 0);
 }
+
+// ----- Bảng "Thêm" (điện thoại / máy tính bảng): mục phụ + cài đặt -----
+const sheet = document.getElementById('sheet');
+function closeSheet() {
+  if (sheet.hidden || sheet.classList.contains('closing')) return;
+  sheet.classList.add('closing');
+  setTimeout(() => { sheet.hidden = true; sheet.classList.remove('closing'); }, 220);
+}
+function syncSheet() {
+  const st = store.get().settings;
+  const sl = document.getElementById('sheetLang');
+  if (!sl.options.length) sl.innerHTML = langSel.innerHTML;
+  sl.value = langSel.value;
+  sheet.querySelectorAll('[data-script2]').forEach(b => b.classList.toggle('on', b.dataset.script2 === st.script));
+  document.getElementById('sheetPetal').classList.toggle('on', st.petals !== false);
+  const dark = document.documentElement.dataset.theme === 'dark' ||
+    (!document.documentElement.dataset.theme && matchMedia('(prefers-color-scheme: dark)').matches);
+  document.getElementById('sheetTheme').classList.toggle('on', dark);
+}
+document.getElementById('moreBtn').addEventListener('click', () => {
+  if (!sheet.hidden) return closeSheet();
+  syncSheet();
+  sheet.hidden = false;
+});
+sheet.addEventListener('click', e => {
+  if (e.target === sheet || e.target.closest('a')) return closeSheet();
+  const sc = e.target.closest('[data-script2]');
+  if (sc) document.querySelector(`button[data-script="${sc.dataset.script2}"]`).click();
+  if (e.target.closest('#sheetPetal')) document.getElementById('petalBtn').click();
+  if (e.target.closest('#sheetTheme')) document.getElementById('themeBtn').click();
+  syncSheet();
+});
+document.getElementById('sheetLang').addEventListener('change', e => {
+  langSel.value = e.target.value;
+  langSel.dispatchEvent(new Event('change'));
+  syncSheet();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSheet(); });
 
 // ----- Hoạt ảnh chuyển trang -----
 let lastPage = null;

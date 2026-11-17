@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Tự học Tiếng Trung – HSK 1–6</title>
   <meta name="description" content="Học tiếng Trung cho người Việt: pinyin, chữ Hán (giản thể & phồn thể, âm Hán Việt), từ vựng, ngữ pháp, nghe, đọc theo HSK 1–6.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23c8102e'/><text x='32' y='46' font-size='40' text-anchor='middle' fill='%23ffd166' font-family='serif'>中</text></svg>">
@@ -50,6 +50,36 @@
     </nav>
     <div class="footer-copy">© 2026 <span data-i18n="appName">Tự học Tiếng Trung</span> · v2026.11.17</div>
   </footer>
+  <nav class="tabbar" id="tabbar" aria-label="Điều hướng">
+    <a href="#/" data-nav="home"><span class="ti">🏮</span><b data-i18n="nav.home">Học thử</b></a>
+    <a href="#/pinyin" data-nav="pinyin" class="wide-only"><span class="ti">🔤</span><b data-i18n="nav.pinyin">Pinyin</b></a>
+    <a href="#/lessons" data-nav="lessons"><span class="ti">📚</span><b data-i18n="nav.lessons">Bài học</b></a>
+    <a href="#/review" data-nav="review"><span class="ti">🔁</span><b data-i18n="nav.review">Ôn tập</b></a>
+    <a href="#/daily" data-nav="daily"><span class="ti">⚡</span><b data-i18n="nav.daily">Thử thách</b></a>
+    <a href="#/explore" data-nav="explore" class="wide-only"><span class="ti">🧭</span><b data-i18n="nav.more">Khám phá</b></a>
+    <a href="#/progress" data-nav="progress" class="wide-only"><span class="ti">🏆</span><b data-i18n="nav.progress">Thành tích</b></a>
+    <button type="button" id="moreBtn"><span class="ti">☰</span><b data-i18n="nav.moreMenu">Thêm</b></button>
+  </nav>
+  <div class="sheet-back" id="sheet" hidden>
+    <div class="sheet" role="dialog" aria-modal="true">
+      <div class="sheet-grip"></div>
+      <div class="sheet-links">
+        <a href="#/pinyin">🔤 <span data-i18n="nav.pinyin">Pinyin</span></a>
+        <a href="#/explore">🧭 <span data-i18n="nav.more">Khám phá</span></a>
+        <a href="#/progress">🏆 <span data-i18n="nav.progress">Thành tích</span></a>
+        <a href="#/account" id="sheetAcct">👤 <span data-i18n="nav.account">Tài khoản</span></a>
+      </div>
+      <h4 data-i18n="set.title">Cài đặt</h4>
+      <div class="sheet-set">
+        <label><span data-i18n="set.lang">Ngôn ngữ</span><select id="sheetLang" class="lang-sel"></select></label>
+        <div class="set-row"><span data-i18n="set.script">Chữ Hán</span>
+          <div class="seg"><button type="button" data-script2="s">简 <small data-i18n="simp">Giản thể</small></button><button type="button" data-script2="t">繁 <small data-i18n="trad">Phồn thể</small></button></div></div>
+        <button type="button" class="set-row" id="sheetPetal"><span data-i18n="set.petals">Hoa mai rơi</span><i class="sw"></i></button>
+        <button type="button" class="set-row" id="sheetTheme"><span data-i18n="set.dark">Giao diện tối</span><i class="sw"></i></button>
+      </div>
+      <a href="#/legal/terms" class="sheet-legal small" data-i18n="legal.terms">Điều khoản sử dụng</a>
+    </div>
+  </div>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <script type="module" src="js/app.js"></script>
 </body>
