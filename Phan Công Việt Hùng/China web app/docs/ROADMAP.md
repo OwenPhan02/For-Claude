@@ -31,7 +31,8 @@ Mỗi bài gồm: **Từ vựng** (thẻ lật + phát âm), **Ngữ pháp**, **
 - Đã kiểm tra trên Chrome (17/11/2026): các trang chạy được, không lỗi console, nút 简/繁 hoạt động.
 
 ### Giai đoạn 2 – Nội dung và tính năng học
-- [ ] HSK 1: bài 2–15 (đủ 150 từ)
+- [x] HSK 1: bài 2–13 (13 bài, 228 từ – đủ 150 từ HSK 1 chuẩn + từ bổ trợ)
+- [x] Đổi tên "Tự học Tiếng Trung", chọn ngôn ngữ giao diện vi/en/zh, tự chuyển phồn thể
 - [ ] Ôn tập theo lặp lại ngắt quãng (SRS) cho từ đã học
 - [ ] Luyện viết chữ Hán (hanzi-writer quiz mode)
 - [ ] Bộ thủ thường gặp (214 bộ, ưu tiên ~50 bộ hay dùng)
