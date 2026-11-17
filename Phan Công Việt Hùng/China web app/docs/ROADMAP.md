@@ -46,7 +46,7 @@ Mỗi bài gồm: **Từ vựng** (thẻ lật + phát âm), **Ngữ pháp**, **
 - [x] HSK 3: 12 bài – HSK 1→3 khớp đủ 600 từ chính thức (tổng 634 từ)
 
 ### Giai đoạn 3 – Tài khoản và đưa lên mạng
-- [ ] Firebase project + Hosting – **chờ chủ app tạo dự án và gửi firebaseConfig** (xem docs/FIREBASE.md); firebase.json + firestore.rules đã có
+- [x] Firebase project + Hosting – dự án tu-hoc-tieng-trung-37b24 (tài khoản hungpcv02.work), web: https://tu-hoc-tieng-trung-37b24.web.app; deploy lại: npx firebase-tools deploy --only hosting,firestore:rules
 - [x] Code đăng ký / đăng nhập (email, Google, quên mật khẩu) – trang #/account, tự bật khi có config
 - [x] Code đồng bộ tiến độ lên Firestore (bản mới hơn thắng)
 - [x] Code bảng xếp hạng tuần (XP thứ Hai → Chủ nhật)
