@@ -1,0 +1,113 @@
+// Ngôn ngữ giao diện. Tên app đổi theo ngôn ngữ.
+// Chuỗi tiếng Trung viết giản thể; khi chọn 繁 sẽ tự chuyển phồn thể.
+import { store } from './store.js';
+import { zhs } from './util.js';
+
+export const LANGS = [
+  { code: 'vi', label: 'Tiếng Việt' },
+  { code: 'en', label: 'English' },
+  { code: 'zh', label: '中文' },
+];
+
+const D = {
+  vi: {
+    appName: 'Tự học Tiếng Trung',
+    footer: 'Học tiếng Trung cho người Việt · Tiến độ được lưu trên trình duyệt của bạn',
+    'nav.home': 'Học thử', 'nav.pinyin': 'Pinyin', 'nav.lessons': 'Bài học', 'nav.daily': 'Thử thách', 'nav.progress': 'Thành tích',
+    'nav.review': 'Ôn tập', 'nav.more': 'Khám phá',
+    theme: 'Đổi giao diện sáng/tối', menu: 'Mở menu', simp: 'Giản thể', trad: 'Phồn thể', lang: 'Ngôn ngữ',
+    contentNote: '',
+    'home.heroEyebrow': '⚡ Miễn phí · khoảng 10–15 phút',
+    'home.heroTitle': 'Bạn đang ở trình độ nào?',
+    'home.heroDesc': 'Làm bài test năng lực HSK 1 → HSK 6: biết ngay trình độ hiện tại và nhận lộ trình học dành riêng cho bạn.',
+    'home.heroBtn': '🧭 Làm bài test', 'home.heroSoon': '🧭 Làm bài test (sắp có)',
+    'home.free': 'Miễn phí',
+    'home.welcomeTitle': 'Học thử miễn phí – bắt đầu ngay',
+    'home.welcomeDesc': 'Không cần đăng ký: Pinyin, HSK 1 và thử thách mỗi ngày đã mở sẵn. Chữ Hán có cả giản thể / phồn thể (nút 简 / 繁 ở góc trên) và âm Hán Việt.',
+    'home.startPinyin': '🔤 Bắt đầu từ Pinyin', 'home.openL1': '📖 Vào bài 1',
+    'home.today': 'Hôm nay', 'home.totalXp': 'Tổng XP', 'home.streak': '{n} ngày liên tiếp',
+    'home.dailyBar': 'Thử thách hôm nay',
+    'home.dailyTitle': 'Thử thách 5 câu hôm nay', 'home.dailyDone': 'Đã hoàn thành ✓ – làm lại để luyện thêm',
+    'home.dailyDesc': '5 câu trắc nghiệm, ~2 phút, tối đa +20 XP', 'home.doIt': 'Làm ngay', 'home.practice': 'Luyện',
+    'home.g1Title': 'Nghe – giành thẻ', 'home.g1Desc': 'Nghe đọc, nhanh tay chọn đúng chữ',
+    'home.g2Title': 'Nối chữ 接龙', 'home.g2Desc': 'Chữ cuối thành chữ đầu – nối càng dài càng tốt',
+    'home.play': 'Chơi', 'home.soon': 'Sắp có', 'home.badges': 'Thành tích & huy hiệu →',
+    'home.steps': '3 bước đầu tiên', 'home.step1': 'Nghe và phân biệt 4 thanh điệu',
+    'home.step2': 'Học phần Từ vựng của HSK 1 · Bài 1', 'home.step3': 'Làm Thử thách 5 câu',
+    'home.beginner': 'Dành cho người mới', 'home.pinyinTitle': 'Pinyin & 4 thanh điệu',
+    'home.pinyinDesc': 'Thanh mẫu, vận mẫu, mẹo phát âm cho người Việt, luyện nghe thanh điệu',
+    'home.l1Desc': 'Từ vựng, ngữ pháp, chữ Hán, đọc, nghe và 10 câu kiểm tra',
+    'home.culture': 'Văn hóa & bài hát', 'home.drafting': 'Đang soạn',
+    'home.cultureDesc': 'Tìm hiểu văn hóa Trung Quốc và học tiếng Trung qua các bài hát thiếu nhi dân gian.',
+  },
+  en: {
+    appName: 'Self-study Chinese',
+    footer: 'Learn Chinese at your own pace · Progress is saved in your browser',
+    'nav.home': 'Start', 'nav.pinyin': 'Pinyin', 'nav.lessons': 'Lessons', 'nav.daily': 'Challenge', 'nav.progress': 'Progress',
+    'nav.review': 'Review', 'nav.more': 'Explore',
+    theme: 'Toggle light/dark', menu: 'Open menu', simp: 'Simplified', trad: 'Traditional', lang: 'Language',
+    contentNote: 'Note: lesson explanations are currently written in Vietnamese. English versions are coming.',
+    'home.heroEyebrow': '⚡ Free · about 10–15 minutes',
+    'home.heroTitle': 'What is your level?',
+    'home.heroDesc': 'Take the HSK 1 → HSK 6 placement test: find your current level and get a study path made for you.',
+    'home.heroBtn': '🧭 Take the test', 'home.heroSoon': '🧭 Placement test (coming soon)',
+    'home.free': 'Free',
+    'home.welcomeTitle': 'Try it free – start now',
+    'home.welcomeDesc': 'No sign-up needed: Pinyin, HSK 1 and the daily challenge are open. Characters in Simplified / Traditional (简 / 繁 button, top right).',
+    'home.startPinyin': '🔤 Start with Pinyin', 'home.openL1': '📖 Lesson 1',
+    'home.today': 'Today', 'home.totalXp': 'Total XP', 'home.streak': '{n}-day streak',
+    'home.dailyBar': "Today's challenge",
+    'home.dailyTitle': "Today's 5-question challenge", 'home.dailyDone': 'Done ✓ – play again for practice',
+    'home.dailyDesc': '5 questions, ~2 minutes, up to +20 XP', 'home.doIt': 'Start', 'home.practice': 'Practice',
+    'home.g1Title': 'Listen & grab', 'home.g1Desc': 'Hear a word, tap the right card fast',
+    'home.g2Title': 'Word chain 接龙', 'home.g2Desc': 'Last character becomes the next first one',
+    'home.play': 'Play', 'home.soon': 'Soon', 'home.badges': 'Progress & badges →',
+    'home.steps': 'First 3 steps', 'home.step1': 'Hear and tell apart the 4 tones',
+    'home.step2': 'Study the vocabulary of HSK 1 · Lesson 1', 'home.step3': 'Do the 5-question challenge',
+    'home.beginner': 'For beginners', 'home.pinyinTitle': 'Pinyin & the 4 tones',
+    'home.pinyinDesc': 'Initials, finals, pronunciation tips and tone listening drills',
+    'home.l1Desc': 'Vocabulary, grammar, characters, reading, listening and a 10-question quiz',
+    'home.culture': 'Culture & songs', 'home.drafting': 'In progress',
+    'home.cultureDesc': 'Discover Chinese culture and learn through traditional children’s songs.',
+  },
+  zh: {
+    appName: '自学中文',
+    footer: '为越南学习者设计的中文课程 · 学习进度保存在你的浏览器里',
+    'nav.home': '开始', 'nav.pinyin': '拼音', 'nav.lessons': '课程', 'nav.daily': '每日挑战', 'nav.progress': '成就',
+    'nav.review': '复习', 'nav.more': '发现',
+    theme: '切换浅色/深色', menu: '打开菜单', simp: '简体', trad: '繁体', lang: '语言',
+    contentNote: '提示：课程讲解目前使用越南语。',
+    'home.heroEyebrow': '⚡ 免费 · 约10–15分钟',
+    'home.heroTitle': '你的中文水平是多少？',
+    'home.heroDesc': '参加 HSK 1 → HSK 6 水平测试，马上知道你的水平，并获得专属学习路线。',
+    'home.heroBtn': '🧭 开始测试', 'home.heroSoon': '🧭 水平测试（即将推出）',
+    'home.free': '免费',
+    'home.welcomeTitle': '免费试学 – 现在开始',
+    'home.welcomeDesc': '无需注册：拼音、HSK 1 和每日挑战已开放。汉字可切换简体 / 繁体。',
+    'home.startPinyin': '🔤 从拼音开始', 'home.openL1': '📖 第一课',
+    'home.today': '今天', 'home.totalXp': '总经验', 'home.streak': '连续 {n} 天',
+    'home.dailyBar': '今日挑战',
+    'home.dailyTitle': '今日五题挑战', 'home.dailyDone': '已完成 ✓ – 可以再练习',
+    'home.dailyDesc': '5道选择题，约2分钟，最多 +20 经验', 'home.doIt': '开始', 'home.practice': '练习',
+    'home.g1Title': '听音抢卡', 'home.g1Desc': '听到词语，快速选出正确的卡片',
+    'home.g2Title': '汉字接龙', 'home.g2Desc': '最后一个字变成下一个词的第一个字',
+    'home.play': '玩', 'home.soon': '即将推出', 'home.badges': '成就和徽章 →',
+    'home.steps': '前三步', 'home.step1': '听并分辨四个声调',
+    'home.step2': '学习 HSK 1 第一课的生词', 'home.step3': '完成五题挑战',
+    'home.beginner': '零基础', 'home.pinyinTitle': '拼音和四个声调',
+    'home.pinyinDesc': '声母、韵母、发音技巧和声调练习',
+    'home.l1Desc': '生词、语法、汉字、阅读、听力和10道测试题',
+    'home.culture': '文化与儿歌', 'home.drafting': '编写中',
+    'home.cultureDesc': '了解中国文化，通过传统儿歌学中文。',
+  },
+};
+
+export const lang = () => store.get().settings.lang || 'vi';
+
+/** Lấy chuỗi giao diện theo ngôn ngữ đang chọn; {n} được thay bằng vars.n */
+export function t(key, vars = {}) {
+  const l = lang();
+  let s = D[l]?.[key] ?? D.vi[key] ?? key;
+  for (const [k, v] of Object.entries(vars)) s = s.replace(`{${k}}`, v);
+  return l === 'zh' ? zhs(s) : s;
+}

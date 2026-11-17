@@ -1,5 +1,6 @@
 import { store } from './store.js';
 import { speak } from './speech.js';
+import { t, LANGS, lang } from './i18n.js';
 
 // Mỗi trang là một module có hàm render(el, params). Tải khi cần.
 const routes = [
@@ -10,6 +11,13 @@ const routes = [
   { re: /^\/lesson\/([\w-]+)(?:\/(\w+))?$/, nav: 'lessons', load: () => import('./views/lesson.js'), keys: ['id', 'tab'] },
   { re: /^\/daily$/, nav: 'daily', load: () => import('./views/daily.js') },
   { re: /^\/progress$/, nav: 'progress', load: () => import('./views/progress.js') },
+  { re: /^\/review$/, nav: 'review', load: () => import('./views/review.js') },
+  { re: /^\/explore$/, nav: 'explore', load: () => import('./views/explore.js') },
+  { re: /^\/test$/, nav: 'home', load: () => import('./views/test.js') },
+  { re: /^\/game\/(\w+)$/, nav: 'explore', load: () => import('./views/game.js'), keys: ['id'] },
+  { re: /^\/culture(?:\/([\w-]+))?$/, nav: 'explore', load: () => import('./views/culture.js'), keys: ['id'] },
+  { re: /^\/songs(?:\/([\w-]+))?$/, nav: 'explore', load: () => import('./views/songs.js'), keys: ['id'] },
+  { re: /^\/radicals$/, nav: 'explore', load: () => import('./views/radicals.js') },
 ];
 
 const app = document.getElementById('app');
@@ -41,6 +49,21 @@ async function router() {
   window.scrollTo(0, 0);
 }
 
+// ----- Ngôn ngữ giao diện (tên app đổi theo) -----
+const langSel = document.getElementById('langSel');
+langSel.innerHTML = LANGS.map(l => `<option value="${l.code}">${l.label}</option>`).join('');
+function applyLang() {
+  const l = lang();
+  langSel.value = l;
+  document.documentElement.lang = l === 'zh' ? 'zh' : l;
+  document.querySelectorAll('[data-i18n]').forEach(n => { n.textContent = t(n.dataset.i18n); });
+  document.title = `${t('appName')} – HSK 1–6`;
+  document.getElementById('themeBtn').title = t('theme');
+  document.querySelector('button[data-script="s"]').title = t('simp');
+  document.querySelector('button[data-script="t"]').title = t('trad');
+}
+langSel.addEventListener('change', () => { store.setSetting('lang', langSel.value); applyLang(); router(); });
+
 // ----- Giản thể / phồn thể -----
 function applyScript() {
   const s = store.get().settings.script;
@@ -51,6 +74,7 @@ document.querySelectorAll('button[data-script]').forEach(b => b.addEventListener
   if (store.get().settings.script === b.dataset.script) return;
   store.setSetting('script', b.dataset.script);
   applyScript();
+  applyLang();
   router(); // vẽ lại trang hiện tại với loại chữ mới
 }));
 
@@ -77,5 +101,6 @@ document.addEventListener('click', e => {
 
 applyScript();
 applyTheme();
+applyLang();
 window.addEventListener('hashchange', router);
 router();

@@ -30,7 +30,7 @@ const defaults = () => ({
   lessons: {},          // id -> { parts: {vocab:true,...}, best: 0..10 }
   pinyinSeen: [],       // các âm đã bấm nghe
   toneBest: 0,
-  settings: { script: 's', theme: 'auto', pinyin: true, trans: true },
+  settings: { script: 's', theme: 'auto', pinyin: true, trans: true, lang: 'vi' },
 });
 
 let state = load();

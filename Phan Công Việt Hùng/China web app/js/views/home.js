@@ -1,6 +1,7 @@
 import { store, rankOf, DAILY_XP_CAP } from '../store.js';
 import { esc, hz } from '../util.js';
 import { HSK1 } from '../data/hsk1.js';
+import { t } from '../i18n.js';
 
 export function render(el) {
   const st = store.get();
@@ -8,30 +9,31 @@ export function render(el) {
   const l1 = HSK1[0];
   const l1p = st.lessons[l1.id]?.parts || {};
   const steps = [
-    { done: st.toneBest > 0 || st.pinyinSeen.length >= 5, text: 'Nghe và phân biệt 4 thanh điệu', href: '#/pinyin' },
-    { done: !!l1p.vocab, text: 'Học phần Từ vựng của HSK 1 · Bài 1', href: `#/lesson/${l1.id}/vocab` },
-    { done: store.dailyDone(), text: 'Làm Thử thách 5 câu', href: '#/daily' },
+    { done: st.toneBest > 0 || st.pinyinSeen.length >= 5, text: t('home.step1'), href: '#/pinyin' },
+    { done: !!l1p.vocab, text: t('home.step2'), href: `#/lesson/${l1.id}/vocab` },
+    { done: store.dailyDone(), text: t('home.step3'), href: '#/daily' },
   ];
   const dailyPct = Math.round((st.dailyXpToday / DAILY_XP_CAP) * 100);
 
   el.innerHTML = `
+    ${t('contentNote') ? `<div class="tipbox" style="margin-bottom:16px">ℹ️ ${esc(t('contentNote'))}</div>` : ''}
     <section class="hero">
-      <div class="eyebrow">⚡ Miễn phí · khoảng 10–15 phút</div>
-      <h1>Bạn đang ở trình độ nào?</h1>
-      <p>Làm bài test năng lực HSK 1 → HSK 6: biết ngay trình độ hiện tại và nhận lộ trình học dành riêng cho bạn.</p>
+      <div class="eyebrow">${t('home.heroEyebrow')}</div>
+      <h1>${t('home.heroTitle')}</h1>
+      <p>${t('home.heroDesc')}</p>
       <div class="levels">${[1, 2, 3, 4, 5, 6].map(n => `<span>HSK ${n}</span>`).join('')}</div>
-      <button class="btn" disabled title="Đang xây dựng">🧭 Làm bài test (sắp có)</button>
+      <a class="btn" href="#/test">${t('home.heroBtn')}</a>
       <div class="hero-badge zh">${hz({ s: '级', t: '級' })}?</div>
     </section>
 
     <section class="card welcome">
       <div>
-        <div class="eyebrow">Miễn phí</div>
-        <h2 style="font-size:clamp(1.4rem,3vw,2rem)">Học thử miễn phí – bắt đầu ngay</h2>
-        <p class="muted">Không cần đăng ký: Pinyin, HSK 1 bài 1 và thử thách mỗi ngày đã mở sẵn. Chữ Hán có cả giản thể / phồn thể (nút <b class="zh">简 / 繁</b> ở góc trên) và âm Hán Việt.</p>
+        <div class="eyebrow">${t('home.free')}</div>
+        <h2 style="font-size:clamp(1.4rem,3vw,2rem)">${t('home.welcomeTitle')}</h2>
+        <p class="muted">${t('home.welcomeDesc')}</p>
         <div class="row">
-          <a class="btn primary" href="#/pinyin">🔤 Bắt đầu từ Pinyin</a>
-          <a class="btn" href="#/lesson/${l1.id}">📖 Vào bài 1</a>
+          <a class="btn primary" href="#/pinyin">${t('home.startPinyin')}</a>
+          <a class="btn" href="#/lesson/${l1.id}">${t('home.openL1')}</a>
         </div>
       </div>
       <div class="welcome-art" aria-hidden="true">${artSvg()}</div>
@@ -39,33 +41,33 @@ export function render(el) {
 
     <section class="card">
       <div class="row spread" style="margin-bottom:10px">
-        <div class="row"><b>Hôm nay</b><span class="pill red zh" title="${esc(rank.vi)}">${esc(rank.zh)}</span><span class="muted small">${esc(rank.vi)} · Tổng XP: ${st.xp}</span></div>
-        <span class="pill gold">🔥 ${st.streak} ngày liên tiếp</span>
+        <div class="row"><b>${t('home.today')}</b><span class="pill red zh" title="${esc(rank.vi)}">${esc(rank.zh)}</span><span class="muted small">${esc(rank.vi)} · ${t('home.totalXp')}: ${st.xp}</span></div>
+        <span class="pill gold">🔥 ${t('home.streak', { n: st.streak })}</span>
       </div>
-      <div class="row spread small muted"><span>Thử thách hôm nay</span><span><b>${st.dailyXpToday}</b> / ${DAILY_XP_CAP} XP</span></div>
+      <div class="row spread small muted"><span>${t('home.dailyBar')}</span><span><b>${st.dailyXpToday}</b> / ${DAILY_XP_CAP} XP</span></div>
       <div class="xpbar" style="margin:4px 0 16px"><span style="width:${dailyPct}%"></span></div>
       <div class="grid grid-3">
         <div class="tile">
           <div class="tile-icon">⚡</div>
-          <div class="tile-body"><b>Thử thách 5 câu hôm nay</b><span class="muted small">${store.dailyDone() ? 'Đã hoàn thành ✓ – làm lại để luyện thêm' : '5 câu trắc nghiệm, ~2 phút, tối đa +20 XP'}</span></div>
-          <a class="btn small primary" href="#/daily">${store.dailyDone() ? 'Luyện' : 'Làm ngay'}</a>
+          <div class="tile-body"><b>${t('home.dailyTitle')}</b><span class="muted small">${store.dailyDone() ? t('home.dailyDone') : t('home.dailyDesc')}</span></div>
+          <a class="btn small primary" href="#/daily">${store.dailyDone() ? t('home.practice') : t('home.doIt')}</a>
         </div>
         <div class="tile">
           <div class="tile-icon zh">${hz({ s: '听', t: '聽' })}</div>
-          <div class="tile-body"><b>Nghe – giành thẻ</b><span class="muted small">Nghe đọc, nhanh tay chọn đúng chữ</span></div>
-          <span class="pill">Sắp có</span>
+          <div class="tile-body"><b>${t('home.g1Title')}</b><span class="muted small">${t('home.g1Desc')}</span></div>
+          <a class="btn small" href="#/game/grab">${t('home.play')}</a>
         </div>
         <div class="tile">
           <div class="tile-icon zh">${hz({ s: '龙', t: '龍' })}</div>
-          <div class="tile-body"><b>Nối chữ 接龙</b><span class="muted small">Chữ cuối thành chữ đầu – nối càng dài càng tốt</span></div>
-          <span class="pill">Sắp có</span>
+          <div class="tile-body"><b>${t('home.g2Title')}</b><span class="muted small">${t('home.g2Desc')}</span></div>
+          <a class="btn small" href="#/game/chain">${t('home.play')}</a>
         </div>
       </div>
-      <div class="row" style="justify-content:flex-end;margin-top:10px"><a href="#/progress" class="small">Thành tích & huy hiệu →</a></div>
+      <div class="row" style="justify-content:flex-end;margin-top:10px"><a href="#/progress" class="small">${t('home.badges')}</a></div>
     </section>
 
     <section class="card">
-      <h3>3 bước đầu tiên</h3>
+      <h3>${t('home.steps')}</h3>
       <ul class="steps">
         ${steps.map(s => `<li class="${s.done ? 'done' : ''}"><span class="check">${s.done ? '✓' : ''}</span><a href="${s.href}" style="color:inherit"><span>${esc(s.text)}</span></a></li>`).join('')}
       </ul>
@@ -74,21 +76,20 @@ export function render(el) {
     <section class="grid grid-2" style="margin-bottom:20px">
       <a class="card tile" href="#/pinyin" style="margin:0;color:inherit;text-decoration:none">
         <div class="tile-icon" style="font-family:inherit">ā</div>
-        <div class="tile-body"><span class="pill jade">Miễn phí</span> <span class="pill">Dành cho người mới</span>
-          <b style="margin-top:4px">Pinyin & 4 thanh điệu</b><span class="muted small">Thanh mẫu, vận mẫu, mẹo phát âm cho người Việt, luyện nghe thanh điệu</span></div>
+        <div class="tile-body"><span class="pill jade">${t('home.free')}</span> <span class="pill">${t('home.beginner')}</span>
+          <b style="margin-top:4px">${t('home.pinyinTitle')}</b><span class="muted small">${t('home.pinyinDesc')}</span></div>
       </a>
       <a class="card tile" href="#/lesson/${l1.id}" style="margin:0;color:inherit;text-decoration:none">
         <div class="tile-icon">HSK<br>1</div>
-        <div class="tile-body"><span class="pill jade">Miễn phí</span>
+        <div class="tile-body"><span class="pill jade">${t('home.free')}</span>
           <b style="margin-top:4px">HSK 1 · Bài 1 – <span class="zh">${esc(hz(l1.title))}</span> (${esc(l1.vi)})</b>
-          <span class="muted small">Từ vựng, ngữ pháp, chữ Hán, đọc, nghe và 10 câu kiểm tra</span></div>
+          <span class="muted small">${t('home.l1Desc')}</span></div>
       </a>
     </section>
 
     <section class="card">
-      <div class="row spread"><h3 style="margin:0">Văn hóa & bài hát</h3><span class="pill">Đang soạn</span></div>
-      <p class="muted small">Sắp có: Tết Nguyên đán, văn hóa trà, phép lịch sự khi ăn uống… và học tiếng Trung qua các bài hát thiếu nhi dân gian như
-        <span class="zh">${esc(hz({ s: '两只老虎', t: '兩隻老虎' }))}</span> (Hai con hổ), <span class="zh">${esc(hz({ s: '小星星' }))}</span> (Ngôi sao nhỏ).</p>
+      <div class="row spread"><h3 style="margin:0">${t('home.culture')}</h3><a href="#/explore" class="small">${t('nav.more')} →</a></div>
+      <p class="muted small">${t('home.cultureDesc')}</p>
     </section>`;
 }
 

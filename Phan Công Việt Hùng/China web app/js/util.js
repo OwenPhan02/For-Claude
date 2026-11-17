@@ -1,9 +1,12 @@
 import { store } from './store.js';
+import { toTrad } from './data/s2t.js';
 
 export const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
 /** Lấy chữ theo chế độ giản/phồn. obj có dạng { s, t } (t bỏ trống = giống s). */
-export const hz = obj => (store.get().settings.script === 't' ? (obj.t || obj.s) : obj.s);
+export const hz = obj => (store.get().settings.script === 't' ? (obj.t || toTrad(obj.s)) : obj.s);
+/** Chuyển một chuỗi giản thể theo chế độ đang chọn. */
+export const zhs = s => (store.get().settings.script === 't' ? toTrad(s) : s);
 
 /** Nút loa: data-say chứa chữ giản thể để TTS đọc. */
 export const speakBtn = (text, title = 'Nghe') =>
@@ -41,7 +44,7 @@ export const colorPinyin = py => esc(py).split(/(\s+)/).map(p => (p.trim() ? `<s
 export function rubyLine(tokens) {
   const script = store.get().settings.script;
   return tokens.map(([s, t, py]) => {
-    const text = script === 't' ? (t || s) : s;
+    const text = script === 't' ? (t || toTrad(s)) : s;
     return py ? `<ruby>${esc(text)}<rt>${esc(py)}</rt></ruby>` : esc(text);
   }).join('');
 }

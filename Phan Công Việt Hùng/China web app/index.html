@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>中文之路 – Học tiếng Trung HSK 1–6</title>
+  <title>Tự học Tiếng Trung – HSK 1–6</title>
   <meta name="description" content="Học tiếng Trung cho người Việt: pinyin, chữ Hán (giản thể & phồn thể, âm Hán Việt), từ vựng, ngữ pháp, nghe, đọc theo HSK 1–6.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23c8102e'/><text x='32' y='46' font-size='40' text-anchor='middle' fill='%23ffd166' font-family='serif'>中</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,15 +13,18 @@
 </head>
 <body>
   <header class="topbar">
-    <a href="#/" class="brand"><span class="brand-mark">中</span><span class="brand-name">中文之路</span></a>
+    <a href="#/" class="brand"><span class="brand-mark">中</span><span class="brand-name" data-i18n="appName">Tự học Tiếng Trung</span></a>
     <nav class="mainnav" id="mainnav">
-      <a href="#/" data-nav="home">🏮 Học thử</a>
-      <a href="#/pinyin" data-nav="pinyin">🔤 Pinyin</a>
-      <a href="#/lessons" data-nav="lessons">📚 Bài học</a>
-      <a href="#/daily" data-nav="daily">⚡ Thử thách</a>
-      <a href="#/progress" data-nav="progress">🏆 Thành tích</a>
+      <a href="#/" data-nav="home">🏮 <span data-i18n="nav.home">Học thử</span></a>
+      <a href="#/pinyin" data-nav="pinyin">🔤 <span data-i18n="nav.pinyin">Pinyin</span></a>
+      <a href="#/lessons" data-nav="lessons">📚 <span data-i18n="nav.lessons">Bài học</span></a>
+      <a href="#/review" data-nav="review">🔁 <span data-i18n="nav.review">Ôn tập</span></a>
+      <a href="#/daily" data-nav="daily">⚡ <span data-i18n="nav.daily">Thử thách</span></a>
+      <a href="#/explore" data-nav="explore">🧭 <span data-i18n="nav.more">Khám phá</span></a>
+      <a href="#/progress" data-nav="progress">🏆 <span data-i18n="nav.progress">Thành tích</span></a>
     </nav>
     <div class="topbar-tools">
+      <select id="langSel" class="lang-sel" aria-label="Ngôn ngữ"></select>
       <div class="seg" role="group" aria-label="Loại chữ">
         <button type="button" data-script="s" title="Giản thể">简</button>
         <button type="button" data-script="t" title="Phồn thể">繁</button>
@@ -31,7 +34,7 @@
     </div>
   </header>
   <main id="app" class="container" tabindex="-1"></main>
-  <footer class="footer">中文之路 · Học tiếng Trung cho người Việt · Tiến độ được lưu trên trình duyệt của bạn</footer>
+  <footer class="footer"><b data-i18n="appName">Tự học Tiếng Trung</b> · <span data-i18n="footer">Học tiếng Trung cho người Việt · Tiến độ được lưu trên trình duyệt của bạn</span></footer>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <script type="module" src="js/app.js"></script>
 </body>
