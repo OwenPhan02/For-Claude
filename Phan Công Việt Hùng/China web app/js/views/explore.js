@@ -2,6 +2,7 @@ import { esc, zhs } from '../util.js';
 
 const ITEMS = [
   { href: '#/test', icon: '级', title: 'Bài test trình độ', desc: 'HSK 1 → 6: biết mình đang ở đâu, nên học bài nào.' },
+  { href: '#/exam', icon: '考', title: 'Đề thi thử HSK', desc: 'Nghe – Đọc – Từ vựng, có tính giờ, mỗi lần một đề mới.' },
   { href: '#/radicals', icon: '部', title: '50 bộ thủ thường gặp', desc: 'Chìa khóa đoán nghĩa chữ Hán, kèm trò đoán bộ.' },
   { href: '#/culture', icon: '茶', title: 'Văn hóa Trung Hoa', desc: 'Tết, trà, ăn uống, phép lịch sự, con số may mắn…' },
   { href: '#/songs', icon: '歌', title: 'Học qua bài hát', desc: 'Đồng dao và bài hát thiếu nhi dân gian có pinyin.' },

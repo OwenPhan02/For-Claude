@@ -34,6 +34,7 @@ const defaults = () => ({
   reviewed: 0,          // tổng số thẻ đã ôn
   cultureSeen: [], songsSeen: [], games: {},
   test: null,           // kết quả test trình độ gần nhất
+  exams: {},            // cấp HSK -> % cao nhất của đề thi thử
   week: null, weekXp: 0, // XP trong tuần (bảng xếp hạng)
   updatedAt: 0,
   settings: { script: 's', theme: 'auto', pinyin: true, trans: true, lang: 'vi' },
@@ -93,6 +94,7 @@ export const store = {
   seeSong(id) { if (!state.songsSeen.includes(id)) { state.songsSeen.push(id); save(); } },
   setGameBest(id, n) { if (n > (state.games[id] || 0)) { state.games[id] = n; save(); return true; } return false; },
   setTest(r) { state.test = r; save(); },
+  setExams(e) { state.exams = e; save(); },
   setToneBest(n) { if (n > state.toneBest) { state.toneBest = n; save(); } },
   // ----- Ôn tập lặp lại ngắt quãng (kiểu SM-2 rút gọn) -----
   srsAdd(keys) {

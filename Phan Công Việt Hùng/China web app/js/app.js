@@ -20,6 +20,7 @@ const routes = [
   { re: /^\/songs(?:\/([\w-]+))?$/, nav: 'explore', load: () => import('./views/songs.js'), keys: ['id'] },
   { re: /^\/radicals$/, nav: 'explore', load: () => import('./views/radicals.js') },
   { re: /^\/account$/, nav: 'account', load: () => import('./views/account.js') },
+  { re: /^\/exam(?:\/(\d))?$/, nav: 'explore', load: () => import('./views/exam.js'), keys: ['level'] },
 ];
 
 const app = document.getElementById('app');

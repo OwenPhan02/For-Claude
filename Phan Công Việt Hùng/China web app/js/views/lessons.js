@@ -13,7 +13,7 @@ export function render(el) {
       <section class="card">
         <div class="row spread">
           <h2 style="margin:0">${lv.name}</h2>
-          <span class="pill">${lv.words} từ</span>
+          <span class="row"><span class="pill">${lv.words} từ</span>${lv.lessons.length ? `<a class="btn small" href="#/exam/${lv.level}">📝 Thi thử</a>` : ''}</span>
         </div>
         <p class="muted small">${esc(lv.desc)}</p>
         ${lv.lessons.length ? `<div class="grid grid-3">${lv.lessons.map(l => {

@@ -50,7 +50,7 @@ Mỗi bài gồm: **Từ vựng** (thẻ lật + phát âm), **Ngữ pháp**, **
 - [x] Code đăng ký / đăng nhập (email, Google, quên mật khẩu) – trang #/account, tự bật khi có config
 - [x] Code đồng bộ tiến độ lên Firestore (bản mới hơn thắng)
 - [x] Code bảng xếp hạng tuần (XP thứ Hai → Chủ nhật)
-- [ ] Đề thi thử HSK 1–6
+- [x] Đề thi thử HSK (3 phần Nghe/Đọc/Từ vựng, tính giờ, trộn ngẫu nhiên) – có cho HSK 1–3, HSK 4–6 tự có khi soạn xong bài
 - [ ] HSK 4–6
 
 ## Câu hỏi cần hỏi bạn (khi tới nơi)
