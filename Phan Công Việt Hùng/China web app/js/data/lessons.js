@@ -25,6 +25,7 @@ import { HSK6B } from './hsk6b.js';
 import { HSK6C } from './hsk6c.js';
 import { HSK6D } from './hsk6d.js';
 import { HSK6E } from './hsk6e.js';
+import { HSK6F } from './hsk6f.js';
 
 export const LEVELS = [
   { level: 1, name: 'HSK 1', words: 150, desc: 'Chào hỏi, số đếm, gia đình, thời gian – giao tiếp cơ bản nhất.', lessons: [...HSK1, ...HSK1B, ...HSK1C, ...HSK1D] },
@@ -32,7 +33,7 @@ export const LEVELS = [
   { level: 3, name: 'HSK 3', words: 600, desc: 'Câu 把, 被, so sánh nâng cao; học tập, công việc, sức khỏe, thành phố – xử lý hầu hết tình huống đời sống.', lessons: [...HSK3A, ...HSK3B, ...HSK3C] },
   { level: 4, name: 'HSK 4', words: 1200, desc: 'Thảo luận nhiều chủ đề, nói chuyện trôi chảy với người bản xứ: tình cảm, du lịch, công việc, xã hội.', lessons: [...HSK4A, ...HSK4B, ...HSK4C, ...HSK4D, ...HSK4E, ...HSK4F] },
   { level: 5, name: 'HSK 5', words: 2500, desc: 'Đọc báo, xem phim, thuyết trình. Bài dạng gọn: 50 từ/bài, ngữ pháp trọng tâm, nghe và kiểm tra tự sinh.', lessons: [...HSK5A, ...HSK5B, ...HSK5C, ...HSK5D, ...HSK5E, ...HSK5F, ...HSK5G] },
-  { level: 6, name: 'HSK 6', words: '5000+', desc: 'Hiểu và diễn đạt trôi chảy bằng nói và viết; nhiều thành ngữ và văn viết. Bài dạng gọn: 50 từ/bài.', lessons: [...HSK6A, ...HSK6B, ...HSK6C, ...HSK6D, ...HSK6E] },
+  { level: 6, name: 'HSK 6', words: '5000+', desc: 'Hiểu và diễn đạt trôi chảy bằng nói và viết; nhiều thành ngữ và văn viết. Bài dạng gọn: 50 từ/bài.', lessons: [...HSK6A, ...HSK6B, ...HSK6C, ...HSK6D, ...HSK6E, ...HSK6F] },
 ];
 
 export const ALL_LESSONS = LEVELS.flatMap(l => l.lessons);
