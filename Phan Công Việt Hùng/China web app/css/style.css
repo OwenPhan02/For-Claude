@@ -519,30 +519,29 @@ img, svg, video, canvas { max-width: 100%; }
 /* Thanh điều hướng dưới đáy – chỉ hiện trên điện thoại / máy tính bảng */
 .tabbar { display: none; }
 .sheet-back[hidden] { display: none; }
-@media (max-width: 1100px) {
-  .mainnav, .menu-btn { display: none !important; }
-  .tabbar {
+/* html.compact: JS bật khi màn ≤1100px, màn cảm ứng, hoặc thanh trên không đủ chỗ */
+  html.compact .mainnav, html.compact .menu-btn { display: none !important; }
+  html.compact .tabbar {
     position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; display: flex; justify-content: space-around;
     padding: 6px max(6px, env(safe-area-inset-left)) calc(6px + env(safe-area-inset-bottom)) max(6px, env(safe-area-inset-right));
     background: color-mix(in srgb, var(--surface) 94%, transparent); backdrop-filter: blur(10px);
     border-top: 1px solid var(--line); box-shadow: 0 -6px 20px rgba(0,0,0,.08);
   }
-  .tabbar a, .tabbar button {
+  html.compact .tabbar a, html.compact .tabbar button {
     flex: 1 1 0; min-width: 0; max-width: 120px; display: flex; flex-direction: column; align-items: center; gap: 2px;
     padding: 6px 2px; border: 0; background: none; border-radius: 12px; color: var(--muted); text-decoration: none;
     font-size: .68rem; transition: color .2s, background-color .2s, transform .15s;
   }
-  .tabbar .ti { font-size: 1.25rem; line-height: 1; transition: transform .3s var(--ease-spring); }
-  .tabbar b { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
-  .tabbar .active { color: var(--red); background: var(--red-soft); }
-  .tabbar .active .ti { transform: translateY(-2px) scale(1.12); }
-  .tabbar a:active, .tabbar button:active { transform: scale(.92); }
-  body { padding-bottom: calc(68px + env(safe-area-inset-bottom)); }
-  .toast { bottom: calc(84px + env(safe-area-inset-bottom)); }
-  .brand-name { font-size: 1rem; }
-}
-@media (max-width: 599px) { .tabbar .wide-only { display: none; } }
-@media (min-width: 600px) and (max-width: 1100px) { .tabbar a, .tabbar button { font-size: .75rem; } }
+  html.compact .tabbar .ti { font-size: 1.25rem; line-height: 1; transition: transform .3s var(--ease-spring); }
+  html.compact .tabbar b { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+  html.compact .tabbar .active { color: var(--red); background: var(--red-soft); }
+  html.compact .tabbar .active .ti { transform: translateY(-2px) scale(1.12); }
+  html.compact .tabbar a:active, html.compact .tabbar button:active { transform: scale(.92); }
+  html.compact body { padding-bottom: calc(68px + env(safe-area-inset-bottom)); }
+  html.compact .toast { bottom: calc(84px + env(safe-area-inset-bottom)); }
+  html.compact .brand-name { font-size: 1rem; }
+@media (max-width: 599px) { html.compact .tabbar .wide-only { display: none; } }
+@media (min-width: 600px) { html.compact .tabbar a, html.compact .tabbar button { font-size: .75rem; } }
 
 /* Bảng "Thêm" trượt từ dưới lên */
 .sheet-back {
@@ -618,9 +617,9 @@ img, svg, video, canvas { max-width: 100%; }
 
 /* Màn ngang thấp (điện thoại xoay ngang) */
 @media (max-height: 520px) and (orientation: landscape) {
-  .tabbar { padding-top: 3px; padding-bottom: calc(3px + env(safe-area-inset-bottom)); }
-  .tabbar a, .tabbar button { flex-direction: row; justify-content: center; gap: 6px; padding: 6px; }
-  body { padding-bottom: calc(48px + env(safe-area-inset-bottom)); }
+  html.compact .tabbar { padding-top: 3px; padding-bottom: calc(3px + env(safe-area-inset-bottom)); }
+  html.compact .tabbar a, html.compact .tabbar button { flex-direction: row; justify-content: center; gap: 6px; padding: 6px; }
+  html.compact body { padding-bottom: calc(48px + env(safe-area-inset-bottom)); }
 }
 
 /* Mở dạng app đã cài: không cần thanh cài */
@@ -634,3 +633,8 @@ img, svg, video, canvas { max-width: 100%; }
 /* Ô số liệu luôn 3 cột (trang Thành tích) */
 .grid:has(> .stat) { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
 @media (max-width: 640px) { .stat { padding: 12px 6px; font-size: .8rem; } .stat b { font-size: 1.5rem; } }
+
+/* Thanh trên không bao giờ đẩy nút ra ngoài */
+.topbar-tools { flex-shrink: 0; }
+.brand { min-width: 0; flex-shrink: 1; }
+.brand-name { overflow: hidden; text-overflow: ellipsis; }

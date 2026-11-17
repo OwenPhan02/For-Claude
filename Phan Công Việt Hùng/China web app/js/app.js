@@ -70,6 +70,23 @@ async function router() {
   if (newPage) window.scrollTo(0, 0);
 }
 
+// ----- Tự chọn bố cục theo khung máy -----
+// Màn ≤1100px, màn cảm ứng, hoặc thanh trên không đủ chỗ cho menu → dùng thanh điều hướng dưới đáy.
+const root = document.documentElement;
+function fitLayout() {
+  const want = innerWidth <= 1100 || matchMedia('(pointer: coarse)').matches;
+  if (want) { root.classList.add('compact'); return; }
+  root.classList.remove('compact');
+  const bar = document.querySelector('.topbar');
+  const name = bar.querySelector('.brand-name');
+  if (bar.scrollWidth > bar.clientWidth + 1 || (name && name.scrollWidth > name.clientWidth + 1)) root.classList.add('compact');
+}
+let fitTimer;
+const refit = () => { clearTimeout(fitTimer); fitTimer = setTimeout(fitLayout, 80); };
+addEventListener('resize', refit);
+addEventListener('orientationchange', refit);
+document.fonts?.ready.then(fitLayout);
+
 // ----- Bảng "Thêm" (điện thoại / máy tính bảng): mục phụ + cài đặt -----
 const sheet = document.getElementById('sheet');
 function closeSheet() {
@@ -145,7 +162,7 @@ function applyLang() {
   document.querySelector('button[data-script="s"]').title = t('simp');
   document.querySelector('button[data-script="t"]').title = t('trad');
 }
-langSel.addEventListener('change', () => { store.setSetting('lang', langSel.value); applyLang(); renderInstallBar(); router(); });
+langSel.addEventListener('change', () => { store.setSetting('lang', langSel.value); applyLang(); renderInstallBar(); fitLayout(); router(); });
 
 // ----- Hoa mai rơi (bật/tắt) -----
 const petalBtn = document.getElementById('petalBtn');
@@ -197,6 +214,7 @@ applyTheme();
 applyLang();
 applyPetals();
 renderInstallBar();
+fitLayout();
 
 // Nút tài khoản (chỉ hiện khi đã cấu hình Firebase)
 const acctBtn = document.getElementById('acctBtn');
@@ -205,6 +223,7 @@ if (cloudEnabled()) {
   onUser(u => {
     acctBtn.textContent = u ? `👤 ${(u.displayName || u.email || '').split('@')[0].slice(0, 14)}` : t('login');
     acctBtn.classList.toggle('primary', !u);
+    refit();
   });
 }
 window.addEventListener('hashchange', router);
