@@ -124,8 +124,8 @@ export function renderInstallBar() {
     <span class="ib-ico">${mob ? '📲' : '▦'}</span>
     <span class="ib-text">${mob ? tx('mob') : tx('desk')}</span>
     <span class="ib-actions">
-      ${mob ? '' : `<button type="button" class="btn small jade" data-act="qr">${tx('openPhone')}</button>`}
-      <button type="button" class="btn small ${mob ? 'jade' : 'ghost'}" data-act="install">${mob ? tx('installApp') : tx('installPc')}</button>
+      ${mob ? '' : `<button type="button" class="btn small primary" data-act="qr">${tx('openPhone')}</button>`}
+      <button type="button" class="btn small ${mob ? 'primary' : 'ghost'}" data-act="install">${mob ? tx('installApp') : tx('installPc')}</button>
       <button type="button" class="icon-btn" data-act="close" aria-label="${tx('close')}">✕</button>
     </span>`;
   bar.addEventListener('click', e => {
