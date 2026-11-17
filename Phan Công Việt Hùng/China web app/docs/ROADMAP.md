@@ -53,7 +53,7 @@ Mỗi bài gồm: **Từ vựng** (thẻ lật + phát âm), **Ngữ pháp**, **
 - [x] Đề thi thử HSK (3 phần Nghe/Đọc/Từ vựng, tính giờ, trộn ngẫu nhiên) – có cho HSK 1–3, HSK 4–6 tự có khi soạn xong bài
 - [x] HSK 4: 24 bài – HSK 1→4 khớp đủ 1200 từ chính thức (tổng 1214 từ), có đề thi thử HSK 4
 - [x] HSK 5: 26 bài dạng gọn – HSK 1→5 khớp đủ 2500 từ chính thức (tổng 2514 từ), có đề thi thử HSK 5
-- [ ] HSK 6: 50 bài dạng gọn (docs/HSK5_PLAN.md mục HSK 6) – bài 1–24 xong, còn bài 25–50
+- [ ] HSK 6: 50 bài dạng gọn (docs/HSK5_PLAN.md mục HSK 6) – bài 1–28 xong, còn bài 29–50
 
 ## Câu hỏi cần hỏi bạn (khi tới nơi)
 - Tên app chính thức? (tạm đặt: **中文之路 · Đường đến Trung văn**)
