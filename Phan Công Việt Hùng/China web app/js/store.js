@@ -30,6 +30,8 @@ const defaults = () => ({
   lessons: {},          // id -> { parts: {vocab:true,...}, best: 0..10 }
   pinyinSeen: [],       // các âm đã bấm nghe
   toneBest: 0,
+  srs: {},             // 'bài:từ' -> { due, ivl (ngày), ease, reps, lapses }
+  reviewed: 0,          // tổng số thẻ đã ôn
   settings: { script: 's', theme: 'auto', pinyin: true, trans: true, lang: 'vi' },
 });
 
@@ -81,6 +83,45 @@ export const store = {
   dailyDone: () => state.dailyDoneOn === today(),
   seePinyin(key) { if (!state.pinyinSeen.includes(key)) { state.pinyinSeen.push(key); save(); } },
   setToneBest(n) { if (n > state.toneBest) { state.toneBest = n; save(); } },
+  // ----- Ôn tập lặp lại ngắt quãng (kiểu SM-2 rút gọn) -----
+  srsAdd(keys) {
+    let n = 0;
+    for (const k of keys) if (!state.srs[k]) { state.srs[k] = { due: Date.now(), ivl: 0, ease: 2.5, reps: 0, lapses: 0 }; n++; }
+    if (n) save();
+    return n;
+  },
+  /** g: 0 = Quên, 1 = Khó, 2 = Nhớ, 3 = Dễ. Trả về số ngày tới lần ôn sau. */
+  srsGrade(key, g) {
+    const c = state.srs[key];
+    if (!c) return 0;
+    const DAY = 864e5;
+    if (g === 0) {
+      c.lapses++; c.reps = 0; c.ivl = 0; c.ease = Math.max(1.3, c.ease - 0.2);
+      c.due = Date.now() + 10 * 60e3; // 10 phút sau hỏi lại
+    } else {
+      if (g === 1) c.ease = Math.max(1.3, c.ease - 0.15);
+      if (g === 3) c.ease += 0.15;
+      c.ivl = c.reps === 0 ? (g === 3 ? 3 : 1)
+        : c.reps === 1 ? (g === 1 ? 2 : g === 3 ? 7 : 4)
+        : Math.round(c.ivl * (g === 1 ? 1.2 : g === 3 ? c.ease * 1.3 : c.ease));
+      c.reps++;
+      c.due = Date.now() + c.ivl * DAY;
+    }
+    state.reviewed++;
+    touchStreak();
+    save();
+    return c.ivl;
+  },
+  srsDue: () => Object.entries(state.srs).filter(([, c]) => c.due <= Date.now()).map(([k]) => k),
+  srsStats() {
+    const cards = Object.values(state.srs);
+    return {
+      total: cards.length,
+      due: cards.filter(c => c.due <= Date.now()).length,
+      learning: cards.filter(c => c.ivl < 7).length,
+      mature: cards.filter(c => c.ivl >= 21).length,
+    };
+  },
   reset() { state = defaults(); save(); },
 };
 

@@ -33,8 +33,8 @@ Mỗi bài gồm: **Từ vựng** (thẻ lật + phát âm), **Ngữ pháp**, **
 ### Giai đoạn 2 – Nội dung và tính năng học
 - [x] HSK 1: bài 2–13 (13 bài, 228 từ – đủ 150 từ HSK 1 chuẩn + từ bổ trợ)
 - [x] Đổi tên "Tự học Tiếng Trung", chọn ngôn ngữ giao diện vi/en/zh, tự chuyển phồn thể
-- [ ] Ôn tập theo lặp lại ngắt quãng (SRS) cho từ đã học
-- [ ] Luyện viết chữ Hán (hanzi-writer quiz mode)
+- [x] Ôn tập theo lặp lại ngắt quãng (SRS) cho từ đã học – 3 kiểu ôn, phím tắt Space/1-4
+- [x] Luyện viết chữ Hán (hanzi-writer quiz mode) – trong trang Ôn tập
 - [ ] Bộ thủ thường gặp (214 bộ, ưu tiên ~50 bộ hay dùng)
 - [ ] Bài test trình độ HSK 1→6 (giống "Bạn đang ở trình độ nào?")
 - [ ] Văn hóa Trung Quốc (Tết, trà, ăn uống, phép lịch sự…)

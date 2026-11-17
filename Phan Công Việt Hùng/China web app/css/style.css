@@ -295,3 +295,4 @@ rt { font-size: .55em; color: var(--red); font-family: "Be Vietnam Pro", sans-se
 .badge { text-align: center; padding: 14px 10px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface); }
 .badge .ico { font-size: 2rem; }
 .badge.locked { opacity: .45; filter: grayscale(1); }
+.btn.primary .muted, .btn.jade .muted { color: inherit; opacity: .85; }

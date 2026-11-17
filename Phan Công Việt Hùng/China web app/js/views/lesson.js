@@ -54,6 +54,7 @@ export function render(el, { id, tab }) {
 
 /** Đánh dấu hoàn thành một phần, cộng XP lần đầu. */
 function complete(L, key) {
+  if (key === 'vocab') store.srsAdd(L.vocab.map(w => `${L.id}:${w.s}`));
   if (store.markPart(L.id, key)) {
     store.addXp(PART_XP);
     toast(`Hoàn thành phần ${PARTS.find(p => p.key === key).name} · +${PART_XP} XP`);
@@ -168,6 +169,7 @@ function grammar(box, L) {
 
 // ---------------- Chữ Hán ----------------
 let writerLib;
+export { loadWriter };
 function loadWriter() {
   writerLib ||= new Promise((res, rej) => {
     const s = document.createElement('script');
