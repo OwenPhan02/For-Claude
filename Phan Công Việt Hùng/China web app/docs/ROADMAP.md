@@ -39,8 +39,8 @@ Mỗi bài gồm: **Từ vựng** (thẻ lật + phát âm), **Ngữ pháp**, **
 - [ ] Bài test trình độ HSK 1→6 (giống "Bạn đang ở trình độ nào?")
 - [x] Văn hóa Trung Quốc: 8 bài (Tết, trà, bàn ăn, con số, Trung thu, xưng hô, tặng quà, thư pháp), "Văn hóa hôm nay" ở trang chủ
 - [x] Học qua bài hát: 3 đồng dao dân gian + 4 bài thơ Đường (có âm Hán Việt), đọc theo từng dòng
-- [ ] Mini game 1: "Nghe – giành thẻ" (giống Karuta)
-- [ ] Mini game 2: Nối thành ngữ / nối chữ 成语接龙 (giống Shiritori)
+- [x] Mini game 1: "Nghe – giành thẻ" đấu với gấu trúc 熊猫, 3 mức độ
+- [x] Mini game 2: Nối chữ 接龙 (từ bài đã học + 70 từ bổ trợ), 12 giây/lượt
 - [ ] Huy hiệu & trang thành tích
 - [ ] HSK 2, HSK 3 (cùng khuôn bài)
 
