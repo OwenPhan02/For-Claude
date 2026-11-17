@@ -42,7 +42,8 @@ Mỗi bài gồm: **Từ vựng** (thẻ lật + phát âm), **Ngữ pháp**, **
 - [x] Mini game 1: "Nghe – giành thẻ" đấu với gấu trúc 熊猫, 3 mức độ
 - [x] Mini game 2: Nối chữ 接龙 (từ bài đã học + 70 từ bổ trợ), 12 giây/lượt
 - [x] Huy hiệu & trang thành tích (15 huy hiệu)
-- [ ] HSK 2, HSK 3 (cùng khuôn bài)
+- [x] HSK 2: 8 bài – HSK 1+2 khớp đủ 300 từ chính thức
+- [ ] HSK 3 (cùng khuôn bài)
 
 ### Giai đoạn 3 – Tài khoản và đưa lên mạng
 - [ ] Firebase project + Hosting (cần bạn tạo tài khoản Firebase)

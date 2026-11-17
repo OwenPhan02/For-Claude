@@ -14,6 +14,7 @@ export const HSK1 = [
       { s: '你们', t: '你們', py: 'nǐmen', hv: 'nhĩ môn', vi: 'các bạn', pos: 'đại từ' },
       { s: '我', py: 'wǒ', hv: 'ngã', vi: 'tôi, mình', pos: 'đại từ' },
       { s: '我们', t: '我們', py: 'wǒmen', hv: 'ngã môn', vi: 'chúng tôi, chúng ta', pos: 'đại từ' },
+      { s: '们', t: '們', py: 'men', hv: 'môn', vi: '(hậu tố số nhiều chỉ người)', pos: 'hậu tố' },
       { s: '他', py: 'tā', hv: 'tha', vi: 'anh ấy, ông ấy', pos: 'đại từ' },
       { s: '她', py: 'tā', hv: 'tha', vi: 'cô ấy, bà ấy', pos: 'đại từ' },
       { s: '他们', t: '他們', py: 'tāmen', hv: 'tha môn', vi: 'họ, các anh ấy', pos: 'đại từ' },
