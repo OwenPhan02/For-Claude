@@ -469,3 +469,39 @@ a.card:hover, a.tile:hover { text-decoration: none; }
 .topbar, .container, .footer, .install-bar { position: relative; z-index: 1; }
 .topbar { z-index: 20; position: sticky; }
 #petalBtn.off { filter: grayscale(1); opacity: .5; }
+
+/* ---------- Hộp hướng dẫn cài app ---------- */
+.modal.guide {
+  position: relative; width: min(560px, 100%); max-height: calc(100vh - 32px); overflow-y: auto;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 20px; box-shadow: 0 24px 60px rgba(0,0,0,.25);
+  display: grid; gap: 14px;
+}
+.guide-x { position: absolute; top: 10px; right: 10px; z-index: 1; }
+.guide-qr {
+  display: flex; gap: 18px; align-items: center; padding: 16px; border-radius: 16px;
+  background: var(--red-soft); border: 1px solid color-mix(in srgb, var(--red) 18%, var(--line));
+}
+.guide-qr .qr-box { width: 170px; height: 170px; margin: 0; flex: none; padding: 6px; border-radius: 10px; }
+.guide-qr-text { min-width: 0; display: grid; gap: 10px; justify-items: start; font-size: .92rem; }
+.guide-qr-text p { margin: 0; padding-right: 24px; }
+.guide-url {
+  width: 100%; padding: 8px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface);
+  font-family: ui-monospace, Consolas, monospace; font-size: .85rem; overflow-wrap: anywhere;
+}
+.btn.soft { background: var(--surface); color: var(--red); border-color: color-mix(in srgb, var(--red) 25%, var(--line)); }
+.guide-install { width: 100%; justify-content: center; padding: 14px; font-size: 1.05rem; border-radius: 14px; }
+.guide-note { margin: -4px 0 0; padding: 10px 12px; border-radius: 12px; background: var(--gold-soft); font-size: .88rem; }
+.guide-sec { border: 1px solid var(--line); border-radius: 16px; padding: 14px 16px; background: var(--surface); }
+.guide-sec h4 { margin: 0 0 8px; font-size: 1.02rem; display: flex; gap: 8px; align-items: center; }
+.guide-sec ol { margin: 0; padding-left: 1.3em; display: grid; gap: 6px; font-size: .92rem; }
+.guide-sec li::marker { color: var(--red); font-weight: 800; }
+.guide-done { padding: 12px 14px; border-radius: 14px; background: var(--jade-soft); font-size: .92rem; }
+.guide .guide-sec, .guide .guide-qr, .guide .guide-install, .guide .guide-done { animation: popIn .45s var(--ease) both; }
+.guide > :nth-child(3) { animation-delay: .05s; } .guide > :nth-child(5) { animation-delay: .1s; }
+.guide > :nth-child(6) { animation-delay: .15s; } .guide > :nth-child(7) { animation-delay: .2s; }
+.guide > :nth-child(8) { animation-delay: .25s; } .guide > :nth-child(9) { animation-delay: .3s; }
+@media (max-width: 520px) {
+  .guide-qr { flex-direction: column; text-align: center; }
+  .guide-qr-text { justify-items: center; }
+  .guide-qr-text p { padding-right: 0; }
+}
