@@ -1,10 +1,13 @@
 import { store, rankOf, DAILY_XP_CAP } from '../store.js';
-import { esc, hz } from '../util.js';
+import { esc, hz, zhs } from '../util.js';
 import { HSK1 } from '../data/hsk1.js';
 import { t } from '../i18n.js';
+import { cultureOfDay } from '../data/culture.js';
+import { SONGS } from '../data/songs.js';
 
 export function render(el) {
   const st = store.get();
+  const cul = cultureOfDay();
   const rank = rankOf(st.xp);
   const l1 = HSK1[0];
   const l1p = st.lessons[l1.id]?.parts || {};
@@ -88,8 +91,23 @@ export function render(el) {
     </section>
 
     <section class="card">
-      <div class="row spread"><h3 style="margin:0">${t('home.culture')}</h3><a href="#/explore" class="small">${t('nav.more')} →</a></div>
-      <p class="muted small">${t('home.cultureDesc')}</p>
+      <div class="row spread"><h3 style="margin:0">🏮 Văn hóa hôm nay</h3><a href="#/culture" class="small">Tất cả bài →</a></div>
+      <a href="#/culture/${cul.id}" class="tile" style="margin-top:10px;color:inherit;text-decoration:none">
+        <div class="tile-icon" style="font-family:inherit">${cul.icon}</div>
+        <div class="tile-body"><b>${esc(cul.title)} · <span class="zh">${esc(zhs(cul.zh))}</span></b><span class="muted small">${esc(cul.summary)}</span></div>
+      </a>
+    </section>
+
+    <section class="card">
+      <div class="row spread"><h3 style="margin:0">🎵 Học qua đồng dao & thơ Đường</h3><a href="#/songs" class="small">Tất cả →</a></div>
+      <div class="grid grid-3" style="margin-top:10px">
+        ${SONGS.slice(0, 6).map(s => `
+          <a class="tile" href="#/songs/${s.id}" style="color:inherit;text-decoration:none">
+            <div class="tile-body"><span class="pill ${s.type === 'Thơ Đường' ? 'gold' : 'jade'}">${esc(s.level)}</span>
+              <b class="zh" style="font-size:1.3rem;margin-top:4px">${esc(zhs(s.zh))}</b><span class="muted small">${esc(s.py)} · ${esc(s.vi)}</span></div>
+            <span class="small" style="color:var(--red)">Học →</span>
+          </a>`).join('')}
+      </div>
     </section>`;
 }
 

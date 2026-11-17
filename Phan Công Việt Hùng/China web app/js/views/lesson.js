@@ -1,6 +1,6 @@
 import { getLesson, ALL_LESSONS } from '../data/lessons.js';
 import { store } from '../store.js';
-import { esc, hz, speakBtn, rubyLine, plainLine, colorPinyin, toast } from '../util.js';
+import { esc, hz, zhs, speakBtn, rubyLine, plainLine, colorPinyin, toast } from '../util.js';
 import { runQuiz, vocabQuestions } from '../quiz.js';
 import { speak } from '../speech.js';
 
@@ -158,8 +158,8 @@ function grammar(box, L) {
     ${L.grammar.map((g, k) => `
       <div class="gpoint">
         <h3>${k + 1}. ${esc(g.title)}</h3>
-        <div class="formula zh">${esc(g.formula)}</div>
-        <p>${g.explain}</p>
+        <div class="formula zh">${esc(zhs(g.formula))}</div>
+        <p>${zhs(g.explain)}</p>
         ${g.examples.map(exLine).join('')}
       </div>`).join('')}
     ${doneBtn()}
@@ -194,7 +194,7 @@ function hanzi(box, L) {
             <div class="py" style="color:var(--red);font-weight:700">${colorPinyin(c.py)} · <span class="hv">${esc(c.hv)}</span></div>
             <div class="small">${esc(c.vi)}</div>
             <div class="small muted">Bộ: <span class="zh">${esc(c.radical)}</span> · ${trad && c.strokesT ? c.strokesT : c.strokes} nét</div>
-            <p class="small" style="margin:6px 0 0">${c.note}</p>
+            <p class="small" style="margin:6px 0 0">${zhs(c.note)}</p>
           </div>
         </div>`).join('')}
     </div>
@@ -248,7 +248,7 @@ function reading(box, L) {
           </div>`;
         }).join('')}
       </div>
-      ${R.newWords ? `<p class="small muted">💡 ${esc(R.newWords)}</p>` : ''}
+      ${R.newWords ? `<p class="small muted">💡 ${esc(zhs(R.newWords))}</p>` : ''}
     </div>
     <div class="card">
       <h3>Câu hỏi đọc hiểu</h3>

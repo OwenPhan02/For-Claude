@@ -32,6 +32,7 @@ const defaults = () => ({
   toneBest: 0,
   srs: {},             // 'bài:từ' -> { due, ivl (ngày), ease, reps, lapses }
   reviewed: 0,          // tổng số thẻ đã ôn
+  cultureSeen: [], songsSeen: [], games: {},
   settings: { script: 's', theme: 'auto', pinyin: true, trans: true, lang: 'vi' },
 });
 
@@ -82,6 +83,9 @@ export const store = {
   markDaily() { state.dailyDoneOn = today(); save(); },
   dailyDone: () => state.dailyDoneOn === today(),
   seePinyin(key) { if (!state.pinyinSeen.includes(key)) { state.pinyinSeen.push(key); save(); } },
+  seeCulture(id) { if (!state.cultureSeen.includes(id)) { state.cultureSeen.push(id); save(); } },
+  seeSong(id) { if (!state.songsSeen.includes(id)) { state.songsSeen.push(id); save(); } },
+  setGameBest(id, n) { if (n > (state.games[id] || 0)) { state.games[id] = n; save(); return true; } return false; },
   setToneBest(n) { if (n > state.toneBest) { state.toneBest = n; save(); } },
   // ----- Ôn tập lặp lại ngắt quãng (kiểu SM-2 rút gọn) -----
   srsAdd(keys) {

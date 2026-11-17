@@ -35,10 +35,10 @@ Mỗi bài gồm: **Từ vựng** (thẻ lật + phát âm), **Ngữ pháp**, **
 - [x] Đổi tên "Tự học Tiếng Trung", chọn ngôn ngữ giao diện vi/en/zh, tự chuyển phồn thể
 - [x] Ôn tập theo lặp lại ngắt quãng (SRS) cho từ đã học – 3 kiểu ôn, phím tắt Space/1-4
 - [x] Luyện viết chữ Hán (hanzi-writer quiz mode) – trong trang Ôn tập
-- [ ] Bộ thủ thường gặp (214 bộ, ưu tiên ~50 bộ hay dùng)
+- [x] 50 bộ thủ thường gặp + trò đoán bộ thủ
 - [ ] Bài test trình độ HSK 1→6 (giống "Bạn đang ở trình độ nào?")
-- [ ] Văn hóa Trung Quốc (Tết, trà, ăn uống, phép lịch sự…)
-- [ ] Học qua bài hát thiếu nhi/đồng dao (bài dân gian, không bản quyền)
+- [x] Văn hóa Trung Quốc: 8 bài (Tết, trà, bàn ăn, con số, Trung thu, xưng hô, tặng quà, thư pháp), "Văn hóa hôm nay" ở trang chủ
+- [x] Học qua bài hát: 3 đồng dao dân gian + 4 bài thơ Đường (có âm Hán Việt), đọc theo từng dòng
 - [ ] Mini game 1: "Nghe – giành thẻ" (giống Karuta)
 - [ ] Mini game 2: Nối thành ngữ / nối chữ 成语接龙 (giống Shiritori)
 - [ ] Huy hiệu & trang thành tích

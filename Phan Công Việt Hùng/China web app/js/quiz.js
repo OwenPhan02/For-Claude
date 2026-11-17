@@ -1,9 +1,9 @@
 // Bộ máy trắc nghiệm dùng chung.
 // Câu hỏi: { label, zh?: {s,t}, py? (hiện dưới chữ Hán), vi?, say?, autoplay?, options: [ {s,t} | 'chuỗi' ], answer, explain? }
-import { esc, hz, speakBtn, shuffle, sample, colorPinyin } from './util.js';
+import { esc, hz, zhs, speakBtn, shuffle, sample, colorPinyin } from './util.js';
 import { speak } from './speech.js';
 
-const optHtml = o => (typeof o === 'string' ? esc(o) : `<span class="zh">${esc(hz(o))}</span>`);
+const optHtml = o => (typeof o === 'string' ? esc(zhs(o)) : `<span class="zh">${esc(hz(o))}</span>`);
 const optKey = o => (typeof o === 'string' ? o : o.s);
 
 /** Trộn thứ tự đáp án nhưng giữ đúng chỉ số đáp án đúng. */
@@ -47,10 +47,10 @@ export function runQuiz(el, questions, { title = '', onFinish, retry = true } = 
         ${title ? `<div class="row spread"><b>${esc(title)}</b><span class="muted small">Câu ${i + 1}/${qs.length}</span></div>` : ''}
         <div class="q-progress">${marks.map((m, k) => `<span class="${m || (k === i ? 'cur' : '')}"></span>`).join('')}</div>
         <div class="q-prompt">
-          <div class="label">${esc(q.label)}</div>
+          <div class="label">${esc(zhs(q.label))}</div>
           ${q.zh ? `<div class="hz zh">${esc(hz(q.zh))}</div>` : ''}
           ${q.py ? `<div style="font-size:1.2rem;font-weight:700">${colorPinyin(q.py)}</div>` : ''}
-          ${q.vi ? `<div style="font-size:1.3rem;font-weight:700">${esc(q.vi)}</div>` : ''}
+          ${q.vi ? `<div style="font-size:1.3rem;font-weight:700">${esc(zhs(q.vi))}</div>` : ''}
           ${q.say ? `<div style="margin-top:8px">${speakBtn(q.say)} <button type="button" class="btn small" data-say="${esc(q.say)}" data-rate="0.6">🐢 Chậm</button></div>` : ''}
         </div>
         <div class="options">
@@ -72,7 +72,7 @@ export function runQuiz(el, questions, { title = '', onFinish, retry = true } = 
       if (ok) score++;
       const fb = el.querySelector('#fb');
       fb.className = `feedback show ${ok ? 'ok' : 'bad'}`;
-      fb.innerHTML = `<b>${ok ? '✅ Chính xác!' : '❌ Chưa đúng.'}</b> ${q.explain || ''}`;
+      fb.innerHTML = `<b>${ok ? '✅ Chính xác!' : '❌ Chưa đúng.'}</b> ${zhs(q.explain || '')}`;
       const next = el.querySelector('#next');
       next.classList.remove('hidden');
       next.focus();
