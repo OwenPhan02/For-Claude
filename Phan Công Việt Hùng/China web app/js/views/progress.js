@@ -1,6 +1,6 @@
 import { store, rankOf, RANKS } from '../store.js';
 import { ALL_LESSONS } from '../data/lessons.js';
-import { PARTS } from './lesson.js';
+import { partsOf } from './lesson.js';
 import { esc } from '../util.js';
 
 export function render(el) {
@@ -52,7 +52,7 @@ export function render(el) {
         ${ALL_LESSONS.map(l => {
           const p = st.lessons[l.id];
           return `<tr><td><a href="#/lesson/${l.id}">HSK ${l.level} · Bài ${l.no} – ${esc(l.vi)}</a></td>
-            <td>${PARTS.filter(x => p?.parts?.[x.key]).length}/${PARTS.length}</td><td>${p?.best ?? 0}/10</td></tr>`;
+            <td>${partsOf(l).filter(x => p?.parts?.[x.key]).length}/${partsOf(l).length}</td><td>${p?.best ?? 0}/10</td></tr>`;
         }).join('')}
       </table>
     </div>

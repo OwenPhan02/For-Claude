@@ -14,10 +14,15 @@ export const PARTS = [
 ];
 const PART_XP = 5;
 
+/** Các phần có trong bài (bài HSK 5–6 dạng gọn có thể không có Chữ Hán / Đọc). */
+export const partsOf = L => PARTS.filter(p =>
+  (p.key !== 'hanzi' || L.hanzi?.length) && (p.key !== 'reading' || L.reading?.lines?.length));
+
 export function render(el, { id, tab }) {
   const L = getLesson(id);
   if (!L) { el.innerHTML = '<div class="card"><h2>Không tìm thấy bài học</h2><a href="#/lessons">← Danh sách bài</a></div>'; return; }
-  const part = PARTS.find(p => p.key === tab) ? tab : null;
+  const parts = partsOf(L);
+  const part = parts.find(p => p.key === tab) ? tab : null;
   const done = store.get().lessons[L.id]?.parts || {};
 
   el.innerHTML = `
@@ -31,7 +36,7 @@ export function render(el, { id, tab }) {
     </div>
     <nav class="tabs">
       <a href="#/lesson/${L.id}" class="${part ? '' : 'active'}">Tổng quan</a>
-      ${PARTS.map(p => `<a href="#/lesson/${L.id}/${p.key}" class="${part === p.key ? 'active' : ''}">${p.icon} ${p.name}${done[p.key] ? ' ✓' : ''}</a>`).join('')}
+      ${parts.map(p => `<a href="#/lesson/${L.id}/${p.key}" class="${part === p.key ? 'active' : ''}">${p.icon} ${p.name}${done[p.key] ? ' ✓' : ''}</a>`).join('')}
     </nav>
     <div id="body"></div>
     <div class="row spread" id="pager" style="margin-top:16px"></div>`;
@@ -42,9 +47,9 @@ export function render(el, { id, tab }) {
   else views[part](body, L);
 
   // Nút chuyển phần trước / sau
-  const idx = part ? PARTS.findIndex(p => p.key === part) : -1;
-  const prev = idx > 0 ? PARTS[idx - 1] : null;
-  const next = PARTS[idx + 1];
+  const idx = part ? parts.findIndex(p => p.key === part) : -1;
+  const prev = idx > 0 ? parts[idx - 1] : null;
+  const next = parts[idx + 1];
   const nextLesson = ALL_LESSONS[ALL_LESSONS.indexOf(L) + 1];
   el.querySelector('#pager').innerHTML = `
     <span>${prev ? `<a class="btn small" href="#/lesson/${L.id}/${prev.key}">← ${prev.name}</a>` : ''}</span>
@@ -72,7 +77,7 @@ function overview(box, L, done) {
       <h3>🎯 Mục tiêu bài học</h3>
       <p>${esc(L.goal)}</p>
       <div class="grid grid-3">
-        ${PARTS.map(p => `
+        ${partsOf(L).map(p => `
           <a class="tile" href="#/lesson/${L.id}/${p.key}" style="color:inherit;text-decoration:none">
             <div class="tile-icon" style="font-family:inherit">${p.icon}</div>
             <div class="tile-body"><b>${p.name}</b><span class="muted small">${count(L, p.key)}</span></div>
@@ -83,8 +88,8 @@ function overview(box, L, done) {
 }
 function count(L, key) {
   return {
-    vocab: `${L.vocab.length} từ mới`, grammar: `${L.grammar.length} điểm ngữ pháp`, hanzi: `${L.hanzi.length} chữ, xem thứ tự nét`,
-    reading: 'Hội thoại có pinyin', listening: `${L.listening.length} câu nghe`, quiz: '10 câu trắc nghiệm',
+    vocab: `${L.vocab.length} từ mới`, grammar: `${L.grammar.length} điểm ngữ pháp`, hanzi: `${L.hanzi?.length || 0} chữ, xem thứ tự nét`,
+    reading: 'Hội thoại có pinyin', listening: L.listening?.length ? `${L.listening.length} câu nghe` : 'Nghe từ vựng và chọn đáp án', quiz: '10 câu trắc nghiệm',
   }[key];
 }
 
@@ -273,7 +278,9 @@ function reading(box, L) {
 // ---------------- Nghe ----------------
 function listening(box, L) {
   box.innerHTML = '<div class="card"><p class="muted small">🎧 Đeo tai nghe. Có thể bấm 🔊 nghe lại hoặc 🐢 nghe chậm.</p><div id="lq"></div></div>';
-  const qs = L.listening.map(q => ({ ...q, autoplay: true }));
+  const qs = L.listening?.length
+    ? L.listening.map(q => ({ ...q, autoplay: true }))
+    : vocabQuestions(L.vocab, Math.min(10, L.vocab.length), L.vocab, ['listen']);
   runQuiz(box.querySelector('#lq'), qs, {
     title: 'Luyện nghe',
     onFinish: (score, total) => { if (score / total >= 0.6) complete(L, 'listening'); return score / total >= 0.6 ? '' : '<p class="small">Đúng từ 60% để hoàn thành phần Nghe.</p>'; },

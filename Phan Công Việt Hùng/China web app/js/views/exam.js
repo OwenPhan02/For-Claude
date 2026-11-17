@@ -49,9 +49,14 @@ function intro(el, lv) {
 function start(el, lv) {
   const L = lv.lessons;
   const words = L.flatMap(l => l.vocab);
+  const listenPool = sample(L.flatMap(l => l.listening || []), PER).map(q => ({ ...q, autoplay: true }));
+  const readPool = sample([...L.flatMap(l => l.quiz || []), ...L.flatMap(l => (l.reading?.questions || []).map(q => ({ label: `${l.reading.title}: ${q.q}`, options: q.options, answer: q.answer })))], PER);
+  // Bài dạng gọn (HSK 5–6) ít câu nghe/đọc: bù bằng câu sinh từ từ vựng
+  if (listenPool.length < PER) listenPool.push(...vocabQuestions(words, PER - listenPool.length, words, ['listen']));
+  if (readPool.length < PER) readPool.push(...vocabQuestions(words, PER - readPool.length, words, ['zh2vi', 'vi2zh']));
   const sections = [
-    { name: 'Phần 1 · Nghe', qs: sample(L.flatMap(l => l.listening), PER).map(q => ({ ...q, autoplay: true })) },
-    { name: 'Phần 2 · Đọc hiểu & ngữ pháp', qs: sample([...L.flatMap(l => l.quiz), ...L.flatMap(l => l.reading.questions.map(q => ({ label: `${l.reading.title}: ${q.q}`, options: q.options, answer: q.answer })))], PER) },
+    { name: 'Phần 1 · Nghe', qs: listenPool },
+    { name: 'Phần 2 · Đọc hiểu & ngữ pháp', qs: readPool },
     { name: 'Phần 3 · Từ vựng', qs: vocabQuestions(words, PER, words, ['zh2vi', 'vi2zh', 'py']) },
   ];
   const scores = [];

@@ -1,7 +1,7 @@
 import { LEVELS } from '../data/lessons.js';
 import { store } from '../store.js';
 import { esc, hz } from '../util.js';
-import { PARTS } from './lesson.js';
+import { partsOf } from './lesson.js';
 
 export function render(el) {
   const st = store.get();
@@ -18,6 +18,7 @@ export function render(el) {
         <p class="muted small">${esc(lv.desc)}</p>
         ${lv.lessons.length ? `<div class="grid grid-3">${lv.lessons.map(l => {
           const p = st.lessons[l.id]?.parts || {};
+          const PARTS = partsOf(l);
           const n = PARTS.filter(x => p[x.key]).length;
           return `
             <a class="tile lesson-card" href="#/lesson/${l.id}" style="color:inherit;text-decoration:none;align-items:stretch">

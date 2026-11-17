@@ -51,8 +51,8 @@ export function lesson(raw) {
         return { tokens: parseTokens(a), reply: b ? parseTokens(b) : undefined, vi: vi.trim() };
       }),
     })),
-    hanzi: raw.hanzi.map(char),
-    reading: {
+    hanzi: (raw.hanzi || []).map(char),
+    reading: raw.reading && {
       title: raw.reading.title,
       people: Object.fromEntries(Object.entries(raw.reading.people).map(([k, v]) => {
         const [s, py] = v.split('|');
@@ -65,7 +65,7 @@ export function lesson(raw) {
       newWords: raw.reading.newWords,
       questions: raw.reading.questions,
     },
-    listening: raw.listening.map(question),
-    quiz: raw.quiz.map(question),
+    listening: (raw.listening || []).map(question),
+    quiz: (raw.quiz || []).map(question),
   };
 }
