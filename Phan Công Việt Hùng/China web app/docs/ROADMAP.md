@@ -46,7 +46,7 @@ Mỗi bài gồm: **Từ vựng** (thẻ lật + phát âm), **Ngữ pháp**, **
 - [x] HSK 3: 12 bài – HSK 1→3 khớp đủ 600 từ chính thức (tổng 634 từ)
 
 ### Giai đoạn 3 – Tài khoản và đưa lên mạng
-- [x] Firebase project + Hosting – dự án tu-hoc-tieng-trung-37b24 (tài khoản hungpcv02.work), web: https://tu-hoc-tieng-trung-37b24.web.app; deploy lại: npx firebase-tools deploy --only hosting,firestore:rules
+- [x] Firebase project + Hosting – dự án tu-hoc-tieng-trung-37b24 (tài khoản hungpcv02.work), web: https://welcome-to-china-vn.web.app (và tu-hoc-tieng-trung-37b24.web.app); deploy lại: npx firebase-tools deploy --only hosting,firestore:rules
 - [x] Code đăng ký / đăng nhập (email, Google, quên mật khẩu) – trang #/account, tự bật khi có config
 - [x] Code đồng bộ tiến độ lên Firestore (bản mới hơn thắng)
 - [x] Code bảng xếp hạng tuần (XP thứ Hai → Chủ nhật)
@@ -58,3 +58,5 @@ Mỗi bài gồm: **Từ vựng** (thẻ lật + phát âm), **Ngữ pháp**, **
 ## Câu hỏi cần hỏi bạn (khi tới nơi)
 - Tên app chính thức? (tạm đặt: **中文之路 · Đường đến Trung văn**)
 - Tài khoản Firebase/Google dùng để đưa app lên mạng
+- [x] Trang pháp lý (điều khoản, bảo mật, hoàn tiền, nguồn hình ảnh) + footer liên hệ hungpcv02.work@gmail.com
+- [x] Hoạt ảnh chuyển trang, hover, bấm nút (tôn trọng "giảm chuyển động" của hệ điều hành)

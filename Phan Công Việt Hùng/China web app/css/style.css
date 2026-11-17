@@ -296,3 +296,81 @@ rt { font-size: .55em; color: var(--red); font-family: "Be Vietnam Pro", sans-se
 .badge .ico { font-size: 2rem; }
 .badge.locked { opacity: .45; filter: grayscale(1); }
 .btn.primary .muted, .btn.jade .muted { color: inherit; opacity: .85; }
+
+/* ---------- Footer & trang pháp lý ---------- */
+.footer { display: grid; gap: 6px; }
+.footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 8px; }
+.footer-links a { color: var(--muted); text-decoration: underline; text-underline-offset: 3px; transition: color .2s; }
+.footer-links a:hover { color: var(--red); }
+.footer-copy { font-size: .75rem; opacity: .8; }
+.legal { max-width: 820px; margin-left: auto; margin-right: auto; }
+.legal h3 { margin-top: 1.4em; font-size: 1.05rem; }
+.legal ul { padding-left: 1.2em; }
+.legal li { margin: 4px 0; }
+
+/* ---------- Hoạt ảnh ---------- */
+:root { --ease: cubic-bezier(.2, .7, .2, 1); --ease-spring: cubic-bezier(.34, 1.56, .64, 1); }
+
+/* Chuyển trang: nội dung trượt lên, các khối xuất hiện lần lượt */
+@keyframes pageIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes popIn { from { opacity: 0; transform: translateY(10px) scale(.97); } to { opacity: 1; transform: none; } }
+#app.page-enter > * { animation: pageIn .42s var(--ease) both; }
+#app.page-enter > *:nth-child(2) { animation-delay: .05s; }
+#app.page-enter > *:nth-child(3) { animation-delay: .1s; }
+#app.page-enter > *:nth-child(4) { animation-delay: .15s; }
+#app.page-enter > *:nth-child(n+5) { animation-delay: .2s; }
+#app.page-enter [style*="--i"] { animation: popIn .45s var(--ease) both; animation-delay: calc(.12s + var(--i) * 35ms); }
+#app.page-leave { opacity: 0; transform: translateY(-6px); transition: opacity .14s, transform .14s; }
+
+/* Rê chuột: thẻ bấm được nhô lên */
+a.card, a.tile, .tile, .vocab-item, .hanzi-card, .badge, .tone-card, .lesson-card, .chip {
+  transition: transform .22s var(--ease), box-shadow .22s var(--ease), border-color .2s, background-color .2s;
+}
+a.card:hover, a.tile:hover, .vocab-item:hover, .hanzi-card:hover, .tone-card:hover, .badge:not(.locked):hover {
+  transform: translateY(-3px); box-shadow: 0 12px 28px rgba(80, 30, 10, .14); border-color: color-mix(in srgb, var(--red) 35%, var(--line));
+}
+a.card:hover, a.tile:hover { text-decoration: none; }
+.tile:hover .tile-icon { transform: rotate(-6deg) scale(1.08); }
+.tile-icon { transition: transform .3s var(--ease-spring); }
+
+/* Nút: nổi nhẹ khi rê, lún xuống khi bấm */
+.btn, .opt, .speak, .icon-btn, .seg button, .tabs a, .mainnav a, .lang-sel {
+  transition: transform .16s var(--ease), box-shadow .2s var(--ease), background-color .2s, color .2s, border-color .2s, filter .2s;
+}
+.btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(80, 30, 10, .14); }
+.btn.primary:hover:not(:disabled) { box-shadow: 0 8px 20px color-mix(in srgb, var(--red) 40%, transparent); }
+.opt:hover:not(:disabled) { transform: translateY(-2px); }
+.speak:hover, .icon-btn:hover { transform: scale(1.1); }
+.tabs a:hover:not(.active), .mainnav a:hover:not(.active) { color: var(--red); }
+.btn:active:not(:disabled), .opt:active:not(:disabled), .chip:active, .tabs a:active, .mainnav a:active,
+.seg button:active, .icon-btn:active, .speak:active { transform: scale(.95); transition-duration: .06s; }
+.brand-mark { transition: transform .5s var(--ease-spring); }
+.brand:hover .brand-mark { transform: rotate(-12deg) scale(1.08); }
+
+/* Gợn sóng khi bấm */
+.btn, .opt, .tabs a { position: relative; overflow: hidden; }
+.ripple {
+  position: absolute; border-radius: 50%; pointer-events: none; transform: scale(0);
+  background: currentColor; opacity: .25; animation: ripple .55s var(--ease) forwards;
+}
+@keyframes ripple { to { transform: scale(2.6); opacity: 0; } }
+
+/* Kết quả trắc nghiệm */
+@keyframes correctPop { 0% { transform: scale(1); } 40% { transform: scale(1.05); } 100% { transform: scale(1); } }
+@keyframes wrongShake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+.opt.correct { animation: correctPop .4s var(--ease-spring); }
+.opt.wrong { animation: wrongShake .4s; }
+.feedback.show { animation: pageIn .3s var(--ease) both; }
+.q-progress span { transition: background-color .3s; }
+
+/* Menu di động, thẻ lật */
+@media (max-width: 1100px) {
+  .mainnav.open { animation: menuDown .25s var(--ease) both; }
+}
+@keyframes menuDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+.flash { transition: transform .6s var(--ease-spring); }
+
+/* Người dùng bật "giảm chuyển động" trong hệ điều hành */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-delay: 0s !important; transition-duration: .001ms !important; }
+}

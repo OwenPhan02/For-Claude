@@ -21,6 +21,7 @@ const routes = [
   { re: /^\/radicals$/, nav: 'explore', load: () => import('./views/radicals.js') },
   { re: /^\/account$/, nav: 'account', load: () => import('./views/account.js') },
   { re: /^\/exam(?:\/(\d))?$/, nav: 'explore', load: () => import('./views/exam.js'), keys: ['level'] },
+  { re: /^\/legal(?:\/(\w+))?$/, nav: 'legal', load: () => import('./views/legal.js'), keys: ['doc'] },
 ];
 
 const app = document.getElementById('app');
@@ -42,15 +43,50 @@ async function router() {
   const m = path.match(route.re);
   const params = {};
   (route.keys || []).forEach((k, i) => (params[k] = m[i + 1]));
+  // Chỉ chạy hiệu ứng khi đổi sang trang khác (đổi tab trong cùng bài thì nhẹ hơn)
+  const pageKey = path.split('/').slice(0, 3).join('/');
+  const newPage = pageKey !== lastPage;
+  lastPage = pageKey;
   try {
-    const mod = await route.load();
+    const modP = route.load();
+    if (newPage && app.childElementCount && !reduceMotion()) {
+      app.classList.add('page-leave');
+      await new Promise(r => setTimeout(r, 140));
+    }
+    const mod = await modP;
     cleanup = await mod.render(app, params);
   } catch (err) {
     console.error(err);
     app.innerHTML = `<div class="card"><h2>Có lỗi khi tải trang</h2><pre class="small">${String(err.message)}</pre></div>`;
   }
-  window.scrollTo(0, 0);
+  app.classList.remove('page-leave');
+  animateIn();
+  if (newPage) window.scrollTo(0, 0);
 }
+
+// ----- Hoạt ảnh chuyển trang -----
+let lastPage = null;
+const reduceMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+const STAGGER = '.grid > *, .vocab-list > *, .badge-grid > *, .hanzi-grid > *';
+function animateIn() {
+  app.classList.remove('page-enter');
+  void app.offsetWidth; // khởi động lại animation
+  app.querySelectorAll(STAGGER).forEach((n, i) => n.style.setProperty('--i', Math.min(i, 14)));
+  app.classList.add('page-enter');
+}
+
+// Gợn sóng khi bấm nút
+document.addEventListener('pointerdown', e => {
+  const b = e.target.closest('.btn, .opt, .tabs a');
+  if (!b || b.disabled || reduceMotion()) return;
+  const r = b.getBoundingClientRect();
+  const size = Math.max(r.width, r.height);
+  const s = document.createElement('span');
+  s.className = 'ripple';
+  s.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX - r.left - size / 2}px;top:${e.clientY - r.top - size / 2}px`;
+  b.appendChild(s);
+  s.addEventListener('animationend', () => s.remove());
+});
 
 // ----- Ngôn ngữ giao diện (tên app đổi theo) -----
 const langSel = document.getElementById('langSel');
