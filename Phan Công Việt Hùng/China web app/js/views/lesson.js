@@ -75,7 +75,7 @@ function overview(box, L, done) {
   box.innerHTML = `
     <div class="card">
       <h3>🎯 Mục tiêu bài học</h3>
-      <p>${esc(L.goal)}</p>
+      <p>${esc(zhs(L.goal))}</p>
       <div class="grid grid-3">
         ${partsOf(L).map(p => `
           <a class="tile" href="#/lesson/${L.id}/${p.key}" style="color:inherit;text-decoration:none">
@@ -162,7 +162,7 @@ function grammar(box, L) {
   box.innerHTML = `<div class="card">
     ${L.grammar.map((g, k) => `
       <div class="gpoint">
-        <h3>${k + 1}. ${esc(g.title)}</h3>
+        <h3>${k + 1}. ${esc(zhs(g.title))}</h3>
         <div class="formula zh">${esc(zhs(g.formula))}</div>
         <p>${zhs(g.explain)}</p>
         ${g.examples.map(exLine).join('')}
