@@ -60,3 +60,6 @@ Mỗi bài gồm: **Từ vựng** (thẻ lật + phát âm), **Ngữ pháp**, **
 - Tài khoản Firebase/Google dùng để đưa app lên mạng
 - [x] Trang pháp lý (điều khoản, bảo mật, hoàn tiền, nguồn hình ảnh) + footer liên hệ hungpcv02.work@gmail.com
 - [x] Hoạt ảnh chuyển trang, hover, bấm nút (tôn trọng "giảm chuyển động" của hệ điều hành)
+- [x] PWA: manifest + service worker + icon; thanh "Học trên điện thoại / Cài app" (mã QR, nút cài)
+- [x] Hiệu ứng: hoa mai rơi (nút 🌸 bật/tắt), tia sáng + chữ bay khi đúng, pháo giấy khi đạt ≥70%
+- [x] Tên miền cũ tu-hoc-tieng-trung-37b24.web.app chuyển hướng 301 sang welcome-to-china-vn.web.app; authDomain = welcome-to-china-vn.web.app (đã thêm redirect URI trong Google Cloud → OAuth client)

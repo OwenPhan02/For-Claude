@@ -2,6 +2,7 @@
 // Câu hỏi: { label, zh?: {s,t}, py? (hiện dưới chữ Hán), vi?, say?, autoplay?, options: [ {s,t} | 'chuỗi' ], answer, explain? }
 import { esc, hz, zhs, speakBtn, shuffle, sample, colorPinyin } from './util.js';
 import { speak } from './speech.js';
+import { burst, floatText, confetti } from './fx.js';
 
 const optHtml = o => (typeof o === 'string' ? esc(zhs(o)) : `<span class="zh">${esc(hz(o))}</span>`);
 const optKey = o => (typeof o === 'string' ? o : o.s);
@@ -69,7 +70,7 @@ export function runQuiz(el, questions, { title = '', onFinish, retry = true } = 
       b.classList.add(ok ? 'correct' : 'wrong');
       el.querySelector(`.opt[data-k="${q.answer}"]`).classList.add('correct');
       marks[i] = ok ? 'ok' : 'bad';
-      if (ok) score++;
+      if (ok) { score++; burst(b); floatText(b, ['对!', '好!', '+1', '棒!'][score % 4]); }
       const fb = el.querySelector('#fb');
       fb.className = `feedback show ${ok ? 'ok' : 'bad'}`;
       fb.innerHTML = `<b>${ok ? '✅ Chính xác!' : '❌ Chưa đúng.'}</b> ${zhs(q.explain || '')}`;
@@ -96,6 +97,7 @@ export function runQuiz(el, questions, { title = '', onFinish, retry = true } = 
         ${extra}
         ${retry ? '<button type="button" class="btn" id="again">↻ Làm lại</button>' : ''}
       </div>`;
+    if (pct >= .7) confetti(pct === 1 ? 140 : 80);
     el.querySelector('#again')?.addEventListener('click', () => runQuiz(el, questions, { title, onFinish, retry }));
   }
 

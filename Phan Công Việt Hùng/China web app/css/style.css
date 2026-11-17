@@ -374,3 +374,98 @@ a.card:hover, a.tile:hover { text-decoration: none; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .001ms !important; animation-delay: 0s !important; transition-duration: .001ms !important; }
 }
+
+/* ---------- Thanh cài app ---------- */
+.install-bar {
+  display: flex; align-items: center; gap: 10px; padding: 8px 16px; background: var(--red-soft); color: var(--text);
+  font-size: .88rem; border-bottom: 1px solid color-mix(in srgb, var(--red) 20%, var(--line));
+  animation: barDown .45s var(--ease) both;
+}
+.install-bar.closing { animation: barUp .3s var(--ease) both; }
+.install-bar .ib-ico { font-size: 1rem; color: var(--muted); }
+.install-bar .ib-text { flex: 1; min-width: 0; }
+.install-bar .ib-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+.install-bar .icon-btn { width: 30px; height: 30px; }
+.btn.ghost { background: transparent; border-color: transparent; }
+.btn.ghost:hover { background: var(--surface); }
+@media (max-width: 640px) { .install-bar { flex-wrap: wrap; } .install-bar .ib-actions { width: 100%; } }
+@keyframes barDown { from { opacity: 0; transform: translateY(-100%); } to { opacity: 1; transform: none; } }
+@keyframes barUp { to { opacity: 0; transform: translateY(-100%); margin-bottom: -48px; } }
+
+/* Hộp thoại (mã QR, hướng dẫn cài) */
+.modal-back {
+  position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; padding: 16px;
+  background: rgba(20, 10, 5, .45); backdrop-filter: blur(3px); animation: fadeIn .2s both;
+}
+.modal-back.closing { animation: fadeOut .2s both; }
+.modal { width: min(420px, 100%); margin: 0; animation: modalIn .35s var(--ease-spring) both; }
+.qr-box { width: 220px; height: 220px; margin: 8px auto; background: #fff; border-radius: 14px; padding: 8px; display: grid; place-items: center; color: #333; }
+.qr-box svg { width: 100%; height: 100%; }
+@keyframes fadeIn { from { opacity: 0; } }
+@keyframes fadeOut { to { opacity: 0; } }
+@keyframes modalIn { from { opacity: 0; transform: translateY(20px) scale(.92); } }
+
+/* ---------- Hiệu ứng sinh động hơn ---------- */
+/* Chuyển trang có thêm chút phóng nhẹ */
+@keyframes pageIn { from { opacity: 0; transform: translateY(18px) scale(.985); } to { opacity: 1; transform: none; } }
+@keyframes popIn { 0% { opacity: 0; transform: translateY(16px) scale(.94); } 70% { opacity: 1; transform: translateY(-2px) scale(1.01); } 100% { opacity: 1; transform: none; } }
+
+/* Banner trang chủ: dải màu chuyển động, huy hiệu lơ lửng */
+.hero { background-size: 220% 220%; animation: heroShift 14s ease-in-out infinite; }
+@keyframes heroShift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+.hero-badge { animation: floaty 5s ease-in-out infinite; }
+@keyframes floaty { 0%, 100% { transform: translateY(-50%) rotate(-3deg); } 50% { transform: translateY(calc(-50% - 10px)) rotate(3deg); } }
+
+/* Nút chính: vệt sáng lướt qua khi rê chuột */
+.btn.primary::after, .btn.jade::after {
+  content: ""; position: absolute; top: 0; left: -60%; width: 40%; height: 100%; pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,.45), transparent); transform: skewX(-20deg);
+}
+.btn.primary:hover::after, .btn.jade:hover::after { animation: shine .7s var(--ease); }
+@keyframes shine { to { left: 130%; } }
+.btn.jade { position: relative; overflow: hidden; }
+
+/* Tab / menu đang chọn nảy nhẹ */
+.tabs a.active, .mainnav a.active { animation: tabPop .35s var(--ease-spring); }
+@keyframes tabPop { 0% { transform: scale(.9); } 100% { transform: scale(1); } }
+
+/* Thanh XP lấp lánh */
+.xpbar > span { position: relative; overflow: hidden; }
+.xpbar > span::after {
+  content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,.5), transparent);
+  transform: translateX(-100%); animation: xpShimmer 2.4s ease-in-out infinite;
+}
+@keyframes xpShimmer { 60%, 100% { transform: translateX(100%); } }
+
+/* Toast bật lên */
+.toast.show { animation: toastBounce .45s var(--ease-spring); }
+@keyframes toastBounce { 0% { transform: translate(-50%, 60px) scale(.8); } 100% { transform: translate(-50%, 0) scale(1); } }
+
+/* Tia sáng, chữ bay, pháo giấy */
+.fx-spark {
+  position: fixed; z-index: 70; width: 8px; height: 8px; border-radius: 50%; pointer-events: none; margin: -4px 0 0 -4px;
+  animation: spark .6s var(--ease) forwards;
+}
+@keyframes spark { to { transform: translate(var(--dx), var(--dy)) scale(.2); opacity: 0; } }
+.fx-float {
+  position: fixed; z-index: 70; pointer-events: none; transform: translateX(-50%);
+  font-weight: 800; font-size: 1.3rem; color: var(--jade); font-family: var(--zh-font); text-shadow: 0 2px 6px rgba(0,0,0,.15);
+  animation: floatUp .9s var(--ease) forwards;
+}
+@keyframes floatUp { 0% { opacity: 0; transform: translate(-50%, 6px) scale(.6); } 25% { opacity: 1; transform: translate(-50%, -14px) scale(1.15); } 100% { opacity: 0; transform: translate(-50%, -54px) scale(1); } }
+.fx-confetti { position: fixed; inset: 0; z-index: 70; pointer-events: none; overflow: hidden; }
+.fx-confetti i { position: absolute; top: -20px; border-radius: 2px; animation-name: confettiFall; animation-timing-function: cubic-bezier(.3,.6,.6,1); animation-fill-mode: forwards; }
+@keyframes confettiFall { to { transform: translate(var(--x), 105vh) rotate(var(--rot)); opacity: .9; } }
+
+/* Hoa mai rơi */
+.fx-petals { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.fx-petals i {
+  position: absolute; top: -24px; border-radius: 80% 0 80% 0;
+  background: radial-gradient(circle at 30% 30%, #ffd1d8, #e8506a); animation-name: petalFall, petalSway;
+  animation-timing-function: linear, ease-in-out; animation-iteration-count: infinite; animation-direction: normal, alternate;
+}
+@keyframes petalFall { to { top: 105vh; transform: rotate(540deg); } }
+@keyframes petalSway { from { margin-left: -30px; } to { margin-left: 30px; } }
+.topbar, .container, .footer, .install-bar { position: relative; z-index: 1; }
+.topbar { z-index: 20; position: sticky; }
+#petalBtn.off { filter: grayscale(1); opacity: .5; }

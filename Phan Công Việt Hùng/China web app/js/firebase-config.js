@@ -3,7 +3,7 @@
 // (Cấu hình web của Firebase là công khai theo thiết kế; bảo mật nằm ở firestore.rules.)
 export const firebaseConfig = {
   apiKey: 'AIzaSyDnoKKUorWZvPZoPZIhoHarwr9Av445gC8',
-  authDomain: 'tu-hoc-tieng-trung-37b24.firebaseapp.com',
+  authDomain: 'welcome-to-china-vn.web.app',
   projectId: 'tu-hoc-tieng-trung-37b24',
   storageBucket: 'tu-hoc-tieng-trung-37b24.firebasestorage.app',
   messagingSenderId: '761051358505',

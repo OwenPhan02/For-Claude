@@ -2,6 +2,8 @@ import { store } from './store.js';
 import { speak } from './speech.js';
 import { t, LANGS, lang } from './i18n.js';
 import { cloudEnabled, onUser } from './cloud.js';
+import { petals } from './fx.js';
+import { renderInstallBar } from './installbar.js';
 
 // Mỗi trang là một module có hàm render(el, params). Tải khi cần.
 const routes = [
@@ -101,7 +103,17 @@ function applyLang() {
   document.querySelector('button[data-script="s"]').title = t('simp');
   document.querySelector('button[data-script="t"]').title = t('trad');
 }
-langSel.addEventListener('change', () => { store.setSetting('lang', langSel.value); applyLang(); router(); });
+langSel.addEventListener('change', () => { store.setSetting('lang', langSel.value); applyLang(); renderInstallBar(); router(); });
+
+// ----- Hoa mai rơi (bật/tắt) -----
+const petalBtn = document.getElementById('petalBtn');
+function applyPetals() {
+  const on = store.get().settings.petals !== false;
+  petals(on);
+  petalBtn.classList.toggle('off', !on);
+  petalBtn.title = on ? 'Tắt hoa mai rơi' : 'Bật hoa mai rơi';
+}
+petalBtn.addEventListener('click', () => { store.setSetting('petals', store.get().settings.petals === false); applyPetals(); });
 
 // ----- Giản thể / phồn thể -----
 function applyScript() {
@@ -141,6 +153,8 @@ document.addEventListener('click', e => {
 applyScript();
 applyTheme();
 applyLang();
+applyPetals();
+renderInstallBar();
 
 // Nút tài khoản (chỉ hiện khi đã cấu hình Firebase)
 const acctBtn = document.getElementById('acctBtn');
