@@ -51,7 +51,7 @@ Mỗi bài gồm: **Từ vựng** (thẻ lật + phát âm), **Ngữ pháp**, **
 - [x] Code đồng bộ tiến độ lên Firestore (bản mới hơn thắng)
 - [x] Code bảng xếp hạng tuần (XP thứ Hai → Chủ nhật)
 - [x] Đề thi thử HSK (3 phần Nghe/Đọc/Từ vựng, tính giờ, trộn ngẫu nhiên) – có cho HSK 1–3, HSK 4–6 tự có khi soạn xong bài
-- [ ] HSK 4: bài 1–20 xong (theo docs/HSK4_PLAN.md), còn bài 21–24
+- [x] HSK 4: 24 bài – HSK 1→4 khớp đủ 1200 từ chính thức (tổng 1214 từ), có đề thi thử HSK 4
 - [ ] HSK 5–6
 
 ## Câu hỏi cần hỏi bạn (khi tới nơi)
