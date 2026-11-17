@@ -9,12 +9,13 @@ import { HSK3B } from './hsk3b.js';
 import { HSK3C } from './hsk3c.js';
 import { HSK4A } from './hsk4a.js';
 import { HSK4B } from './hsk4b.js';
+import { HSK4C } from './hsk4c.js';
 
 export const LEVELS = [
   { level: 1, name: 'HSK 1', words: 150, desc: 'Chào hỏi, số đếm, gia đình, thời gian – giao tiếp cơ bản nhất.', lessons: [...HSK1, ...HSK1B, ...HSK1C, ...HSK1D] },
   { level: 2, name: 'HSK 2', words: 300, desc: 'Sức khỏe, mua sắm, hỏi đường, du lịch, công việc – giao tiếp đời sống hằng ngày.', lessons: [...HSK2A, ...HSK2B] },
   { level: 3, name: 'HSK 3', words: 600, desc: 'Câu 把, 被, so sánh nâng cao; học tập, công việc, sức khỏe, thành phố – xử lý hầu hết tình huống đời sống.', lessons: [...HSK3A, ...HSK3B, ...HSK3C] },
-  { level: 4, name: 'HSK 4', words: 1200, desc: 'Thảo luận nhiều chủ đề, nói chuyện trôi chảy với người bản xứ: tình cảm, du lịch, công việc, xã hội.', lessons: [...HSK4A, ...HSK4B] },
+  { level: 4, name: 'HSK 4', words: 1200, desc: 'Thảo luận nhiều chủ đề, nói chuyện trôi chảy với người bản xứ: tình cảm, du lịch, công việc, xã hội.', lessons: [...HSK4A, ...HSK4B, ...HSK4C] },
   { level: 5, name: 'HSK 5', words: 2500, desc: 'Đọc báo, xem phim, thuyết trình.', lessons: [] },
   { level: 6, name: 'HSK 6', words: '5000+', desc: 'Hiểu và diễn đạt trôi chảy bằng nói và viết.', lessons: [] },
 ];
