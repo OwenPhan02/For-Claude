@@ -52,7 +52,7 @@ Mỗi bài gồm: **Từ vựng** (thẻ lật + phát âm), **Ngữ pháp**, **
 - [x] Code bảng xếp hạng tuần (XP thứ Hai → Chủ nhật)
 - [x] Đề thi thử HSK (3 phần Nghe/Đọc/Từ vựng, tính giờ, trộn ngẫu nhiên) – có cho HSK 1–3, HSK 4–6 tự có khi soạn xong bài
 - [x] HSK 4: 24 bài – HSK 1→4 khớp đủ 1200 từ chính thức (tổng 1214 từ), có đề thi thử HSK 4
-- [ ] HSK 5: bài 1–8 xong (khuôn bài gọn, xem docs/HSK5_PLAN.md), còn bài 9–26
+- [ ] HSK 5: bài 1–12 xong (khuôn bài gọn, xem docs/HSK5_PLAN.md), còn bài 13–26
 - [ ] HSK 6
 
 ## Câu hỏi cần hỏi bạn (khi tới nơi)
