@@ -16,6 +16,8 @@ export const HSK1 = [
       { s: '我们', t: '我們', py: 'wǒmen', hv: 'ngã môn', vi: 'chúng tôi, chúng ta', pos: 'đại từ' },
       { s: '他', py: 'tā', hv: 'tha', vi: 'anh ấy, ông ấy', pos: 'đại từ' },
       { s: '她', py: 'tā', hv: 'tha', vi: 'cô ấy, bà ấy', pos: 'đại từ' },
+      { s: '他们', t: '他們', py: 'tāmen', hv: 'tha môn', vi: 'họ, các anh ấy', pos: 'đại từ' },
+      { s: '她们', t: '她們', py: 'tāmen', hv: 'tha môn', vi: 'các cô ấy', pos: 'đại từ' },
       { s: '是', py: 'shì', hv: 'thị', vi: 'là', pos: 'động từ' },
       { s: '不', py: 'bù', hv: 'bất', vi: 'không', pos: 'phó từ' },
       { s: '也', py: 'yě', hv: 'dã', vi: 'cũng', pos: 'phó từ' },

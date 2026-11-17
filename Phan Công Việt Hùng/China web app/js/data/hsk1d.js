@@ -88,6 +88,7 @@ export const HSK1D = [
       '看见|kànjiàn|khán kiến|nhìn thấy|động từ',
       '听|tīng|thính|nghe|động từ',
       '说|shuō|thuyết|nói|động từ',
+      '说话|shuōhuà|thuyết thoại|nói chuyện|động từ',
       '读|dú|độc|đọc (thành tiếng)|động từ',
       '写|xiě|tả|viết|động từ',
       '字|zì|tự|chữ|danh từ',

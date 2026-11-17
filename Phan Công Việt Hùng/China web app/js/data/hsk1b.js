@@ -235,6 +235,7 @@ export const HSK1B = [
       '昨天|zuótiān|tạc thiên|hôm qua|danh từ',
       '年|nián|niên|năm|danh từ',
       '月|yuè|nguyệt|tháng; mặt trăng|danh từ',
+      '日|rì|nhật|ngày (văn viết); mặt trời|danh từ',
       '号|hào|hiệu|ngày (trong tháng)|danh từ',
       '星期|xīngqī|tinh kỳ|tuần, thứ|danh từ',
       '现在|xiànzài|hiện tại|bây giờ|danh từ',
