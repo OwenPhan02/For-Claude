@@ -660,3 +660,7 @@ html.compact .tabbar .ti { font-size: 22px; }
 @media (min-width: 641px) { .hero > :not(.hero-badge) { max-width: calc(100% - 150px); } }
 /* Màn hẹp: ô ngôn ngữ chỉ nằm trong bảng cài đặt để tên app không bị cắt */
 @media (max-width: 899px) { html.compact .topbar-tools > .lang-sel { display: none; } }
+/* Toast: ẩn hẳn khi không có thông báo (tránh cục trắng ở đáy màn hình điện thoại) */
+.toast { visibility: hidden; opacity: 0; transition: transform .3s, opacity .25s, visibility 0s .3s; }
+.toast:empty { display: none; }
+.toast.show { visibility: visible; opacity: 1; transition: transform .3s, opacity .25s, visibility 0s; }
