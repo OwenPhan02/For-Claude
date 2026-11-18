@@ -1,5 +1,6 @@
 import { CULTURE } from '../data/culture.js';
 import { esc, zhs, speakBtn, colorPinyin } from '../util.js';
+import { amBoi } from '../ambo.js';
 import { store } from '../store.js';
 
 export function render(el, { id }) {
@@ -34,7 +35,7 @@ export function render(el, { id }) {
       <table class="simple">
         ${a.words.map(w => { const [s, py, hv, vi] = w.split('|'); return `
           <tr><td style="width:40px">${speakBtn(s)}</td><td class="zh" style="font-size:1.2rem">${esc(zhs(s))}</td>
-          <td>${colorPinyin(py)}<div class="hv">${esc(hv)}</div></td><td>${esc(vi)}</td></tr>`; }).join('')}
+          <td>${colorPinyin(py)}<div class="ab" title="Âm bồi – đọc gần đúng">${esc(amBoi(py, s))}</div></td><td>${esc(vi)}</td></tr>`; }).join('')}
       </table>
       <div class="tipbox" style="margin-top:16px">💡 ${zhs(a.tip)}</div>
     </article>

@@ -4,6 +4,7 @@ import { esc, hz, zhs, speakBtn, rubyLine, plainLine, colorPinyin, toast } from 
 import { runQuiz, vocabQuestions } from '../quiz.js';
 import { speak } from '../speech.js';
 import { renderSpeak } from './speak.js';
+import { amBoi } from '../ambo.js';
 
 export const PARTS = [
   { key: 'vocab', name: 'Từ vựng', icon: '📝' },
@@ -109,6 +110,7 @@ function vocab(box, L) {
         </div>
         <span class="muted small">${L.vocab.length} từ · bấm 🔊 để nghe</span>
       </div>
+      <p class="small muted" style="margin:-4px 0 12px"><span class="ab">nỉ hảo</span> là <b>âm bồi</b> – cách đọc gần đúng viết bằng chữ Việt, chỉ để tham khảo. Hãy nghe 🔊 và đọc theo <b>pinyin</b> để phát âm chuẩn.</p>
       <div id="vbody"></div>
       ${doneBtn()}`;
     box.querySelectorAll('[data-mode]').forEach(b => b.addEventListener('click', () => { mode = b.dataset.mode; draw(); }));
@@ -120,7 +122,7 @@ function vocab(box, L) {
           <div class="hz zh">${esc(hz(w))}</div>
           <div class="meta">
             <div class="py">${colorPinyin(w.py)}</div>
-            <div class="hv">${esc(w.hv)}</div>
+            <div class="ab" title="Âm bồi – đọc gần đúng">${esc(amBoi(w.py, w.s))}</div>
             <div>${esc(w.vi)}</div>
             <div class="muted small">${esc(w.pos)}${w.t && w.t !== w.s ? ` · <span class="zh">${esc(store.get().settings.script === 't' ? w.s : w.t)}</span>` : ''}</div>
           </div>
@@ -133,7 +135,7 @@ function vocab(box, L) {
           <button type="button" class="flash" id="card" aria-label="Lật thẻ">
             <div class="flash-face"><div class="hz zh">${esc(hz(w))}</div><div class="muted small">Bấm để lật thẻ</div></div>
             <div class="flash-face back">
-              <div class="py">${colorPinyin(w.py)}</div><div class="hv">${esc(w.hv)}</div><div class="vi">${esc(w.vi)}</div>
+              <div class="py">${colorPinyin(w.py)}</div><div class="ab">${esc(amBoi(w.py, w.s))}</div><div class="vi">${esc(w.vi)}</div>
               <div class="muted small">${esc(w.pos)}</div>
             </div>
           </button>
@@ -200,7 +202,7 @@ function hanzi(box, L) {
           <div class="hanzi-box zh" id="hw${k}" title="Xem thứ tự nét" style="cursor:pointer"></div>
           <div style="min-width:0">
             <div class="row"><b class="zh" style="font-size:1.6rem">${esc(hz(c))}</b>${speakBtn(c.s)}</div>
-            <div class="py" style="color:var(--red);font-weight:700">${colorPinyin(c.py)} · <span class="hv">${esc(c.hv)}</span></div>
+            <div class="py" style="color:var(--red);font-weight:700">${colorPinyin(c.py)} · <span class="ab">${esc(amBoi(c.py, c.s))}</span></div>
             <div class="small">${esc(c.vi)}</div>
             <div class="small muted">Bộ: <span class="zh">${esc(c.radical)}</span> · ${trad && c.strokesT ? c.strokesT : c.strokes} nét</div>
             <p class="small" style="margin:6px 0 0">${zhs(c.note)}</p>

@@ -3,6 +3,7 @@ import { ALL_LESSONS, getLesson } from '../data/lessons.js';
 import { esc, hz, speakBtn, colorPinyin, shuffle, toast } from '../util.js';
 import { speak } from '../speech.js';
 import { loadWriter } from './lesson.js';
+import { amBoi } from '../ambo.js';
 
 const MODES = [
   { key: 'read', name: 'Nhìn chữ → nhớ nghĩa' },
@@ -110,7 +111,7 @@ function session(box, queue) {
         <div id="back" class="hidden" style="text-align:center;border-top:1px dashed var(--line);padding-top:12px">
           <div class="zh" style="font-size:2.4rem;font-weight:700">${esc(hz(w))}</div>
           <div style="font-size:1.2rem;font-weight:700">${colorPinyin(w.py)}</div>
-          <div class="hv">${esc(w.hv)}</div>
+          <div class="ab" title="Âm bồi – đọc gần đúng">${esc(amBoi(w.py, w.s))}</div>
           <div>${esc(w.vi)}</div>
         </div>
         <div class="row" style="justify-content:center;margin-top:16px" id="actions">
@@ -160,7 +161,7 @@ function writing(box) {
       <div class="card" style="max-width:520px;margin:0 auto;text-align:center">
         <p class="muted small">Viết chữ theo đúng thứ tự nét vào ô bên dưới (dùng chuột hoặc ngón tay). Sai 2 lần sẽ có gợi ý.</p>
         <div class="row" style="justify-content:center">
-          <b style="font-size:1.3rem">${colorPinyin(c.py)}</b> <span class="hv">${esc(c.hv)}</span> · ${esc(c.vi)} ${speakBtn(c.s)}
+          <b style="font-size:1.3rem">${colorPinyin(c.py)}</b> <span class="ab">${esc(amBoi(c.py, c.s))}</span> · ${esc(c.vi)} ${speakBtn(c.s)}
         </div>
         <div id="pad" class="hanzi-box" style="width:260px;height:260px;margin:14px auto;cursor:crosshair;touch-action:none"></div>
         <div id="msg" class="small muted" style="min-height:1.5em"></div>

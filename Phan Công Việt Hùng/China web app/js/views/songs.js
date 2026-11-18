@@ -1,5 +1,6 @@
 import { SONGS } from '../data/songs.js';
 import { esc, zhs, speakBtn, rubyLine, plainLine, colorPinyin } from '../util.js';
+import { amBoi } from '../ambo.js';
 import { speak } from '../speech.js';
 import { store } from '../store.js';
 
@@ -57,7 +58,7 @@ export function render(el, { id }) {
       <table class="simple">
         ${s.words.map(w => { const [zh, py, hv, vi] = w.split('|'); return `
           <tr><td style="width:40px">${speakBtn(zh)}</td><td class="zh" style="font-size:1.2rem">${esc(zhs(zh))}</td>
-          <td>${colorPinyin(py)}<div class="hv">${esc(hv)}</div></td><td>${esc(vi)}</td></tr>`; }).join('')}
+          <td>${colorPinyin(py)}<div class="ab" title="Âm bồi – đọc gần đúng">${esc(amBoi(py, zh))}</div></td><td>${esc(vi)}</td></tr>`; }).join('')}
       </table>
     </div>`;
 

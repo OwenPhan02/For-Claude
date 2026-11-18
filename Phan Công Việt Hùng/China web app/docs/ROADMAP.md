@@ -64,3 +64,4 @@ Mỗi bài gồm: **Từ vựng** (thẻ lật + phát âm), **Ngữ pháp**, **
 - [x] Hiệu ứng: hoa mai rơi (nút 🌸 bật/tắt), tia sáng + chữ bay khi đúng, pháo giấy khi đạt ≥70%
 - [x] Tên miền cũ tu-hoc-tieng-trung-37b24.web.app chuyển hướng 301 sang welcome-to-china-vn.web.app; authDomain = welcome-to-china-vn.web.app (đã thêm redirect URI trong Google Cloud → OAuth client)
 - [x] Luyện nói (mỗi bài): nhận dạng giọng nói + đo cao độ, chấm từng âm tiết/thanh điệu, biểu đồ thanh, mẹo sửa cho người Việt (js/pron.js, js/mic.js, js/views/speak.js)
+- [x] Bỏ hiển thị Hán Việt ở từ vựng, thay bằng âm bồi tự tạo từ pinyin (js/ambo.js)

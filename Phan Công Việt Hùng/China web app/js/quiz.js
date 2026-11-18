@@ -3,6 +3,7 @@
 import { esc, hz, zhs, speakBtn, shuffle, sample, colorPinyin } from './util.js';
 import { speak } from './speech.js';
 import { burst, floatText, confetti } from './fx.js';
+import { amBoi } from './ambo.js';
 
 const optHtml = o => (typeof o === 'string' ? esc(zhs(o)) : `<span class="zh">${esc(hz(o))}</span>`);
 const optKey = o => (typeof o === 'string' ? o : o.s);
@@ -27,7 +28,7 @@ export function vocabQuestions(words, n, pool = words, types = ['zh2vi', 'vi2zh'
     else if (type === 'listen') q = { label: 'Nghe và chọn từ đúng', say: w.s, autoplay: true, options: opts.map(o => ({ s: o.s, t: o.t })) };
     else q = { label: 'Chọn pinyin đúng:', zh: w, options: opts.map(o => o.py) };
     q.answer = 0;
-    q.explain = `<span class="zh">${esc(hz(w))}</span> · ${esc(w.py)} · <span class="hv">${esc(w.hv)}</span> — ${esc(w.vi)}`;
+    q.explain = `<span class="zh">${esc(hz(w))}</span> · ${esc(w.py)} · <span class="ab">${esc(amBoi(w.py, w.s))}</span> — ${esc(w.vi)}`;
     return q;
   });
 }

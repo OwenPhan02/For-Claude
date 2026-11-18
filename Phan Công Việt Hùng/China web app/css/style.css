@@ -713,3 +713,7 @@ html.compact .tabbar .ti { font-size: 22px; }
 .sp-tips { margin-top: 12px; padding: 12px 14px; border-radius: 14px; background: var(--gold-soft); }
 .sp-tips ul { margin: 6px 0 0; padding-left: 1.2em; display: grid; gap: 6px; }
 @media (max-width: 480px) { .sp-res { flex-direction: column; text-align: center; } .sp-legend { justify-content: center; } }
+
+/* Âm bồi (đọc gần đúng bằng chữ Việt) */
+.ab { color: var(--jade); font-weight: 600; font-size: .85rem; font-style: italic; }
+.ab::before { content: "≈ "; font-style: normal; opacity: .7; }
