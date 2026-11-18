@@ -14,7 +14,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <script>/* Chọn bố cục trước khi vẽ trang: màn hẹp hoặc cảm ứng → thanh điều hướng dưới */
-    if (innerWidth <= 1100 || matchMedia('(pointer: coarse)').matches) document.documentElement.classList.add('compact');</script>
+    if (innerWidth <= 1100 || matchMedia('(pointer: coarse)').matches) document.documentElement.classList.add('compact');
+    try { const fs = JSON.parse(localStorage.getItem('zwzl.v1') || '{}').settings?.fontScale; if (fs) document.documentElement.style.setProperty('--fs', fs); } catch (e) {}</script>
 </head>
 <body>
   <header class="topbar">
@@ -35,6 +36,7 @@
         <button type="button" data-script="t" title="Phồn thể">繁</button>
       </div>
       <a href="#/account" class="btn small primary hidden" id="acctBtn">Đăng nhập</a>
+      <button type="button" class="icon-btn font-btn" id="fontBtn" title="Cỡ chữ" aria-label="Cỡ chữ">A<small>A</small></button>
       <button type="button" class="icon-btn" id="petalBtn" title="Hoa mai rơi">🌸</button>
       <button type="button" class="icon-btn" id="themeBtn" title="Đổi giao diện sáng/tối">🌓</button>
       <button type="button" class="icon-btn menu-btn" id="menuBtn" aria-label="Mở menu">☰</button>
@@ -73,6 +75,8 @@
       </div>
       <h4 data-i18n="set.title">Cài đặt</h4>
       <div class="sheet-set">
+        <div class="set-row set-font" id="fontRow"><span data-i18n="set.font">Cỡ chữ</span><div class="fs-opts" id="fsOpts"></div>
+          <div class="fs-preview"><span class="zh">你好</span><span id="fsLabel"></span> – <span data-i18n="set.fontDemo">Xin chào, chữ hiển thị cỡ này.</span></div></div>
         <label><span data-i18n="set.lang">Ngôn ngữ</span><select id="sheetLang" class="lang-sel"></select></label>
         <div class="set-row"><span data-i18n="set.script">Chữ Hán</span>
           <div class="seg"><button type="button" data-script2="s">简 <small data-i18n="simp">Giản thể</small></button><button type="button" data-script2="t">繁 <small data-i18n="trad">Phồn thể</small></button></div></div>

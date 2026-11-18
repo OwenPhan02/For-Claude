@@ -105,10 +105,35 @@ function syncSheet() {
     (!document.documentElement.dataset.theme && matchMedia('(prefers-color-scheme: dark)').matches);
   document.getElementById('sheetTheme').classList.toggle('on', dark);
 }
-document.getElementById('moreBtn').addEventListener('click', () => {
-  if (!sheet.hidden) return closeSheet();
+function openSheet(focusFont) {
   syncSheet();
   sheet.hidden = false;
+  if (focusFont) requestAnimationFrame(() => {
+    const row = document.getElementById('fontRow');
+    row.scrollIntoView({ block: 'center' });
+    row.classList.remove('flash-hint'); void row.offsetWidth; row.classList.add('flash-hint');
+  });
+}
+document.getElementById('moreBtn').addEventListener('click', () => (sheet.hidden ? openSheet() : closeSheet()));
+document.getElementById('fontBtn').addEventListener('click', () => (sheet.hidden ? openSheet(true) : closeSheet()));
+
+// ----- Cỡ chữ (cho người lớn tuổi, mắt kém) -----
+const FONT_STEPS = [1, 1.0625, 1.1875, 1.3125, 1.4375]; // 16 · 17 (mặc định) · 19 · 21 · 23 px
+function applyFont() {
+  const v = store.get().settings.fontScale || 1.0625;
+  root.style.setProperty('--fs', v);
+  const names = t('set.fs').split('|');
+  const k = FONT_STEPS.indexOf(v);
+  document.getElementById('fsOpts').innerHTML = FONT_STEPS.map((f, i) =>
+    `<button type="button" data-fs="${f}" class="${f === v ? 'on' : ''}" style="font-size:${Math.round(13 + i * 3.5)}px" aria-label="${names[i]}" title="${names[i]}">A</button>`).join('');
+  document.getElementById('fsLabel').textContent = names[k >= 0 ? k : 1];
+  refit();
+}
+document.getElementById('fsOpts').addEventListener('click', e => {
+  const b = e.target.closest('[data-fs]');
+  if (!b) return;
+  store.setSetting('fontScale', +b.dataset.fs);
+  applyFont();
 });
 sheet.addEventListener('click', e => {
   if (e.target === sheet || e.target.closest('a')) return closeSheet();
@@ -162,7 +187,7 @@ function applyLang() {
   document.querySelector('button[data-script="s"]').title = t('simp');
   document.querySelector('button[data-script="t"]').title = t('trad');
 }
-langSel.addEventListener('change', () => { store.setSetting('lang', langSel.value); applyLang(); renderInstallBar(); fitLayout(); router(); });
+langSel.addEventListener('change', () => { store.setSetting('lang', langSel.value); applyLang(); applyFont(); renderInstallBar(); fitLayout(); router(); });
 
 // ----- Hoa mai rơi (bật/tắt) -----
 const petalBtn = document.getElementById('petalBtn');
@@ -213,6 +238,7 @@ applyScript();
 applyTheme();
 applyLang();
 applyPetals();
+applyFont();
 renderInstallBar();
 fitLayout();
 

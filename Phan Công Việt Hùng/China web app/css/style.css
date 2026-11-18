@@ -40,10 +40,10 @@
 }
 
 * { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; font-size: calc(100% * var(--fs, 1.0625)); }
 body {
   margin: 0; background: var(--bg); color: var(--text);
-  font-family: "Be Vietnam Pro", system-ui, sans-serif; font-size: 16px; line-height: 1.55;
+  font-family: "Be Vietnam Pro", system-ui, sans-serif; font-size: 1rem; line-height: 1.6;
   min-height: 100vh; display: flex; flex-direction: column;
 }
 a { color: var(--red); text-decoration: none; }
@@ -597,7 +597,6 @@ img, svg, video, canvas { max-width: 100%; }
 
 /* Máy tính bảng */
 @media (min-width: 641px) and (max-width: 1100px) { .container { padding: 20px 24px 40px; } }
-@media (min-width: 641px) and (max-width: 1100px) and (pointer: coarse) { body { font-size: 17px; } }
 
 /* Màn hình cảm ứng: nút đủ lớn để chạm, bỏ hiệu ứng rê chuột bị "dính" */
 @media (pointer: coarse) {
@@ -638,3 +637,26 @@ img, svg, video, canvas { max-width: 100%; }
 .topbar-tools { flex-shrink: 0; }
 .brand { min-width: 0; flex-shrink: 1; }
 .brand-name { overflow: hidden; text-overflow: ellipsis; }
+
+/* ---------- Cỡ chữ ---------- */
+.font-btn { width: auto !important; padding: 0 10px; font-weight: 800; font-size: 17px; letter-spacing: -.02em; color: var(--red); border: 2px solid color-mix(in srgb, var(--red) 55%, var(--line)) !important; }
+.font-btn small { font-size: 13px; }
+.set-font { flex-wrap: wrap; }
+.fs-opts { display: flex; gap: 6px; flex-wrap: wrap; }
+.fs-opts button {
+  min-width: 44px; height: 44px; padding: 0 6px; border-radius: 12px; border: 2px solid var(--line); background: var(--surface);
+  font-weight: 800; color: var(--text); display: grid; place-items: center; line-height: 1;
+}
+.fs-opts button.on { border-color: var(--red); background: var(--red-soft); color: var(--red); }
+.fs-preview { width: 100%; margin-top: 8px; padding: 10px 12px; border-radius: 12px; background: var(--surface-2); font-size: 1rem; }
+.fs-preview .zh { font-size: 1.5rem; font-weight: 700; margin-right: 6px; }
+@keyframes hintFlash { 0%, 100% { background: transparent; } 30% { background: var(--gold-soft); } }
+.flash-hint { animation: hintFlash 1.2s ease 2; }
+/* Nhãn thanh dưới: không phóng theo cỡ chữ để luôn hiện đủ chữ */
+html.compact .tabbar a, html.compact .tabbar button { font-size: 11.5px; }
+html.compact .tabbar .ti { font-size: 22px; }
+@media (min-width: 600px) { html.compact .tabbar a, html.compact .tabbar button { font-size: 13px; } html.compact .tabbar .ti { font-size: 24px; } }
+/* Banner: chừa chỗ cho huy hiệu, không để chữ đè */
+@media (min-width: 641px) { .hero > :not(.hero-badge) { max-width: calc(100% - 150px); } }
+/* Màn hẹp: ô ngôn ngữ chỉ nằm trong bảng cài đặt để tên app không bị cắt */
+@media (max-width: 899px) { html.compact .topbar-tools > .lang-sel { display: none; } }
