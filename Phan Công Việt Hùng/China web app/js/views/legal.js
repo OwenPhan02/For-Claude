@@ -55,6 +55,7 @@ const DOCS = {
         <li>Google Firebase (đăng nhập, cơ sở dữ liệu, lưu trữ web).</li>
         <li>Google Fonts (tải phông chữ) và jsDelivr (tải thư viện viết chữ Hán) – các dịch vụ này có thể ghi nhận địa chỉ IP khi trình duyệt tải tệp.</li>
         <li>Phát âm dùng giọng đọc có sẵn của trình duyệt / hệ điều hành (Web Speech API).</li>
+        <li><b>Luyện nói:</b> khi bạn bấm 🎤, ứng dụng dùng micro (chỉ khi bạn cho phép). Giọng nói được gửi tới dịch vụ nhận dạng giọng nói của trình duyệt (Google với Chrome/Android, Apple với Safari/iPhone) để chuyển thành chữ; cao độ giọng được phân tích ngay trên máy của bạn. Ứng dụng <b>không lưu và không gửi bản ghi</b> lên máy chủ của chúng tôi – bản ghi chỉ nằm tạm trong trình duyệt để bạn nghe lại và mất khi rời trang.</li>
       </ul>
       <h3>5. Cookie</h3>
       <p>Ứng dụng không dùng cookie quảng cáo hay theo dõi. Firebase có thể lưu dữ liệu phiên đăng nhập trong trình duyệt.</p>

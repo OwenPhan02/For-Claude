@@ -664,3 +664,52 @@ html.compact .tabbar .ti { font-size: 22px; }
 .toast { visibility: hidden; opacity: 0; transition: transform .3s, opacity .25s, visibility 0s .3s; }
 .toast:empty { display: none; }
 .toast.show { visibility: visible; opacity: 1; transition: transform .3s, opacity .25s, visibility 0s; }
+
+/* ---------- Luyện nói ---------- */
+.sp-mode button { padding: 6px 14px; font-family: inherit; font-weight: 700; }
+.sp-stage { display: grid; justify-items: center; gap: 10px; padding: 18px 0 6px; text-align: center; }
+.sp-text { font-size: clamp(2.2rem, 9vw, 3.6rem); font-weight: 700; line-height: 1.1; display: flex; flex-wrap: wrap; justify-content: center; gap: 2px 4px; }
+.sp-text.long { font-size: clamp(1.6rem, 6vw, 2.4rem); }
+.sp-syl { display: inline-flex; flex-direction: column; align-items: center; padding: 2px 4px 4px; border-radius: 10px; border-bottom: 4px solid transparent; transition: background-color .3s, border-color .3s; }
+.sp-syl small { font-family: "Be Vietnam Pro", sans-serif; font-size: .32em; font-weight: 700; color: var(--red); margin-bottom: 2px; }
+.sp-punct { align-self: flex-end; }
+.sp-syl.st-ok { background: var(--jade-soft); border-color: var(--ok); }
+.sp-syl.st-tone { background: var(--gold-soft); border-color: var(--gold); }
+.sp-syl.st-sound, .sp-syl.st-miss { background: var(--red-soft); border-color: var(--bad); }
+.sp-syl.st-miss { opacity: .6; }
+.sp-vi { color: var(--muted); font-weight: 600; }
+.sp-actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.sp-mic {
+  position: relative; width: 88px; height: 88px; border-radius: 50%; border: 0; margin-top: 6px;
+  background: linear-gradient(140deg, var(--red), #e0533d); color: #fff; font-size: 2.2rem;
+  box-shadow: 0 10px 26px color-mix(in srgb, var(--red) 45%, transparent); transition: transform .15s var(--ease);
+}
+.sp-mic:active { transform: scale(.93); }
+.sp-mic .sp-ico { position: relative; z-index: 1; }
+.sp-ring { position: absolute; inset: 0; border-radius: 50%; }
+.sp-mic.rec { background: linear-gradient(140deg, #b00020, var(--red)); }
+.sp-mic.rec .sp-ring { animation: micPulse 1.2s ease-out infinite; box-shadow: 0 0 0 0 color-mix(in srgb, var(--red) 60%, transparent); }
+@keyframes micPulse { to { box-shadow: 0 0 0 26px transparent; } }
+.sp-hint { font-weight: 700; color: var(--muted); font-size: .95rem; }
+.sp-level { width: min(240px, 80%); height: 6px; border-radius: 99px; background: var(--surface-2); overflow: hidden; }
+.sp-level span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--jade), var(--gold), var(--red)); transition: width .08s; }
+.sp-res { display: flex; gap: 14px; align-items: center; padding: 14px; border-radius: 16px; background: var(--surface-2); margin-top: 14px; animation: popIn .4s var(--ease) both; }
+.sp-score { width: 76px; height: 76px; flex: none; border-radius: 50%; display: grid; place-items: center; align-content: center; border: 5px solid var(--line); background: var(--surface); }
+.sp-score b { font-size: 1.6rem; line-height: 1; }
+.sp-score small { font-size: .7rem; color: var(--muted); }
+.sp-score.good { border-color: var(--ok); color: var(--ok); }
+.sp-score.mid { border-color: var(--gold); color: var(--gold); }
+.sp-score.low { border-color: var(--bad); color: var(--bad); }
+.sp-res-body { min-width: 0; }
+.sp-legend { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
+.sp-legend .st-ok { color: var(--ok); } .sp-legend .st-tone { color: var(--gold); }
+.sp-legend .st-sound { color: var(--bad); } .sp-legend .st-miss { color: var(--muted); }
+.sp-chart { margin-top: 12px; padding: 10px 12px; border-radius: 14px; border: 1px solid var(--line); }
+.sp-chart svg { width: 100%; height: 150px; display: block; }
+.sp-chart .tpl { fill: none; stroke: var(--muted); stroke-width: 3; stroke-dasharray: 6 6; opacity: .7; }
+.sp-chart .usr { fill: none; stroke: var(--red); stroke-width: 4; stroke-linejoin: round; stroke-linecap: round; }
+.sp-chart .lbl { fill: var(--text); font-size: 14px; font-weight: 700; font-family: "Be Vietnam Pro", sans-serif; }
+.sp-chart .lbl.bad { fill: var(--bad); }
+.sp-tips { margin-top: 12px; padding: 12px 14px; border-radius: 14px; background: var(--gold-soft); }
+.sp-tips ul { margin: 6px 0 0; padding-left: 1.2em; display: grid; gap: 6px; }
+@media (max-width: 480px) { .sp-res { flex-direction: column; text-align: center; } .sp-legend { justify-content: center; } }

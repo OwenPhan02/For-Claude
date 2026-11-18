@@ -3,6 +3,7 @@ import { store } from '../store.js';
 import { esc, hz, zhs, speakBtn, rubyLine, plainLine, colorPinyin, toast } from '../util.js';
 import { runQuiz, vocabQuestions } from '../quiz.js';
 import { speak } from '../speech.js';
+import { renderSpeak } from './speak.js';
 
 export const PARTS = [
   { key: 'vocab', name: 'Từ vựng', icon: '📝' },
@@ -10,6 +11,7 @@ export const PARTS = [
   { key: 'hanzi', name: 'Chữ Hán', icon: '🖌️' },
   { key: 'reading', name: 'Đọc', icon: '📖' },
   { key: 'listening', name: 'Nghe', icon: '🎧' },
+  { key: 'speak', name: 'Luyện nói', icon: '🗣️' },
   { key: 'quiz', name: 'Kiểm tra', icon: '✅' },
 ];
 const PART_XP = 5;
@@ -42,9 +44,10 @@ export function render(el, { id, tab }) {
     <div class="row spread" id="pager" style="margin-top:16px"></div>`;
 
   const body = el.querySelector('#body');
-  const views = { vocab, grammar, hanzi, reading, listening, quiz };
+  const views = { vocab, grammar, hanzi, reading, listening, quiz, speak: (b, L) => renderSpeak(b, L, () => complete(L, 'speak')) };
   if (!part) overview(body, L, done);
-  else views[part](body, L);
+  let stopPart = null;
+  if (part) { const c = views[part](body, L); if (typeof c === 'function') stopPart = c; }
 
   // Nút chuyển phần trước / sau
   const idx = part ? parts.findIndex(p => p.key === part) : -1;
@@ -55,6 +58,7 @@ export function render(el, { id, tab }) {
     <span>${prev ? `<a class="btn small" href="#/lesson/${L.id}/${prev.key}">← ${prev.name}</a>` : ''}</span>
     <span>${next ? `<a class="btn small primary" href="#/lesson/${L.id}/${next.key}">${next.name} →</a>`
       : nextLesson ? `<a class="btn small primary" href="#/lesson/${nextLesson.id}">Bài ${nextLesson.no} →</a>` : ''}</span>`;
+  return stopPart;
 }
 
 /** Đánh dấu hoàn thành một phần, cộng XP lần đầu. */
