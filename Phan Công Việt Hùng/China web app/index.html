@@ -16,7 +16,7 @@
   <script>/* Chọn bố cục trước khi vẽ trang: màn hẹp hoặc cảm ứng → thanh điều hướng dưới */
     if (innerWidth <= 1100 || matchMedia('(pointer: coarse)').matches) document.documentElement.classList.add('compact');
     try { const st = JSON.parse(localStorage.getItem('zwzl.v1') || '{}').settings || {}; let fs = st.fontScale;
-      if (fs && st.fontV !== 2) { const old = [1, 1.0625, 1.1875, 1.3125, 1.4375], nw = [1.0625, 1.1875, 1.375, 1.625, 1.875]; fs = old.includes(fs) ? nw[old.indexOf(fs)] : 1.1875; }
+      if (fs && st.fontV !== 3) { const old = st.fontV === 2 ? [1.0625, 1.1875, 1.375, 1.625, 1.875] : [1, 1.0625, 1.1875, 1.3125, 1.4375], nw = [1, 1.1875, 1.375, 1.5625, 1.75]; fs = old.includes(fs) ? nw[old.indexOf(fs)] : 1.1875; }
       if (fs) document.documentElement.style.setProperty('--fs', fs); } catch (e) {}</script>
 </head>
 <body>

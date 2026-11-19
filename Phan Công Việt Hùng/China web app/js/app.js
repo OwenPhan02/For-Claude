@@ -118,16 +118,16 @@ document.getElementById('moreBtn').addEventListener('click', () => (sheet.hidden
 document.getElementById('fontBtn').addEventListener('click', () => (sheet.hidden ? openSheet(true) : closeSheet()));
 
 // ----- Cỡ chữ (cho người lớn tuổi, mắt kém) -----
-const FONT_STEPS = [1.0625, 1.1875, 1.375, 1.625, 1.875]; // 17 · 19 (mặc định) · 22 · 26 · 30 px
-const OLD_STEPS = [1, 1.0625, 1.1875, 1.3125, 1.4375];     // bản cũ: 16 · 17 · 19 · 21 · 23
+const FONT_STEPS = [1, 1.1875, 1.375, 1.5625, 1.75];      // 16 · 19 (mặc định) · 22 · 25 · 28 px
+const OLD_STEPS = { 1: [1, 1.0625, 1.1875, 1.3125, 1.4375], 2: [1.0625, 1.1875, 1.375, 1.625, 1.875] };
 function applyFont() {
   const st = store.get().settings;
   let v = st.fontScale || 1.1875;
-  if (st.fontScale && st.fontV !== 2) {                                  // chuyển lựa chọn cũ sang mức mới tương ứng (1 lần)
-    const i = OLD_STEPS.indexOf(v);
+  if (st.fontScale && st.fontV !== 3) {                                  // chuyển lựa chọn cũ sang mức mới tương ứng (1 lần)
+    const i = (OLD_STEPS[st.fontV] || OLD_STEPS[1]).indexOf(v);
     v = i >= 0 ? FONT_STEPS[i] : 1.1875;
     store.setSetting('fontScale', v);
-    store.setSetting('fontV', 2);
+    store.setSetting('fontV', 3);
   }
   root.style.setProperty('--fs', v);
   const names = t('set.fs').split('|');
@@ -141,7 +141,7 @@ document.getElementById('fsOpts').addEventListener('click', e => {
   const b = e.target.closest('[data-fs]');
   if (!b) return;
   store.setSetting('fontScale', +b.dataset.fs);
-  store.setSetting('fontV', 2);
+  store.setSetting('fontV', 3);
   applyFont();
 });
 sheet.addEventListener('click', e => {

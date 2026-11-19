@@ -731,3 +731,20 @@ html.compact .tabbar .ti { font-size: 22px; }
   .topbar .brand-name { font-size: 15px; }
   #acctBtn { font-size: 13px; }
 }
+
+/* Nút biểu tượng: căn chính giữa, cân đối */
+.icon-btn { display: inline-grid; place-items: center; padding: 0; line-height: 1; font-size: 17px; flex: none; text-align: center; }
+.icon-btn > * { line-height: 1; }
+.font-btn { display: inline-flex; align-items: baseline; justify-content: center; gap: 1px; padding: 0 9px !important; height: 34px; line-height: 34px; }
+@media (pointer: coarse) { .font-btn { height: 38px; line-height: 38px; } .icon-btn { font-size: 18px; } }
+.install-bar .icon-btn { font-size: 13px; }
+
+/* Thanh dưới: chữ to hơn, biểu tượng cân giữa */
+html.compact .tabbar a, html.compact .tabbar button { font-size: 13.5px; gap: 3px; justify-content: center; }
+html.compact .tabbar .ti { font-size: 24px; height: 26px; display: grid; place-items: center; }
+@media (min-width: 600px) {
+  html.compact .tabbar a, html.compact .tabbar button { font-size: 15px; }
+  html.compact .tabbar .ti { font-size: 26px; height: 28px; }
+}
+html.compact body { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
+@media (max-width: 380px) { html.compact .tabbar a, html.compact .tabbar button { font-size: 12px; } }
