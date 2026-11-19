@@ -37,7 +37,7 @@ const defaults = () => ({
   exams: {},            // cấp HSK -> % cao nhất của đề thi thử
   week: null, weekXp: 0, // XP trong tuần (bảng xếp hạng)
   updatedAt: 0,
-  settings: { script: 's', theme: 'auto', pinyin: true, trans: true, lang: 'vi', fontScale: 1.0625 },
+  settings: { script: 's', theme: 'auto', pinyin: true, trans: true, lang: 'vi', fontScale: null },
 });
 
 let state = load();

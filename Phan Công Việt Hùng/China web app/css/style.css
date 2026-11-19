@@ -40,7 +40,7 @@
 }
 
 * { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; font-size: calc(100% * var(--fs, 1.0625)); }
+html { -webkit-text-size-adjust: 100%; font-size: calc(100% * var(--fs, 1.1875)); }
 body {
   margin: 0; background: var(--bg); color: var(--text);
   font-family: "Be Vietnam Pro", system-ui, sans-serif; font-size: 1rem; line-height: 1.6;
@@ -717,3 +717,17 @@ html.compact .tabbar .ti { font-size: 22px; }
 /* Âm bồi (đọc gần đúng bằng chữ Việt) */
 .ab { color: var(--jade); font-weight: 600; font-size: .85rem; font-style: italic; }
 .ab::before { content: "≈ "; font-style: normal; opacity: .7; }
+
+/* Thanh khung (thanh cài app, thanh trên cùng, menu) giữ cỡ cố định – chỉ phần nội dung phóng theo cỡ chữ */
+.install-bar { font-size: 14px; }
+.install-bar .btn.small { font-size: 13.5px; padding: 6px 12px; }
+.topbar .brand-name { font-size: 17px; }
+.topbar .btn.small, #acctBtn { font-size: 14px; }
+.topbar .seg button { font-size: 15px; }
+.topbar .lang-sel { font-size: 13px; }
+.mainnav a { font-size: 14px; }
+@media (max-width: 640px) {
+  .install-bar { font-size: 13px; }
+  .topbar .brand-name { font-size: 15px; }
+  #acctBtn { font-size: 13px; }
+}
